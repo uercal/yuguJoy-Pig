@@ -86,7 +86,7 @@
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $item) : ?>
                                 <tr>
-                                    <td class="am-text-middle"><?= $item['order']['order_no'] ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['order']?$item['order']['order_no']:'（在库，未绑定订单）' ?></td>                                    
                                     <td class="am-text-middle">
                                         <p class="item-title"><?= $item['equip_id'] ?></p>
                                     </td>
@@ -97,13 +97,13 @@
                                     <td class="am-text-middle"> <?= date('Y-m-d H:i:s', $item['check_time']) ?></td>                                                                        
                                     <td class="am-text-middle">
                                     
-                                        <div class="tpl-table-black-operation">                                                  
-                                            <a class="tpl-table-black-operation" href="<?= url(
+                                        <div class="tpl-table-black-operation">     
+                                            <?= $item['order']?"<a class='tpl-table-black-operation' href=".url(
                                                         'order/detail',
                                                         ['order_id' => $item['order_id']]
-                                                    ) ?>" class="am-btn am-btn-xs am-radius">
-                                                <i class="am-icon-book"></i> 查看归属订单
-                                            </a>    
+                                                    )."class='am-btn am-btn-xs am-radius'>
+                                                <i class='am-icon-book'></i> 查看归属订单</a>":"" ?>                                             
+                                               
                                             <a class="tpl-table-black-operation-del" href="javascript:;" onclick="">
                                                 <i class="am-icon-pencil"></i> 删除
                                             </a>                                                                               

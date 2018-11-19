@@ -3,6 +3,17 @@
 .equip-detail{
     font-size:12px;color:#777;
 }
+.equip-box{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+    width: 40%;
+    border-radius: 10px;
+}
+.equip-box:hover{
+    border: 1px solid #1E9FFF;
+}
 </style>
 <div class="row-content am-cf">
     <div class="row">
@@ -49,45 +60,46 @@
                             <li class="layui-timeline-item">
                                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                 <div class="layui-timeline-content layui-text">
-                                <h3 class="layui-timeline-title"><?= $item['equip_status_text'] ?>
-                                <span style="font-size:13px;color:#777;"><?= date('Y年m月d日 h:i:s', strtotime($item['create_time'])) ?></span>
-                                </h3>                                
-                                <p class="equip-detail">
-                                    设备ID：<a href="JavaScript:;"><?= $item['equip_id'] ?></a>
-                                </p>
-                                <p class="equip-detail">
-                                    设备所属产品：<a href="JavaScript:;"><?= $item['equip']['goods']['goods_name'] ?> <?= $item['equip']['spec_value']['spec_value'] ?></a>
-                                </p>
-                                <?php if ($item['order']) : ?>
-                                <p class="equip-detail">
-                                    订单号：<a href="JavaScript:;"><?= $item['order']['order_no'] ?></a>
-                                </p>                                                                  
-                                <?php endif; ?>
-                                <p class="equip-detail">
-                                    操作人：<a href="JavaScript:;"><?= $item['member'] ? $item['member']['name'] : '管理员' ?></a>
-                                </p>
-                                <p class="equip-detail">
-                                    变更状态：
-                                    <?php switch ($item['equip_status']):
-                                        case 10:
-                                            echo ("<a href='JavaScript:; style='color:#0c79b1;'>");
-                                            break;                                    
-                                        case 20:
-                                            echo ("<a href='JavaScript:;' style='color:#E0690C;'>");
-                                            break;
-                                        case 30:
-                                            echo ("<a href='JavaScript:;' style='color:#B848FF;'>");
-                                            break;
-                                        case 40:
-                                            echo ("<a href='JavaScript:;' style='color:#4AAA4A;'>");
-                                            break;
-                                        case 50:
-                                            echo ("<a href='JavaScript:;' style='color:red;'>");
-                                            break;                                                                           
-                                    endswitch;
-                                    ?>               
-                                    <?= $item['equip_status_text'] ?></a>
-                                </p>
+                                    <h3 class="layui-timeline-title" style="font-size:14px;"><?= date('m月d日 H:i:s', strtotime($item['create_time'])) ?>
+                                    </h3>
+                                    <div class="equip-box">
+                                        <p class="equip-detail" style="font-size:13px;">
+                                            变更状态：
+                                            <?php switch ($item['equip_status']):
+                                                case 10:
+                                                    echo ("<span href='JavaScript:; style='color:#0c79b1;' class='layui-badge layui-bg-cyan'>");
+                                                    break;                                    
+                                                case 20:
+                                                    echo ("<span href='JavaScript:;' style='color:#E0690C;' class='layui-badge layui-bg-green'>");
+                                                    break;
+                                                case 30:
+                                                    echo ("<span href='JavaScript:;' style='color:#B848FF;' class='layui-badge layui-bg-red'>");
+                                                    break;
+                                                case 40:
+                                                    echo ("<span href='JavaScript:;' style='color:#4AAA4A;' class='layui-badge layui-bg-blue'>");
+                                                    break;
+                                                case 50:
+                                                    echo ("<span href='JavaScript:;' style='color:red;' class='layui-badge layui-bg-gray'>");
+                                                    break;                                                                           
+                                            endswitch;
+                                            ?>               
+                                            <?= $item['equip_status_text'] ?></span>
+                                        </p>                           
+                                        <p class="equip-detail">
+                                            设备ID：<a href="JavaScript:;"><?= $item['equip_id'] ?></a>
+                                        </p>
+                                        <p class="equip-detail">
+                                            设备所属产品：<a href="JavaScript:;"><?= $item['equip']['goods']['goods_name'] ?> <?= $item['equip']['spec_value']['spec_value'] ?></a>
+                                        </p>
+                                        <?php if ($item['order']) : ?>
+                                        <p class="equip-detail">
+                                            订单号：<a href="JavaScript:;"><?= $item['order']['order_no'] ?></a>
+                                        </p>                                                                  
+                                        <?php endif; ?>
+                                        <p class="equip-detail">
+                                            操作人：<a href="JavaScript:;"><?= $item['member'] ? $item['member']['name'] : '管理员' ?></a>
+                                        </p> 
+                                    </div>                               
                                 </div>
                             </li>                          
                             <?php endforeach; ?>  

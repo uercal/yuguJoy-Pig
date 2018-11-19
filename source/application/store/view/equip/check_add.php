@@ -83,7 +83,7 @@
                             <div class="widget-head am-cf">
                                 <div class="widget-title am-fl">其他</div>
                             </div>                                                                                    
-                            <div class="am-form-group">                                
+                            <div class="am-form-group">                  
                                 <div class="am-u-sm-9 am-u-end">                                    
                                     <span class="demonstration">维修状态</span>
                                     <el-select v-model="post.check_status" placeholder="请选择">
@@ -95,16 +95,26 @@
                                         </el-option>
                                     </el-select>
                                 </div>
-                                <div class="am-u-sm-9 am-u-end" style="margin-top:2rem;">     
+                                <div class="am-u-sm-9 am-u-end" style="margin-top:1rem;display:flex;">                                    
+                                    <span class="demonstration" style="width:5rem;">设备维修后状态</span>
+                                    <el-select v-model="post.equip_status" placeholder="请选择">
+                                        <el-option
+                                        v-for="item in equip_status"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </div>  
+                                <div class="am-u-sm-9 am-u-end" style="margin-top:1rem;">     
                                     <span class="demonstration">维修时间</span>
                                     <el-date-picker
                                     v-model="post.check_time"
                                     type="datetime"
                                     placeholder="选择日期时间">
                                     </el-date-picker>
-                                </div>
-                            </div>
-                            
+                                </div>                                                                                                                                                          
+                            </div>                                                 
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3 am-margin-top-lg">
                                     <button type="default" class="j-submit am-btn am-btn-secondary" @click="doPost">提交
@@ -139,6 +149,22 @@
             },{
                 value: '30',
                 label: '停用'
+            }],
+            equip_status:[{
+                value: '10',
+                label: '在库'
+            },{
+                value: '20',
+                label: '运送中'
+            },{
+                value: '30',
+                label: '使用中'
+            },{
+                value:'40',
+                label:'维修中',
+            },{
+                value:'50',
+                label:'停用'
             }],
             post:{
                 equip_id:'',

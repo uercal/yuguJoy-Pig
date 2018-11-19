@@ -14,9 +14,10 @@ use think\Request;
 class EquipCheckLog extends EquipCheckLogModel
 {
     public function add($data)
-    {        
+    {
         $data['wxapp_id'] = self::$wxapp_id;
-        $data['check_time'] = strtotime($data['check_time']);
+        $data['check_time'] = strtotime($data['check_time']);         
+        $this->addEquipLog($data['equip_id'], isset($data['order_id'])?$data['order_id']:null, $data['equip_status']);                
         // halt($data);        
         // 开启事务
         Db::startTrans();

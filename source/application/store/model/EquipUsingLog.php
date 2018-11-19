@@ -20,9 +20,9 @@ class EquipUsingLog extends EquipUsingLogModel
         $map = $request->request();
         $_map = [];
         $_map['equip_id'] = ['=', $map['equip_id']];
-
+                
         if (!empty($map['startDate'])) $_map['create_time'] = ['>=', strtotime($map['startDate'])];
-        if (!empty($map['endDate'])) $_map['create_time'] = ['<=', strtotime($map['endDate'])];
+        if (!empty($map['endDate'])) $_map['create_time'] = ['<=', strtotime($map['endDate'].' 23:59:59')];
 
         $data = $this->with(['order', 'member','equip'=>['goods','specValue']])
             ->where($_map)

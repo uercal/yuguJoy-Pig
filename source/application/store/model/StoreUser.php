@@ -34,7 +34,7 @@ class StoreUser extends StoreUserModel
             if ($member = $model->where([
                 'phone' => $data['user_name'],
                 'password' => yoshop_hash($data['password'])
-            ])->with(['wxapp','role'])->find()) {
+            ])->with(['wxapp', 'role'])->find()) {
                 $type = 1; //员工
             } else {
                 $this->error = '登录失败, 用户名或密码错误';
@@ -53,6 +53,7 @@ class StoreUser extends StoreUserModel
         Session::set('yoshop_store', [
             'user' => [
                 'store_user_id' => $type == 0 ? $user['store_user_id'] : $member['phone'],
+                'member_id' => $type == 0 ? 0 : Db::name('store_member')->where('phone', $member['phone'])->value('id'),
                 'user_name' => $type == 0 ? $user['user_name'] : $member['name'],
                 'type' => $type,
                 'role' => $type == 0 ? [] : $member['role']

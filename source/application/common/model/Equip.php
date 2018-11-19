@@ -23,7 +23,7 @@ class Equip extends BaseModel
 
     public function order()
     {
-        return $this->belongsTo('Order','order_id','order_id');
+        return $this->hasMany('Order', 'order_id', 'order_id');
     }
 
     public function goods()
@@ -48,7 +48,17 @@ class Equip extends BaseModel
         return implode(',', Db::name('goods_service')->whereIn('service_id', $data['service_ids'])->column('service_name'));
     }
     
+    // 關聯使用記錄表
+    public function equipUsingLog()
+    {
+        return $this->hasMany('EquipUsingLog');
+    }
 
+    // 关联维修记录表
+    public function equipCheckLog()
+    {
+        return $this->hasMany('EquipCheckLog', 'equip_id', 'equip_id');
+    }
 
     // 
     public function getList()
@@ -70,7 +80,7 @@ class Equip extends BaseModel
 
     }
 
-    
+
     public static function detail($equip_id)
     {
         return self::get($equip_id);

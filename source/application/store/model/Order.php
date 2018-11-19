@@ -15,6 +15,8 @@ use app\store\model\EquipUsingLog;
 use app\api\model\Goods as GoodsApi;
 use app\api\model\Order as OrderApi;
 use app\common\model\Wxapp;
+use think\Session;
+// 
 /**
  * 订单管理
  * Class Order
@@ -73,6 +75,25 @@ class Order extends OrderModel
                 $_data['order_id'] = $order_id;
                 $data[] = $_data;
             }
+            // 
+            $session = Session::get('yoshop_store');
+            $wxapp_id = $session['wxapp']['wxapp_id'];
+            $user = $session['user'];
+            $type = $user['type'];
+            $member_id = $type == 0 ? 0 : $user['member_id'];
+
+
+
+            $usingLog = [];
+            foreach ($data as $key => $value) {
+                $_usingLog = [];
+                $_usingLog['order_id'] = $value['order_id'];
+                $_usingLog['equip_id'] = $value['equip_id'];
+                $_usingLog['member_id'] = $member_id;
+                $_usingLog['equip_status'] = $value['status'];
+                $_usingLog['wxapp_id'] = $wxapp_id;
+                $usingLog[] = $_usingLog;
+            }
             
             // 开启事务
             Db::startTrans();
@@ -80,10 +101,8 @@ class Order extends OrderModel
                 // 设备
                 $equip = new Equip;
                 $equip->saveAll($data);
-                // 设备使用记录
-                
-
-
+                // 设备使用记录                
+                $this->usingLog()->saveAll($usingLog);
                 // 订单
                 $this->save([
                     'delivery_status' => 20,
@@ -337,10 +356,17 @@ class Order extends OrderModel
             $order_goods[] = $value;
         }
 
-        if (isset($input['equip'])) {            
+        if (isset($input['equip'])) {           
+            // 
+            $session = Session::get('yoshop_store');
+            $wxapp_id = $session['wxapp']['wxapp_id'];
+            $user = $session['user'];
+            $type = $user['type'];
+            $member_id = $type == 0 ? 0 : $user['member_id']; 
             // 更换了设备
             $equip = $input['equip'];
             $data = [];
+            $log_data = [];
             foreach ($equip as $key => $value) {
                 $_data = [];
                 $_data['equip_id'] = $key;
@@ -350,6 +376,15 @@ class Order extends OrderModel
                 $_data['order_id'] = $input['order_id'];
                 $data[] = $_data;
                 // 
+                $_data_log = [];
+                $_data_log['order_id'] = $input['order_id'];
+                $_data_log['equip_id'] = $key;
+                $_data_log['member_id'] = $member_id;
+                $_data_log['equip_status'] = 20;
+                $_data_log['wxapp_id'] = $wxapp_id;
+                $_data_log['create_time'] = time();
+                $log_data[] = $_data_log;                
+                // 
                 $_p_data = [];
                 $_p_data['equip_id'] = $value['p_equip_id'];
                 $_p_data['secure'] = null;
@@ -357,12 +392,20 @@ class Order extends OrderModel
                 $_p_data['status'] = 10; // 在库
                 $_p_data['order_id'] = null;
                 $data[] = $_p_data;
+                // 
+                $_p_data_log = [];
+                $_p_data_log['order_id'] = null;
+                $_p_data_log['equip_id'] = $value['p_equip_id'];
+                $_p_data_log['member_id'] = $member_id;
+                $_p_data_log['equip_status'] = 10;
+                $_p_data_log['wxapp_id'] = $wxapp_id;
+                $_p_data_log['create_time'] = time();
+                $log_data[] = $_p_data_log;
             }
         }
 
 
-
-        
+    
         // 开启事务
         Db::startTrans();
         try {            
@@ -375,6 +418,8 @@ class Order extends OrderModel
             isset($input['equip']) ?
                 $equip->saveAll($data) : '';
             // 
+            $log = new EquipUsingLog;
+            $log->saveAll($log_data);
             Db::commit();
             return true;
         } catch (\Exception $e) {
@@ -417,6 +462,12 @@ class Order extends OrderModel
      */
     public function chgStatus($state)
     {
+        $session = Session::get('yoshop_store');
+        $wxapp_id = $session['wxapp']['wxapp_id'];
+        $user = $session['user'];
+        $type = $user['type'];
+        $member_id = $type == 0 ? 0 : $user['member_id'];
+        // 
         $_state = [];
         $_state['order_id'] = $state['order_id'];
         if ($state['pay_status'] == 10 && $state['delivery_status'] == 10) {
@@ -472,11 +523,27 @@ class Order extends OrderModel
                 'service_time' => null
             ]) : '';
             // 是否送达设备
-            $type == 3 ?
+            if ($type == 3) {
                 Equip::where('order_id', $state['order_id'])->update([
-                'status' => 30,
-                'service_time' => time()
-            ]) : '';
+                    'status' => 30,
+                    'service_time' => time()
+                ]);
+
+                // UsingLog
+                $data = Equip::where('order_id', $state['order_id'])->select()->toArray();
+                $_data = [];
+                foreach ($data as $key => $value) {
+                    $param = [];
+                    $param['order_id'] = $state['order_id'];
+                    $param['equip_id'] = $value['equip_id'];
+                    $param['member_id'] = $member_id;
+                    $param['equip_status'] = 30;
+                    $param['wxapp_id'] = $wxapp_id;
+                    $_data[] = $param;
+                }
+                $log = new EquipUsingLog;
+                $log->saveAll($_data);
+            }
             Db::commit();
             return true;
         } catch (\Exception $e) {

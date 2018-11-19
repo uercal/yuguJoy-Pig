@@ -60,6 +60,17 @@ class Order extends BaseModel
         return $this->belongsTo('User');
     }
 
+
+    /**
+     * 关联设备使用记录表
+     */
+    public function usingLog()
+    {
+        return $this->hasMany('EquipUsingLog', 'order_id', 'order_id');
+    }
+
+
+
     /**
      * 付款状态
      * @param $value

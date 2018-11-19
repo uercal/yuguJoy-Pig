@@ -638,7 +638,7 @@ input::-webkit-inner-spin-button{
         $.post('<?= url("order/changeEquipState") ?>',{
             equip_id:equip_id,
             state:state
-        },function(res){
+        },function(res){            
             window.location.reload();
         })
     }

@@ -6,6 +6,7 @@ use app\store\model\Goods as GoodsModel;
 use app\store\model\Equip as EquipModel;
 use app\api\model\Goods as GoodsApiModel;
 use app\store\model\EquipCheckLog;
+use app\store\model\EquipUsingLog;
 // 
 use Endroid\QrCode\QrCode;
 use app\store\model\Member as MemberModel;
@@ -164,7 +165,7 @@ class Equip extends Controller
     public function checkLog()
     {
         $model = new EquipCheckLog();
-        $res = $model->getList();        
+        $res = $model->getList();
         $map = $res['map'];
         $list = $res['data'];
         return $this->fetch('check_index', compact('list', 'map'));
@@ -172,14 +173,14 @@ class Equip extends Controller
 
     public function checkAdd()
     {
-        if(!$this->request->isAjax()){
+        if (!$this->request->isAjax()) {
             return $this->fetch('check_add');
-        }                
+        }
         $model = new EquipCheckLog;
         if ($model->add($this->postData('post'))) {
             return $this->renderSuccess('添加成功');
         }
-        return $this->renderError('添加失败');        
+        return $this->renderError('添加失败');
     }
 
 
@@ -190,15 +191,40 @@ class Equip extends Controller
         $type = $input['type'];
         if ($type == 'equip') {
             $model = new EquipModel;
-            $data = $model->getOne($input['equip_id'],['<>',0]);
+            $data = $model->getOne($input['equip_id'], ['<>', 0]);
             return $data;
         }
         if ($type == 'member') {
             $model = new MemberModel;
-            $data = $model->getOne(['phone'=>$input['member_phone']]);
-            return $data;            
+            $data = $model->getOne(['phone' => $input['member_phone']]);
+            return $data;
         }
     }
 
+
+
+    // 使用记录列表
+    public function usingLog()
+    {
+        $log = new EquipUsingLog;
+        $res = $log->getList();
+        $map = $res['map'];
+        $list = $res['data'];
+        return $this->fetch('using_index', compact('map', 'list'));
+
+    }
+
+
+    // 使用记录详情
+    public function usingDetail()
+    {
+        $log = new EquipUsingLog;
+        $res = $log->EquipDetail();
+        $map = $res['map'];
+        $data = $res['data'];
+        // halt($data->toArray());
+        // halt($data->toArray()[0]['equip']);
+        return $this->fetch('using_detail', compact('map', 'data'));
+    }
 
 }

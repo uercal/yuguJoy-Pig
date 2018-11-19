@@ -5,6 +5,7 @@ namespace app\common\model;
 use think\Model;
 use think\Request;
 use think\Session;
+use think\Db;
 
 /**
  * 模型基类
@@ -86,4 +87,51 @@ class BaseModel extends Model
         }
     }
 
+
+
+
+
+    /**
+     * 设备更新 使用记录  和 维修记录
+     */
+    public function addEquipLog($equip_id, $order_id, $state)
+    {   
+        // 
+        $session = Session::get('yoshop_store');
+        $wxapp_id = $session['wxapp']['wxapp_id'];
+        $user = $session['user'];
+        $type = $user['type'];
+        $member_id = $type == 0 ? 0 : $user['member_id'];
+        Db::startTrans();
+        try {
+            // 
+            Db::name('equip_using_log')->insert([
+                'order_id' => $order_id,
+                'equip_id' => $equip_id,
+                'member_id' => $member_id,
+                'equip_status' => $state,
+                'wxapp_id' => $wxapp_id,
+                'create_time' => time()
+            ]);            
+            // 如果维修
+            if ($state == 40) {
+                Db::name('equip_check_log')->insert([
+                    'order_id' => $order_id,
+                    'equip_id' => $equip_id,
+                    'check_member_id' => $member_id,
+                    'check_status' => 10,
+                    'check_time' => time(),
+                    'wxapp_id' => $wxapp_id,
+                    'create_time' => time()
+                ]);
+            }
+            //    
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }        
+    }
 }

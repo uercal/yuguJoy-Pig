@@ -5,6 +5,7 @@ namespace app\store\model;
 use app\common\model\Equip as EquipModel;
 use think\Db;
 use think\Request;
+use think\Session;
 
 /**
  * 设备模型
@@ -174,20 +175,35 @@ class Equip extends EquipModel
     // 更换指定设备
     public function getOne($equip_id, $status = ['=', 10])
     {
-        $data =  $this->with(['goodsGetName', 'specValue', 'order', 'goods' => ['service' => ['service']]])->where([
-            'equip_id' => ['=',$equip_id],
+        $data = $this->with(['goodsGetName', 'specValue', 'order', 'goods' => ['service' => ['service']]])->where([
+            'equip_id' => ['=', $equip_id],
             'status' => $status
         ])->find();
-        if($data) $data->status_text = $this->getStatusTextAttr('',$data);        
+        if ($data) $data->status_text = $this->getStatusTextAttr('', $data);
         return $data;
     }
 
 
     public function chgStatus($equip_id, $state)
     {
-        return $this->where('equip_id', $equip_id)->update([
-            'status' => $state
-        ]);
+        Db::startTrans();
+        try {
+            // 
+            $order_id = $this->where('equip_id', $equip_id)->value('order_id');                                 
+            //         
+            $this->addEquipLog($equip_id, $order_id, $state);                        
+            // 
+            $this->where('equip_id', $equip_id)->update([
+                'status' => $state
+            ]);                        
+            Db::commit();            
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+
     }
 
 }

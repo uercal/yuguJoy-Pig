@@ -249,7 +249,7 @@ class Order extends Controller
     public function changeEquipState($equip_id, $state)
     {
         $model = new EquipModel;
-        if ($model->chgStatus($equip_id, $state)) {
+        if ($model->chgStatus($equip_id, $state)) {                        
             return $this->renderSuccess('变更成功', url('order/edit', ['order_id' => $state['order_id']]));
         }
         $error = $model->getError() ? : '变更失败';

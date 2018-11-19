@@ -45,16 +45,7 @@ return [
                     'goods/service_add',
                     'goods/service_edit'
                 ],
-            ]           
-            // [
-            //     'name' => '商品分类',
-            //     'index' => 'goods.category/index',
-            //     'uris' => [
-            //         'goods.category/index',
-            //         'goods.category/add',
-            //         'goods.category/edit',
-            //     ],
-            // ]
+            ]                    
         ],
     ],
     'equip'=>[
@@ -64,30 +55,15 @@ return [
         'submenu'=>[
             [
                 'name' => '设备列表',
-                'index' => 'equip/index',
-                'uris' => [
-                    'equip/index',
-                    'equip/add',
-                    'equip/edit'
-                ],
+                'index' => 'equip/index',               
             ],
             [
                 'name' => '设备使用记录',
-                'index' => 'equip/usingLog',
-                // 'uris' => [
-                //     'goods.category/index',
-                //     'goods.category/add',
-                //     'goods.category/edit',
-                // ],
+                'index' => 'equip/usingLog',                
             ],
             [
                 'name' => '维修记录',
-                'index' => 'equip/checkLog',
-                // 'uris' => [
-                //     'goods.category/index',
-                //     'goods.category/add',
-                //     'goods.category/edit',
-                // ],
+                'index' => 'equip/checkLog',              
             ]
         ]
     ],

@@ -41,8 +41,8 @@
                                             <th>设备订单状态</th>  
                                         </tr>                                                                       
                                         <tr v-if="equip_info.order">
-                                            <td v-html="equip_info.order.order_id"></td>
-                                            <td v-html="equip_info.order.order_no"></td>
+                                            <td v-html="equip_info.order[0].order_id"></td>
+                                            <td v-html="equip_info.order[0].order_no"></td>
                                             <td v-html="equip_info.equip_id"></td>
                                             <td v-html="equip_info.goods_name"></td>                                            
                                             <td v-html="equip_info.spec_value.spec_value"></td>                                            
@@ -179,10 +179,10 @@
                 this.$http.post('<?= url("equip/checkAjax") ?>',{
                     type:'equip',
                     equip_id:this.equip_id
-                }).then(function(res){
+                }).then(function(res){                    
                     if(res.data){
                         this.equip_info = res.data;
-                        this.post.order_id = res.data.order.order_id;
+                        this.post.order_id = res.data.order[0].order_id;
                         this.post.equip_id = res.data.equip_id;
                     }else{
                         this.equip_info = null;

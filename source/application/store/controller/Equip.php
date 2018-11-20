@@ -183,6 +183,15 @@ class Equip extends Controller
         return $this->renderError('添加失败');
     }
 
+    public function checkDetail()
+    {
+        $log = new EquipCheckLog;
+        $res = $log->EquipDetail();
+        $map = $res['map'];
+        $data = $res['data'];   
+        return $this->fetch('check_detail', compact('map', 'data'));
+    }
+
 
     // 维修记录接口
     public function checkAjax()
@@ -222,8 +231,6 @@ class Equip extends Controller
         $res = $log->EquipDetail();
         $map = $res['map'];
         $data = $res['data'];
-        // halt($data->toArray());
-        // halt($data->toArray()[0]['equip']);
         return $this->fetch('using_detail', compact('map', 'data'));
     }
 

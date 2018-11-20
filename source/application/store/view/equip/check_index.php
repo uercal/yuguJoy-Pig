@@ -66,6 +66,10 @@
                                     href="javascript:;">
                                         <span class="am-icon-search"></span> 搜索
                                     </a>
+                                    <a class="am-btn am-btn-default am-btn-warning am-radius" id="detail"
+                                    href="javascript:;">
+                                        <span class="am-icon-search"></span> 查看该设备详情
+                                    </a>
                                 </div>
                             </div>                            
                         </div>
@@ -140,6 +144,13 @@
             var html = url + '&' + param;
             window.location.href = html;            
         });    
+        $('#detail').on('click', function(e) {         
+            var url = "<?php echo url('equip/checkDetail') ?>";
+            var param = $('#form').serialize();
+            var equip_id = $('#equip_id').val();
+            var html = url + '&' + param;
+            equip_id===''?layer.msg('请填写设备ID'):window.location.href = html;            
+        });
     });
 </script>
 <script>

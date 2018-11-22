@@ -59,7 +59,7 @@ class Goods extends GoodsModel
 
     public function getAllGoods()
     {
-        return $this->with(['category', 'image.file', 'spec', 'spec_rel.spec', 'delivery.rule'])
+        return $this->with(['category', 'image.file', 'spec', 'service', 'spec_rel.spec', 'delivery.rule'])
             ->select();
     }
 
@@ -68,8 +68,8 @@ class Goods extends GoodsModel
     {
         // 筛选条件
         $filter = [];
-        $filter['goods_status'] = ['=',10];
-        $filter['goods_id'] = ['in',$ids];
+        $filter['goods_status'] = ['=', 10];
+        $filter['goods_id'] = ['in', $ids];
         !empty($search) && $filter['goods_name'] = ['like', '%' . trim($search) . '%'];
 
         // 排序规则

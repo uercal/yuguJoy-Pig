@@ -21,8 +21,19 @@ class Category extends CategoryModel
         'update_time'
     ];
 
-    public static function getList() {
-
+    public function getIndexList()
+    {
+        $list = $this->with(['image', 'goods' => function ($query) {
+            $query->with(['image.file', 'spec'])->order('goods_sort', 'asc');
+        }])->select()->toArray();
+        foreach ($list as $k => $cate) {
+            foreach ($cate['goods'] as $key => $value) {
+                if ($key > 3) {
+                    unset($list[$k]['goods'][$key]);
+                }
+            }
+        }
+        return $list;
     }
 
 }

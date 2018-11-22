@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\api\model\WxappPage;
 use app\api\model\Goods as GoodsModel;
+use app\api\model\Category;
 
 /**
  * 首页控制器
@@ -23,9 +24,10 @@ class Index extends Controller
         $wxappPage = WxappPage::detail();
         $items = $wxappPage['page_data']['array']['items'];
         // 新品推荐
-        $model = new GoodsModel;        
+        $model = new Category;
+        $list = $model->getIndexList();
         // 猜您喜欢        
-        return $this->renderSuccess(compact('items'));
+        return $this->renderSuccess(compact('items', 'list'));
     }
 
 }

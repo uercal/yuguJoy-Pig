@@ -45,25 +45,25 @@ return [
                     'goods/service_add',
                     'goods/service_edit'
                 ],
-            ]                    
+            ]
         ],
     ],
-    'equip'=>[
-        'name'=>'设备管理',
-        'icon'=>'icon-goods',
-        'index'=>'equip/index',
-        'submenu'=>[
+    'equip' => [
+        'name' => '设备管理',
+        'icon' => 'icon-goods',
+        'index' => 'equip/index',
+        'submenu' => [
             [
                 'name' => '设备列表',
-                'index' => 'equip/index',               
+                'index' => 'equip/index',
             ],
             [
                 'name' => '设备使用记录',
-                'index' => 'equip/usingLog',                
+                'index' => 'equip/usingLog',
             ],
             [
                 'name' => '维修记录',
-                'index' => 'equip/checkLog',              
+                'index' => 'equip/checkLog',
             ]
         ]
     ],
@@ -75,7 +75,7 @@ return [
             [
                 'name' => '审核列表',
                 'index' => 'exam/list',
-            ],            
+            ],
         ]
     ],
     'order' => [
@@ -107,6 +107,29 @@ return [
             [
                 'name' => '全部订单',
                 'index' => 'order/all_list',
+            ],
+        ]
+    ],
+    'finance' => [
+        'name' => '财政管理',
+        'icon' => 'icon-order',
+        'index' => 'finance/account',
+        'submenu' => [
+            [
+                'name' => '用户余额',
+                'index' => 'finance/account'
+            ],
+            [
+                'name' => '扣款记录',
+                'index' => 'finance/deduct',
+            ],
+            [
+                'name' => '充值记录',
+                'index' => 'finance/recharge',
+            ],
+            [
+                'name' => '额度发放记录',
+                'index' => 'finance/quota',
             ],
         ]
     ],

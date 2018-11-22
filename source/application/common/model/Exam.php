@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\Request;
+use think\Db;
 
 /**
  * 设备模型
@@ -48,6 +49,24 @@ class Exam extends BaseModel
             ->paginate(15, false, ['query' => $request->request()]);
 
         return ['data' => $data, 'map' => $map];
+    }
+
+
+
+
+    /**
+     * 额度发放表 是否存在用户认证发放额度记录
+     */
+    public function isExistQuotaUser($user_id)
+    {
+        $obj = Db::name('quota_log')->where([
+            'user_id' => $user_id,
+            'quota_type' => 10
+        ])->find();
+        if ($obj) {
+            return true;
+        }
+        return false;
     }
 
 }

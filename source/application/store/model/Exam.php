@@ -3,8 +3,12 @@
 namespace app\store\model;
 
 use app\common\model\Exam as ExamModel;
+use app\common\model\Quota;
+use app\common\model\AccountMoney;
+use app\common\model\User;
 
 use think\Db;
+
 
 /**
  * 审核模型
@@ -29,17 +33,38 @@ class Exam extends ExamModel
 
 
     public function updateStatus($data)
-    {        
+    {                        
+        // 
+        $obj = $this->where('id', $data['id'])->find();                
         // 开启事务
         Db::startTrans();
         try {
-            $this->where('id',$data['id'])->update([
-                'status'=>$data['status']
-            ]);           
+            $this->where('id', $data['id'])->update([
+                'status' => $data['status']
+            ]);
+            // $type==10 用户认证 首次认证 获得额度
+            if ($obj['type'] == 10 && !$this->isExistQuotaUser($obj['user_id'])) {
+                $model = new Quota;
+                $res = Db::name('quota_option')->where('quota_type', 10)->find();
+                $value = $res['value'];
+                $model->allowField(true)->save([
+                    'quota_type' => 10,
+                    'quota_money' => $value,
+                    'user_id' => $obj['user_id']
+                ]);
+                $account = new AccountMoney;
+                if (!$account::get($obj['user_id'])) {
+                    $account->save([
+                        'user_id' => $obj['user_id']
+                    ]);
+                }
+                $account_obj = $account::get($obj['user_id']);
+                $account_obj->setInc('quota_money', $value);
+            }
             Db::commit();
             return true;
         } catch (\Exception $e) {
-            Db::rollback();
+            Db::rollback();            
         }
         return false;
     }

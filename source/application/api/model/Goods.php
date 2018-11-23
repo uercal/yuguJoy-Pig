@@ -59,7 +59,7 @@ class Goods extends GoodsModel
 
     public function getAllGoods()
     {
-        return $this->with(['category', 'image.file', 'spec', ['service'=>'service'], 'spec_rel.spec', 'delivery.rule'])
+        return $this->with(['category', 'image.file', 'spec', 'service.service', 'spec_rel.spec', 'delivery.rule'])
             ->select();
     }
 

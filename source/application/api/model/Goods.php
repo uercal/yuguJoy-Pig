@@ -22,7 +22,7 @@ class Goods extends GoodsModel
         'sales_actual',
         'is_delete',
         'wxapp_id',
-        'create_time',
+        // 'create_time',
         'update_time'
     ];
 

@@ -165,7 +165,7 @@ class Order extends OrderModel
      * @throws \Exception
      */
     public function add($user_id, $order)
-    {        
+    {
         Db::startTrans();
         // 记录订单信息
         $this->save([
@@ -210,7 +210,7 @@ class Order extends OrderModel
                 // 
                 'total_num' => $goods['total_num'],
                 'total_price' => $goods['total_price'],
-            ];            
+            ];
         }        
         // 保存订单商品信息
         $this->goods()->saveAll($goodsList);
@@ -247,52 +247,57 @@ class Order extends OrderModel
         switch ($type) {
             case 'all':
                 break;
-            case 'payment';
-            $filter['pay_status'] = 10;
-            break;
-        case 'delivery';
-        $filter['pay_status'] = 20;
-        $filter['delivery_status'] = 10;
-        break;
-    case 'received';
-    $filter['pay_status'] = 20;
-    $filter['delivery_status'] = 20;
-    $filter['receipt_status'] = 10;
-    break;
-}
-return $this->with(['goods.image'])
-    ->where('user_id', '=', $user_id)
-    ->where('order_status', '<>', 20)
-    ->where($filter)
-    ->order(['create_time' => 'desc'])
-    ->select();
-}
-
-/**
- * 取消订单
- * @return bool|false|int
- * @throws \Exception
- */
-public function cancel()
-{
-    if ($this['pay_status']['value'] === 20) {
-        $this->error = '已付款订单不可取消';
-        return false;
+            case 'payment':
+                $filter['pay_status'] = 10;
+                break;
+            case 'delivery':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 10;
+                break;
+            case 'received':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 20;
+                $filter['receipt_status'] = 10;
+                break;
+            case 'doing':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 20;
+                $filter['receipt_status'] = 20;
+                break;
+        }
+        return $this->with(['goods.image'])
+            ->where('user_id', '=', $user_id)
+            ->where('order_status', '<>', 20)
+            ->where($filter)
+            ->order(['create_time' => 'desc'])
+            ->select();
     }
-        // 回退商品库存
-    $this->backGoodsStock($this['goods']);
-    return $this->save(['order_status' => 20]);
-}
 
-/**
- * 回退商品库存
- * @param $goodsList
- * @return array|false
- * @throws \Exception
- */
-private function backGoodsStock(&$goodsList)
-{
-    $goodsSpecSave = [];
+    /**
+     * 取消订单
+     * @return bool|false|int
+     * @throws \Exception
+     */
+    public function cancel()
+    {
+        if ($this['pay_status']['value'] === 20) {
+            $this->error = '已付款订单不可取消';
+            return false;
+        }
+        // 回退商品库存
+        $this->backGoodsStock($this['goods']);
+        return $this->save(['order_status' => 20]);
+    }
+
+    /**
+     * 回退商品库存
+     * @param $goodsList
+     * @return array|false
+     * @throws \Exception
+     */
+    private function backGoodsStock(&$goodsList)
+    {
+        $goodsSpecSave = [];
     // foreach ($goodsList as $goods) {
     //         // 下单减库存
     //     if ($goods['deduct_stock_type'] === 10) {
@@ -303,114 +308,123 @@ private function backGoodsStock(&$goodsList)
     //     }
     // }
         // 更新商品规格库存
-    return !empty($goodsSpecSave) && (new GoodsSpec)->isUpdate()->saveAll($goodsSpecSave);
-}
-
-/**
- * 确认收货
- * @return bool|false|int
- */
-public function receipt()
-{
-    if ($this['delivery_status']['value'] === 10 || $this['receipt_status']['value'] === 20) {
-        $this->error = '该订单不合法';
-        return false;
-    }
-    return $this->save([
-        'receipt_status' => 20,
-        'receipt_time' => time(),
-        'order_status' => 30
-    ]);
-}
-
-/**
- * 获取订单总数
- * @param $user_id
- * @param string $type
- * @return int|string
- */
-public function getCount($user_id, $type = 'all')
-{
-        // 筛选条件
-    $filter = [];
-        // 订单数据类型
-    switch ($type) {
-        case 'all':
-            break;
-        case 'payment';
-        $filter['pay_status'] = 10;
-        break;
-    case 'received';
-    $filter['pay_status'] = 20;
-    $filter['delivery_status'] = 20;
-    $filter['receipt_status'] = 10;
-    break;
-}
-return $this->where('user_id', '=', $user_id)
-    ->where('order_status', '<>', 20)
-    ->where($filter)
-    ->count();
-}
-
-/**
- * 订单详情
- * @param $order_id
- * @param null $user_id
- * @return null|static
- * @throws BaseException
- * @throws \think\exception\DbException
- */
-public static function getUserOrderDetail($order_id, $user_id)
-{
-    if (!$order = self::get([
-        'order_id' => $order_id,
-        'user_id' => $user_id,
-        'order_status' => ['<>', 20]
-    ], ['goods' => ['image', 'spec', 'goods', 'rentMode'], 'address'])) {
-        throw new BaseException(['msg' => '订单不存在']);
+        return !empty($goodsSpecSave) && (new GoodsSpec)->isUpdate()->saveAll($goodsSpecSave);
     }
 
-    return $order;
-}
-
-/**
- * 判断商品库存不足 (未付款订单)
- * @param $goodsList
- * @return bool
- */
-public function checkGoodsStatusFromOrder(&$goodsList)
-{
-    foreach ($goodsList as $goods) {
-            // 判断商品是否下架
-        if ($goods['goods']['goods_status']['value'] !== 10) {
-            $this->setError('很抱歉，商品 [' . $goods['goods_name'] . '] 已下架');
+    /**
+     * 确认收货
+     * @return bool|false|int
+     */
+    public function receipt()
+    {
+        if ($this['delivery_status']['value'] === 10 || $this['receipt_status']['value'] === 20) {
+            $this->error = '该订单不合法';
             return false;
         }
+        return $this->save([
+            'receipt_status' => 20,
+            'receipt_time' => time(),
+            'order_status' => 30
+        ]);
+    }
+
+    /**
+     * 获取订单总数
+     * @param $user_id
+     * @param string $type
+     * @return int|string
+     */
+    public function getCount($user_id, $type = 'all')
+    {
+        // 筛选条件
+        $filter = [];
+        // 订单数据类型
+        switch ($type) {
+            case 'all':
+                break;
+            case 'payment':
+                $filter['pay_status'] = 10;
+                break;
+            case 'delivery':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 10;
+                break;
+            case 'received':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 20;
+                $filter['receipt_status'] = 10;
+            case 'doing':
+                $filter['pay_status'] = 20;
+                $filter['delivery_status'] = 20;
+                $filter['receipt_status'] = 20;
+                $filter['order_status'] = 30;
+                break;
+        }
+        return $this->where('user_id', '=', $user_id)
+            ->where('order_status', '<>', 20)
+            ->where($filter)
+            ->count();
+    }
+
+    /**
+     * 订单详情
+     * @param $order_id
+     * @param null $user_id
+     * @return null|static
+     * @throws BaseException
+     * @throws \think\exception\DbException
+     */
+    public static function getUserOrderDetail($order_id, $user_id)
+    {
+        if (!$order = self::get([
+            'order_id' => $order_id,
+            'user_id' => $user_id,
+            'order_status' => ['<>', 20]
+        ], ['goods' => ['image', 'spec', 'goods', 'rentMode'], 'address'])) {
+            throw new BaseException(['msg' => '订单不存在']);
+        }
+
+        return $order;
+    }
+
+    /**
+     * 判断商品库存不足 (未付款订单)
+     * @param $goodsList
+     * @return bool
+     */
+    public function checkGoodsStatusFromOrder(&$goodsList)
+    {
+        foreach ($goodsList as $goods) {
+            // 判断商品是否下架
+            if ($goods['goods']['goods_status']['value'] !== 10) {
+                $this->setError('很抱歉，商品 [' . $goods['goods_name'] . '] 已下架');
+                return false;
+            }
             // 付款减库存
         // if ($goods['deduct_stock_type'] === 20 && $goods['spec']['stock_num'] < 1) {
         //     $this->setError('很抱歉，商品 [' . $goods['goods_name'] . '] 库存不足');
         //     return false;
         // }
+        }
+        return true;
     }
-    return true;
-}
 
-/**
- * 设置错误信息
- * @param $error
- */
-private function setError($error)
-{
-    empty($this->error) && $this->error = $error;
-}
+    /**
+     * 设置错误信息
+     * @param $error
+     */
+    private function setError($error)
+    {
+        empty($this->error) && $this->error = $error;
+    }
 
-/**
- * 是否存在错误
- * @return bool
- */
-public function hasError()
-{
-    return !empty($this->error);
-}
+    /**
+     * 是否存在错误
+     * @return bool
+     */
+    public function hasError()
+    {
+        return !empty($this->error);
+    }
 
 }

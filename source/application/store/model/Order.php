@@ -415,11 +415,12 @@ class Order extends OrderModel
             $this->updateOrderGoods($order_goods);
             // 更新设备信息
             $equip = new Equip;
-            isset($input['equip']) ?
-                $equip->saveAll($data) : '';
-            // 
-            $log = new EquipUsingLog;
-            $log->saveAll($log_data);
+            if (isset($input['equip'])) {
+                $equip->saveAll($data);
+                // 
+                $log = new EquipUsingLog;
+                $log->saveAll($log_data);
+            }
             Db::commit();
             return true;
         } catch (\Exception $e) {

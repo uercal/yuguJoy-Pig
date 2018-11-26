@@ -28,7 +28,9 @@ class Index extends Controller
         $model = new OrderModel;
         $orderCount = [
             'payment' => $model->getCount($userInfo['user_id'], 'payment'),
+            'delivery' => $model->getCount($userInfo['user_id'], 'delivery'),
             'received' => $model->getCount($userInfo['user_id'], 'received'),
+            'doing' => $model->getCount($userInfo['user_id'], 'doing')
         ];
 
         // 个人资料是否认证  以前status

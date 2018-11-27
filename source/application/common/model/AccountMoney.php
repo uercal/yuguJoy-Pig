@@ -18,6 +18,24 @@ class AccountMoney extends BaseModel
 
 
 
+    public function getAccountMoneyAttr($value, $data)
+    {
+        return bcdiv($data['account_money'], 100, 2);
+    }
+
+
+    public function getFreezingMoneyAttr($value, $data)
+    {
+        return bcdiv($data['freezing_money'], 100, 2);
+    }
+
+
+    public function getQuotaMoneyAttr($value, $data)
+    {
+        return bcdiv($data['quota_money'], 100, 2);
+    }
+
+
     /**
      * openID 自动写入
      */
@@ -35,5 +53,5 @@ class AccountMoney extends BaseModel
         return $this->hasOne('User', 'user_id', 'user_id');
     }
 
-    
+
 }

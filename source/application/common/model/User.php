@@ -16,6 +16,17 @@ class User extends BaseModel
     // 性别
     private $gender = ['未知', '男', '女'];
 
+
+    /**
+     * 关联余额表
+     */
+    public function accountMoney()
+    {
+        return $this->hasOne('AccountMoney', 'user_id', 'user_id');
+    }
+
+
+
     /**
      * 关联收货地址表
      * @return \think\model\relation\HasMany
@@ -53,17 +64,17 @@ class User extends BaseModel
     {
         $request = Request::instance();
         $map = $request->request();
-                  
-        $_map = [];
-        if(!empty($map['company'])) $_map['company'] = ['=',$map['company']];
-        if(!empty($map['phone'])) $_map['phone'] = ['=',$map['phone']];
-        if(!empty($map['startDate'])&&!empty($map['endDate'])) $_map['create_time'] = ['between',[strtotime($map['startDate']),strtotime($map['endDate'])]];
 
-        $data = $this->where($_map)                                                       
+        $_map = [];
+        if (!empty($map['company'])) $_map['company'] = ['=', $map['company']];
+        if (!empty($map['phone'])) $_map['phone'] = ['=', $map['phone']];
+        if (!empty($map['startDate']) && !empty($map['endDate'])) $_map['create_time'] = ['between', [strtotime($map['startDate']), strtotime($map['endDate'])]];
+
+        $data = $this->where($_map)
             ->order(['create_time' => 'desc'])
             ->paginate(15, false, ['query' => $request->request()]);
-                    
-        return ['data'=>$data,'map'=>$map];
+
+        return ['data' => $data, 'map' => $map];
     }
 
     /**
@@ -74,7 +85,7 @@ class User extends BaseModel
      */
     public static function detail($where)
     {
-        return self::get($where, ['address', 'addressDefault']);
+        return self::get($where, ['address', 'addressDefault', 'account_money']);
     }
 
 }

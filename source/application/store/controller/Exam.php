@@ -23,8 +23,10 @@ class Exam extends Controller
 
     // 审核
     public function detail($id){
-        $info = ExamModel::get($id);
+        $info = ExamModel::with('quota')->find($id);        
         $map = ExamModel::attrTextMap();
+        $type = $info['type'];
+        $status = $info['status'];
         $id = $info['id'];
         $content = $info['content'];
         $data_arr = json_decode($content,true);
@@ -40,7 +42,7 @@ class Exam extends Controller
             }
         }                       
         // 
-        return $this->fetch('detail',compact('data','map','id'));
+        return $this->fetch('detail',compact('data','map','id','type','status','info'));
 
 
     }

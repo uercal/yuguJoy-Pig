@@ -3,7 +3,7 @@
 namespace app\store\model;
 
 use app\common\model\Exam as ExamModel;
-use app\common\model\Quota;
+use app\store\model\Quota;
 use app\common\model\AccountMoney;
 use app\common\model\User;
 
@@ -30,27 +30,23 @@ class Exam extends ExamModel
     }
 
 
-
-
     public function updateStatus($data)
     {                        
         // 
-        $obj = $this->where('id', $data['id'])->find();                
+        $obj = $this->where('id', $data['id'])->find();
+        
         // 开启事务
         Db::startTrans();
-        try {
-            $this->where('id', $data['id'])->update([
-                'status' => $data['status']
-            ]);
-            // $type==10 用户认证 首次认证 获得额度
-            if ($obj['type'] == 10 && !$this->isExistQuotaUser($obj['user_id'])) {
+        try {            
+            // $type==10 用户认证 获得额度
+            if ($obj['type'] == 10) {
                 $model = new Quota;
-                $res = Db::name('quota_option')->where('quota_type', 10)->find();
-                $value = $res['value'];
-                $model->allowField(true)->save([
+                $value = bcmul($data['quota_money'], 100, 2);
+                $quota_log = $model->allowField(true)->save([
                     'quota_type' => 10,
                     'quota_money' => $value,
-                    'user_id' => $obj['user_id']
+                    'user_id' => $obj['user_id'],
+                    'exam_id' => $data['id']
                 ]);
                 $account = new AccountMoney;
                 if (!$account::get($obj['user_id'])) {
@@ -60,11 +56,15 @@ class Exam extends ExamModel
                 }
                 $account_obj = $account::get($obj['user_id']);
                 $account_obj->setInc('quota_money', $value);
+                // 
+                $this->where('id', $data['id'])->update([
+                    'status' => $data['status']
+                ]);
             }
             Db::commit();
             return true;
         } catch (\Exception $e) {
-            Db::rollback();            
+            Db::rollback();
         }
         return false;
     }

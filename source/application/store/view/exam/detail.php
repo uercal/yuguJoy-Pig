@@ -25,7 +25,7 @@
                                                     value="<?= $v ?>" disabled="disabled">
                                             </div>
                                         </div>
-                                    <?php endforeach; ?>
+                                    <?php endforeach; ?>                                    
                                 <?php elseif ($key == "image") : ?>
                                     <?php foreach ($item as $k => $v) : ?>
                                         <div class="am-form-group">
@@ -39,8 +39,18 @@
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
+                            
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">发放额度</label>
+                                <div class="am-u-sm-9 am-u-end">
+                                    <input type="number" class="tpl-form-input" style="background-color:#fff;"
+                                        value="<?= $status==10?'':$info['quota']['quota_money'] ?>" <?= $status==10?'':'disabled="disabled"' ?>  id="quota_money">
+                                </div>
+                            </div>
+                           
                         </form>          
-
+                        
+                            <?php if ($status == 10) : ?>
                             <div class="widget-head am-cf">
                                 <div class="widget-title am-fl">审核</div>
                             </div>
@@ -53,6 +63,7 @@
                                 </div>        
                                 <input type="hidden" id="id" value="<?= $id ?>">
                             </div>
+                            <?php endif; ?>
                         </fieldset>
                     </div>
                 
@@ -80,16 +91,22 @@
                     value = 30;
                     break;
             }
+            var quota_money = $('#quota_money').val();
+            if(quota_money==''){
+                layer.msg('额度不能为空');
+                return false;
+            }
 
 
             $.post("<?= url('exam/examine') ?>",{
                 id:$('#id').val(),
-                status:value
+                status:value,
+                quota_money:quota_money
             },function(res){
                 console.log(res);
                 layer.msg(res.msg, {time: 1500, anim: 1}, function () {
                     var url = "<?= url('exam/list') ?>";
-                    window.location.href = url;
+                    // window.location.href = url;
                 });
             })
 

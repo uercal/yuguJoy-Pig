@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\api\model\User as UserModel;
+use app\api\model\Member as MemberModel;
 use app\common\exception\BaseException;
 use think\Controller as ThinkController;
 
@@ -59,6 +60,34 @@ class Controller extends ThinkController
         //         
         return $user;
     }
+
+
+    /**
+     * 获取当前员工信息
+     * @return mixed
+     * @throws BaseException
+     * @throws \think\exception\DbException
+     */
+    protected function getMember()
+    {
+        if (!$member_token = $this->request->param('member_token')) {
+            throw new BaseException(['code' => -1, 'msg' => '缺少必要的参数：member_id']);
+        }
+        if (!$member = MemberModel::getMember($member_token)) {
+            throw new BaseException(['code' => -1, 'msg' => '没有找到员工信息']);
+        }
+        //         
+        return $member;
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * 返回封装后的 API 数据到客户端

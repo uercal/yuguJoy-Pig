@@ -27,7 +27,7 @@ class Member extends BaseModel
 
 
     public static function detail($id){
-        return self::get($id);
+        return self::with('role')->find($id);
     }
 
 

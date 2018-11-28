@@ -46,18 +46,20 @@ class Goods extends Controller
                 
         // 规格信息
         $specData = $detail['spec_type'] === 20 ? $detail->getManySpecData($detail['spec_rel'], $detail['spec']) : null;
-        
-        
 
-        // halt($specData);
-        $user = $this->getUser();
-        // 购物车商品总数量
-        $cart_total_num = (new CartModel($user['user_id']))->getTotalNum();
+        try {
+            $user = $this->getUser();
+            // 购物车商品总数量
+            $cart_total_num = (new CartModel($user['user_id']))->getTotalNum();
+        } catch (\Throwable $th) {
+            $cart_total_num = 0;
+        }
+
         return $this->renderSuccess(compact('detail', 'cart_total_num', 'specData'));
     }
 
 
 
-    
+
 
 }

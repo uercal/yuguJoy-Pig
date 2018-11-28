@@ -23,20 +23,20 @@ class Exam extends ExamModel
                 'license_id' => $data['license_id'],
                 'idcard_ids' => $data['idcard_ids']
             ]
-        );        
+        );
         Db::startTrans();
         // 记录订单信息
-        $obj = $this->where(['user_id'=>$user['user_id'],'type'=>$data['type']])->find();
-        if($obj){
-            $res = $this->save([                
+        $obj = $this->where(['user_id' => $user['user_id'], 'type' => $data['type']])->find();
+        if ($obj) {
+            $res = $this->save([
                 'content' => $content,
-                'type' => $data['type'],  
+                'type' => $data['type'],
                 'status' => 10,
                 'wxapp_id' => $data['wxapp_id'],
-            ],[
+            ], [
                 'user_id' => $user['user_id']
             ]);
-        }else{
+        } else {
             $res = $this->save([
                 'user_id' => $user['user_id'],
                 'content' => $content,
@@ -44,7 +44,7 @@ class Exam extends ExamModel
                 'status' => 10,
                 'wxapp_id' => $data['wxapp_id'],
             ]);
-        }        
+        }
         Db::commit();
         return $res;
     }
@@ -54,10 +54,10 @@ class Exam extends ExamModel
     // 获取审核情况
     public function getStatus($user_id, $type = 10)
     {
-        $obj = $this->where(['user_id' => $user_id, 'type' => $type])->find();
+        $obj = $this->where(['user_id' => $user_id, 'type' => $type, 'status' => 20])->find();
         if ($obj) {
             return ['code' => 1, 'status' => $obj['status'], 'status_text' => $obj['status_text']];
-        }else{
+        } else {
             return ['code' => 0];
         }
 

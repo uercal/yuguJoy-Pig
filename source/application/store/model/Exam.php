@@ -35,6 +35,12 @@ class Exam extends ExamModel
         // 
         $obj = $this->where('id', $data['id'])->find();
         
+        $content = $data['content'];
+        // 筛选空值 content
+        foreach ($content as $key => $value) {
+            if(empty($value)) unset($content[$key]);
+        }        
+        // halt($data);
         // 开启事务
         Db::startTrans();
         try {            
@@ -60,11 +66,15 @@ class Exam extends ExamModel
                 $this->where('id', $data['id'])->update([
                     'status' => $data['status']
                 ]);
+
+                // 用户认证 更新用户资料
+                User::where('user_id',$obj['user_id'])->update($content);                
             }
             Db::commit();
             return true;
-        } catch (\Exception $e) {
+        } catch (\Exception $e) {            
             Db::rollback();
+            halt($e);            
         }
         return false;
     }

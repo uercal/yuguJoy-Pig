@@ -21,21 +21,30 @@
                                         <div class="am-form-group">
                                             <label class="am-u-sm-3 am-u-lg-2 am-form-label"> <?= $map[$k] ?> :</label>
                                             <div class="am-u-sm-9 am-u-end">
-                                                <input type="text" class="tpl-form-input"
+                                                <input type="text" class="tpl-form-input" name="<?= $k ?>"
                                                     value="<?= $v ?>" disabled="disabled">
                                             </div>
                                         </div>
                                     <?php endforeach; ?>                                    
                                 <?php elseif ($key == "image") : ?>
                                     <?php foreach ($item as $k => $v) : ?>
+
                                         <div class="am-form-group">
                                             <label class="am-u-sm-3 am-u-lg-2 am-form-label"> <?= $map[$k] ?> :</label>
-                                            <div class="am-u-sm-9 am-u-end">                                                
+                                            <div class="am-u-sm-9 am-u-end">                                                   
+                                            <?php if (is_array($v)) : foreach ($v as $c) : ?>
+                                                <a href="<?= $c ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                                    <img name="<?= $k ?>" src="<?= $c ?>" width="72" height="72" alt="">
+                                                </a>                                                                                                
+                                            <?php endforeach;
+                                            else : ?>                                                                                    
                                                 <a href="<?= $v ?>" title="点击查看大图" target="_blank">
-                                                    <img src="<?= $v ?>" width="72" height="72" alt="">
-                                                </a>
+                                                    <img name="<?= $k ?>" src="<?= $v ?>" width="72" height="72" alt="">
+                                                </a> 
+                                            <?php endif; ?>
                                             </div>
                                         </div>
+
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -44,7 +53,7 @@
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label">发放额度</label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <input type="number" class="tpl-form-input" style="background-color:#fff;"
-                                        value="<?= $status==10?'':$info['quota']['quota_money'] ?>" <?= $status==10?'':'disabled="disabled"' ?>  id="quota_money">
+                                        value="<?= $status == 10 ? '' : $info['quota']['quota_money'] ?>" <?= $status == 10 ? '' : 'disabled="disabled"' ?>  id="quota_money">
                                 </div>
                             </div>
                            
@@ -62,7 +71,8 @@
                                     </button>
                                 </div>        
                                 <input type="hidden" id="id" value="<?= $id ?>">
-                            </div>
+                                <input type="hidden" id="content" value='<?= $content ?>'>
+                            </div>                            
                             <?php endif; ?>
                         </fieldset>
                     </div>
@@ -79,34 +89,53 @@
          * @type {*}
          */
         $('.j-submit').on('click',function(){
-            
+            var post_data = [];
+            $('input').map(function(){                
+                var name = $(this).attr('name');                
+                var value = $(this).val();
+                if(!name||value==""){
+                   return false;
+                }
+                var data = {
+                    'name':name,
+                    'value':value
+                };
+                post_data.push(data);
+            })
+            $('img').map(function(){
+                console.log($(this));
+            })
+            console.log(post_data);
             var type = $(this).attr('data-type');
-            var value = 10;
+            var status = 10;
             switch (type) {
                 case 'pass':
-                    value = 20;
+                    status = 20;
                     break;
             
                 case 'failed':
-                    value = 30;
+                    status = 30;
                     break;
-            }
+            }            
+
             var quota_money = $('#quota_money').val();
-            if(quota_money==''){
+            if(status==20&&quota_money==''){
                 layer.msg('额度不能为空');
                 return false;
             }
-
+            
+            var content = JSON.parse($('#content').val());
 
             $.post("<?= url('exam/examine') ?>",{
                 id:$('#id').val(),
-                status:value,
-                quota_money:quota_money
+                status:status,
+                quota_money:quota_money,
+                content:content
             },function(res){
                 console.log(res);
                 layer.msg(res.msg, {time: 1500, anim: 1}, function () {
                     var url = "<?= url('exam/list') ?>";
-                    // window.location.href = url;
+                    window.location.href = url;
                 });
             })
 

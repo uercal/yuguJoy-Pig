@@ -27,6 +27,7 @@
                                 <th>员工姓名</th>
                                 <th>角色</th>
                                 <th>手机号码</th>                                
+                                <th>职称</th>                                
                                 <th>注册时间</th>
                                 <th>操作</th>
                             </tr>
@@ -38,6 +39,7 @@
                                     <td class="am-text-middle"><?= $item['name'] ?></td>
                                     <td class="am-text-middle"><?= $item['role'][0]['role_name'] ?></td>
                                     <td class="am-text-middle"><?= $item['phone'] ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['function'] ?></td>                                    
                                     <td class="am-text-middle"><?= $item['create_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">

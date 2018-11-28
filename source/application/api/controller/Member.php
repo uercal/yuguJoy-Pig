@@ -16,7 +16,8 @@ class Member extends Controller
         $res = $model->login($this->request->post());
         if($res){            
             $member_id = $res['id'];
-            return $this->renderSuccess(compact('member_id'));
+            $member_token = $model->getToken();
+            return $this->renderSuccess(compact('member_id','member_token'));
         }
         return $this->renderError('手机号或密码错误',[]);
     }

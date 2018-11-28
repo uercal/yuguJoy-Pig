@@ -27,7 +27,7 @@ class UploadApiFile extends BaseModel
     {
         return self::$base_url . 'uploads/' . $data['file_name'];
     }
-    
+
     /**
      * 查询文件id
      * @param $fileId
@@ -37,6 +37,16 @@ class UploadApiFile extends BaseModel
     {
         $data = self::where(['file_id' => $fileId])->find();
         return self::$base_url . 'uploads/' . $data['file_name'];
+    }
+
+
+    public static function getFilesPath($filesIds)
+    {
+        $data = self::whereIn('file_id', $filesIds)->select()->toArray();        
+        foreach ($data as $key => $value) {
+            $data[$key] = self::$base_url . 'uploads/' . $value['file_name'];
+        }        
+        return $data;
     }
 
 

@@ -72,6 +72,18 @@ class Order extends BaseModel
 
 
     /**
+     * 关联订单员工表
+     */
+    public function order_member()
+    {
+        return $this->hasMany('OrderMember', 'order_id', 'order_id');
+    }
+
+
+
+
+
+    /**
      * 付款状态
      * @param $value
      * @return array

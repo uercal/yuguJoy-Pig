@@ -1,3 +1,15 @@
+<style>
+.tpl-table-black-operation a.tpl-table-black-operation-war {
+  border: 1px solid orange;
+  color: orange;
+}
+
+.tpl-table-black-operation a.tpl-table-black-operation-war:hover {
+  background: orange;
+  color: #fff;
+}
+</style>
+
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -28,6 +40,7 @@
                                 <th>角色</th>
                                 <th>手机号码</th>                                
                                 <th>职称</th>                                
+                                <th>状态<th>                                
                                 <th>注册时间</th>
                                 <th>操作</th>
                             </tr>
@@ -37,19 +50,28 @@
                                 <tr>
                                     <td class="am-text-middle"><?= $item['id'] ?></td>
                                     <td class="am-text-middle"><?= $item['name'] ?></td>
-                                    <td class="am-text-middle"><?= $item['role'][0]['role_name'] ?></td>
+                                    <td class="am-text-middle"><?= $item['role']['role_name'] ?></td>
                                     <td class="am-text-middle"><?= $item['phone'] ?></td>                                    
                                     <td class="am-text-middle"><?= $item['function'] ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['status_text'] ?></td>                                    
                                     <td class="am-text-middle"><?= $item['create_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?= url('member/edit',
-                                                ['id' => $item['id']]) ?>">
+                                            <a href="<?= url(
+                                                        'member/edit',
+                                                        ['id' => $item['id']]
+                                                    ) ?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a onclick="reset(<?= $item['id'] ?>)">
+                                            <a  onclick="reset(<?= $item['id'] ?>)" class="tpl-table-black-operation-green">
                                                 <i class="am-icon-book"></i> 修改密码
                                             </a>
+                                            <?php if ($item['status'] == 10 || $item['status'] == 40) : ?>
+                                            <a href="javascript:;"
+                                               data-id="<?= $item['id'] ?>" onclick="exchange(<?= $item['id'] ?>)">
+                                                <i class="am-icon-edit"></i> 状态切换
+                                            </a>
+                                            <?php endif; ?>
                                             <a href="javascript:;" class="item-delete tpl-table-black-operation-del"
                                                data-id="<?= $item['id'] ?>">
                                                 <i class="am-icon-trash"></i> 删除
@@ -91,8 +113,25 @@
                 layer.msg(res.msg);
                 setTimeout(() => {
                     window.location.reload();
-                }, 1500);
+                }, 1100);
             });
+        });
+    }
+
+    function exchange(id){
+        layer.confirm('是否状态切换（空闲/休息）？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.post('<?= url("member/exchangeStatus") ?>',{
+                id:id                
+            },function(res){
+                layer.msg(res.msg);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1100);
+            });
+        }, function(){
+            
         });
     }
 </script>

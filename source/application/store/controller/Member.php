@@ -25,7 +25,7 @@ class Member extends Controller
     {
         $model = new MemberModel;
         $list = $model->getList();
-        // halt($list->toArray());
+        // halt($list->toArray()['data'][0]['role']['role_name']);
         return $this->fetch('index', compact('list'));
     }
 
@@ -84,7 +84,14 @@ class Member extends Controller
     }
 
 
-
+    public function exchangeStatus($id)
+    {
+        $model = MemberModel::get($id);
+        if (!$model->exchange()) {
+            return $this->renderError('更新失败');
+        }
+        return $this->renderSuccess('更新成功');
+    }
 
 
 

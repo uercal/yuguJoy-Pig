@@ -12,6 +12,9 @@ use app\store\model\Equip;
 use app\store\model\EquipCheckLog;
 use app\store\model\EquipUsingLog;
 // 
+use app\store\model\Member;
+use app\store\model\OrderMember;
+// 
 use app\api\model\Goods as GoodsApi;
 use app\api\model\Order as OrderApi;
 use app\common\model\Wxapp;
@@ -62,6 +65,11 @@ class Order extends OrderModel
             $this->error = "请添加设备";
             return false;
         } else {
+            if (empty($input['member_ids'])) {
+                $this->error = "请添加配送员";
+                return false;
+            }
+            // halt($input);
             $equip = $input['equip'];
             $order_id = $input['order_id'];
 
@@ -95,6 +103,29 @@ class Order extends OrderModel
                 $usingLog[] = $_usingLog;
             }
             
+
+
+            // 员工配送记录
+            $order_member = [];
+            $member = [];
+            $member_ids = explode(',', $input['member_ids']);
+            foreach ($member_ids as $key => $value) {
+                $_order_member = [];
+                $_order_member['member_id'] = $value;
+                $_order_member['order_id'] = $input['order_id'];
+                $_order_member['type'] = 10; //配送
+                $_order_member['status'] = 10; //进行中
+                $_order_member['wxapp_id'] = $wxapp_id;
+                $order_member[] = $_order_member;
+
+                // 员工状态变更
+                $_member['id'] = $value;
+                $_member['status'] = 20; //配送中
+                $member[] = $_member;
+            }
+            
+
+
             // 开启事务
             Db::startTrans();
             try {
@@ -103,6 +134,11 @@ class Order extends OrderModel
                 $equip->saveAll($data);
                 // 设备使用记录                
                 $this->usingLog()->saveAll($usingLog);
+                // 员工配送记录
+                $this->order_member()->saveAll($order_member);
+                // 员工状态变更
+                $member_model = new Member;
+                $member_model->saveAll($member);
                 // 订单
                 $this->save([
                     'delivery_status' => 20,
@@ -514,15 +550,36 @@ class Order extends OrderModel
         try {
             // 保存订单信息
             $this->update($_state);
+            // log
+
+            $data = Equip::where('order_id', $state['order_id'])->select()->toArray();
+            $_data = [];
+            foreach ($data as $key => $value) {
+                $param = [];
+                $param['order_id'] = ($type == 1 || $type == 2) ? null : $state['order_id'];
+                $param['equip_id'] = $value['equip_id'];
+                $param['member_id'] = $member_id;
+                $param['equip_status'] = ($type == 1 || $type == 2) ? 10 : 30;
+                $param['wxapp_id'] = $wxapp_id;
+                $_data[] = $param;
+            }
+            $log = new EquipUsingLog;
+            $log->saveAll($_data);      
+
+            // 获取配送/维修员工
+            $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');
+        
             // 是否清空设备
-            $type == 1 || $type == 2 ?
+            if ($type == 1 || $type == 2) {
                 Equip::where('order_id', $state['order_id'])->update([
-                'status' => 10,
-                'order_id' => null,
-                'secure' => null,
-                'service_ids' => null,
-                'service_time' => null
-            ]) : '';
+                    'status' => 10,
+                    'order_id' => null,
+                    'secure' => null,
+                    'service_ids' => null,
+                    'service_time' => null
+                ]);                
+            }
+            
             // 是否送达设备
             if ($type == 3) {
                 Equip::where('order_id', $state['order_id'])->update([
@@ -544,7 +601,19 @@ class Order extends OrderModel
                 }
                 $log = new EquipUsingLog;
                 $log->saveAll($_data);
+
+                // 更新配送员工记录 和 状态
+                OrderMember::where('order_id',$state['order_id'])->update([
+                    'status'=>20
+                ]);                                
             }
+
+            // 还原配送相关员工状态                
+            Member::whereIn('id', $member_ids)->update([
+                'status' => 10
+            ]);
+
+            
             Db::commit();
             return true;
         } catch (\Exception $e) {

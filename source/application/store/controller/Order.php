@@ -11,6 +11,7 @@ use app\common\model\Region;
 use app\store\model\Category;
 use app\api\model\Order as OrderApi;
 use app\store\model\User as UserModel;
+use app\store\model\Member as MemberModel;
 
 /**
  * 订单管理
@@ -249,7 +250,7 @@ class Order extends Controller
     public function changeEquipState($equip_id, $state)
     {
         $model = new EquipModel;
-        if ($model->chgStatus($equip_id, $state)) {                        
+        if ($model->chgStatus($equip_id, $state)) {
             return $this->renderSuccess('变更成功', url('order/edit', ['order_id' => $state['order_id']]));
         }
         $error = $model->getError() ? : '变更失败';
@@ -274,9 +275,15 @@ class Order extends Controller
     /**
      * 自主新增订单AJAX
      */
-    public function getAddAjax($type, $params)
+    public function getMemberAjax()
     {
-
+        $list = MemberModel::getReadyMember();
+        return [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($list),
+            'data' => $list
+        ];
     }
 
 

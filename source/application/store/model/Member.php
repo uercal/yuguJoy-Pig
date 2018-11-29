@@ -84,6 +84,33 @@ class Member extends MemberModel
         }
     }
 
+
+    public function exchange()
+    {
+        // 开启事务处理
+        Db::startTrans();
+        try {
+            // 删除当前商品
+            $status=$this->status;
+            if($status==10){
+                $this->status = 40;
+            }
+            if($status==40){
+                $this->status = 10;
+            }            
+            $this->save();
+            // 事务提交
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            Db::rollback();
+            return false;
+        }
+    }
+
+
+
     public function getOne($map)
     {
         return $this->with('role')->where($map)->find();

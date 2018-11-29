@@ -5,7 +5,12 @@
 .am-service{
     /* margin-bottom:unset; */
 }
+
 </style>
+
+<link rel="stylesheet" href="assets/layui/css/layui.css"  media="all">
+
+
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -195,6 +200,7 @@
                                     
                                 </tbody>                                                                    
                             </table>
+                            <input type="hidden" name="member_ids" id="member_ids" value="">
                             <button type="submit" id="delivery_sub" style="display:none;"></button>
                         </form>
 
@@ -222,7 +228,7 @@
                                         <td><?= $item['goods_name'] ?></td>
                                         <td><?= $item['spec_value']['spec_value'] ?></td>
                                         <td><?= $item['secure'] == 0 ? '标准保' : '意外保' ?></td>
-                                        <td><?= $item['services']?:'无' ?></td>
+                                        <td><?= $item['services'] ? : '无' ?></td>
                                         <td><?= $item['status_text'] ?></td>
                                         <!-- <td><?= $item['equip_id'] ?></td> -->
                                     </tr>     
@@ -291,6 +297,28 @@
                             </table>
                         </div>
                     <?php endif; ?>
+                                        
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">配送人员</div>
+                    </div>                    
+                                                                                    
+                    <div class="am-form-group">
+                        <table class="layui-table" lay-data="{width: 628, height:332, url:'<?= url('order/getMemberAjax') ?>', page:true, id:'idTest'}" lay-filter="demo">
+                            <thead>
+                                <tr>
+                                <th lay-data="{type:'checkbox', width:60 }"></th>
+                                <th lay-data="{field:'id', width:80, sort: true}">ID</th>
+                                <th lay-data="{field:'name', width:160}">用户名</th>
+                                <th lay-data="{field:'phone', width:160, sort: true}">手机号</th>
+                                <th lay-data="{field:'role_name', width:80}">角色</th>
+                                <th lay-data="{field:'status_text', width:80}">状态</th>                                                                
+                                </tr>
+                            </thead>
+                        </table>                    
+                    </div>
+
+
 
                     <?php if ($detail['pay_status']['value'] === 20) : ?>                        
                         <?php if ($detail['delivery_status']['value'] === 10) : ?>
@@ -317,6 +345,29 @@
         </div>
     </div>
 </div>
+<script src="assets/layui/layui.all.js" charset="utf-8"></script>
+
+<script>
+
+layui.use('table', function(){
+    var table = layui.table;                                    
+    table.on('checkbox(demo)', function(obj){
+        var checkStatus = table.checkStatus('idTest');
+        var member_ids = [];
+        checkStatus.data.map(function(e){
+            member_ids.push(e.id);
+        });
+        console.log(member_ids);
+        $('#member_ids').attr('value','');
+        $('#member_ids').attr('value',member_ids);
+        // console.log(obj.checked); //当前是否选中状态
+        // console.log(obj.data); //选中行的相关数据
+        // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+    });                  
+});
+</script>
+
+
 <script>
     $(function () {
 
@@ -358,13 +409,13 @@
                         for (var i in data){
                             // 服务html
                             var service = '<td><div class="am-form-group am-service"><label class="am-checkbox-inline">';
-                            service += '<input type="radio" name="equip['+data[i]['equip_id']+'][secure]"  value="0" data-am-ucheck checked>标准保</label><label class="am-checkbox-inline">';
-                            service += '<input type="radio" name="equip['+data[i]['equip_id']+'][secure]" value="1" data-am-ucheck>意外保</label></div></td>';
+                            service += '<input class="equip-radio" type="radio" name="equip['+data[i]['equip_id']+'][secure]"  value="0" data-am-ucheck checked>标准保</label><label class="am-checkbox-inline">';
+                            service += '<input class="equip-radio" type="radio" name="equip['+data[i]['equip_id']+'][secure]" value="1" data-am-ucheck>意外保</label></div></td>';
                             service += '<td><div class="am-form-group am-service">'
                             var service_data = data[i]['goods']['service'];
                             for(var j in service_data){                                
                                 service += '<label class="am-checkbox-inline am-secondary">';
-                                service += '<input type="checkbox" name="equip['+data[i]['equip_id']+'][service][]" value="'+service_data[j]['service_id']+'" data-am-ucheck>'+service_data[j]['service_name']+'</label>'
+                                service += '<input class="equip-checkbox" type="checkbox" name="equip['+data[i]['equip_id']+'][service][]" value="'+service_data[j]['service_id']+'" data-am-ucheck>'+service_data[j]['service_name']+'</label>'
                             }                            
                             service += '</div></td>';
                             // 
@@ -376,15 +427,14 @@
                         }
                     }
                     $('#equip').append(html);   
-                    $('input[type="checkbox"],input[type="radio"]').uCheck();             
+                    $('.equip-radio,.equip-checkbox').uCheck();             
                 })
             }   
             
         });
+        
 
-
-
-        $('#delivery_btn').on('click',function(){
+        $('#delivery_btn').on('click',function(){                           
             $('#delivery_sub').click();
         })
 

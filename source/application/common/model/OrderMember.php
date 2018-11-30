@@ -16,6 +16,12 @@ class OrderMember extends BaseModel
     protected $updateTime = false;
     // protected $append = ['service_info'];
 
+
+    public function member()
+    {
+        return $this->hasOne('Member', 'id', 'member_id');
+    }
+
     public function getTypeTextAttr($value, $data)
     {
         $type = [10 => '配送', 20 => '维修'];

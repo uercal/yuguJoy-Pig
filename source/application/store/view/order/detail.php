@@ -234,7 +234,34 @@
                                     </tr>     
                                 <?php endforeach; ?>
                             </tbody>                                                                    
-                        </table>                        
+                        </table>        
+
+
+                        <!--  -->
+                        <div class="widget-head am-cf" style="position:relative;">
+                            <div class="widget-title am-fl">配送人员</div> 
+                        </div>                                                                                                                   
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <thead>
+                                <tr>
+                                    <th>人员id</th>
+                                    <th>姓名</th>
+                                    <th>角色</th>
+                                    <th>电话</th>                                    
+                                </tr>
+                            </thead>                                
+                            <tbody>
+                                <?php foreach ($member_list as $item) : ?>
+                                    <tr>
+                                        <td><?= $item['id'] ?></td>
+                                        <td><?= $item['name'] ?></td>
+                                        <td><?= $item['role']['role_name'] ?></td>
+                                        <td><?= $item['phone'] ?></td>                                        
+                                    </tr>                                    
+                                <?php endforeach; ?>
+                            </tbody>                                                                    
+                        </table>                  
                         <?php endif; ?>
 
                     
@@ -299,29 +326,29 @@
                     <?php endif; ?>
                                         
 
-                    <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">配送人员</div>
-                    </div>                    
-                                                                                    
-                    <div class="am-form-group">
-                        <table class="layui-table" lay-data="{width: 628, height:332, url:'<?= url('order/getMemberAjax') ?>', page:true, id:'idTest'}" lay-filter="demo">
-                            <thead>
-                                <tr>
-                                <th lay-data="{type:'checkbox', width:60 }"></th>
-                                <th lay-data="{field:'id', width:80, sort: true}">ID</th>
-                                <th lay-data="{field:'name', width:160}">用户名</th>
-                                <th lay-data="{field:'phone', width:160, sort: true}">手机号</th>
-                                <th lay-data="{field:'role_name', width:80}">角色</th>
-                                <th lay-data="{field:'status_text', width:80}">状态</th>                                                                
-                                </tr>
-                            </thead>
-                        </table>                    
-                    </div>
-
-
 
                     <?php if ($detail['pay_status']['value'] === 20) : ?>                        
                         <?php if ($detail['delivery_status']['value'] === 10) : ?>
+
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">配送人员</div>
+                            </div>                                                                                                                
+                            <div class="am-form-group">
+                                <table class="layui-table" lay-data="{width: 628, height:332, url:'<?= url('order/getMemberAjax') ?>', page:true, id:'idTest'}" lay-filter="demo">
+                                    <thead>
+                                        <tr>
+                                        <th lay-data="{type:'checkbox', width:60 }"></th>
+                                        <th lay-data="{field:'id', width:80, sort: true}">ID</th>
+                                        <th lay-data="{field:'name', width:160}">用户名</th>
+                                        <th lay-data="{field:'phone', width:160, sort: true}">手机号</th>
+                                        <th lay-data="{field:'role_name', width:80}">角色</th>
+                                        <th lay-data="{field:'status_text', width:80}">状态</th>                                                                
+                                        </tr>
+                                    </thead>
+                                </table>                    
+                            </div>
+
+
                             <div class="widget-head am-cf">
                                 <div class="widget-title am-fl">发货信息</div>
                             </div>

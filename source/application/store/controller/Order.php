@@ -12,6 +12,7 @@ use app\store\model\Category;
 use app\api\model\Order as OrderApi;
 use app\store\model\User as UserModel;
 use app\store\model\Member as MemberModel;
+use app\store\model\OrderMember;
 
 /**
  * 订单管理
@@ -113,9 +114,12 @@ class Order extends Controller
     public function detail($order_id)
     {
         $detail = OrderModel::detail($order_id);
-        // 设备列表
-        // halt($detail->toArray()['equip'][1]);
-        return $this->fetch('detail', compact('detail'));
+        // 订单配送人员列表
+        $member_ids = OrderMember::where('order_id', $detail['order_id'])->column('member_id');
+        $member = new MemberModel;
+        $member_list = $member->getList(['id' => ['in', array_unique($member_ids)]]);
+        // halt($member_list);
+        return $this->fetch('detail', compact('detail', 'member_list'));
     }
 
 
@@ -210,9 +214,14 @@ class Order extends Controller
         $detail = OrderModel::detail($order_id);          
         // 租赁模式 list
         $rent_model = new RentModeModel;
-        $rent_list = $rent_model->getList();   
-        // halt($detail->toArray())     ;
-        return $this->fetch('edit', compact('detail', 'rent_list'));
+        $rent_list = $rent_model->getList();           
+        // 订单配送人员列表
+        $member_ids = OrderMember::where('order_id', $detail['order_id'])->column('member_id');
+        $member = new MemberModel;
+        $member_list = $member->getList(['id' => ['in', array_unique($member_ids)]]);
+
+        // 
+        return $this->fetch('edit', compact('detail', 'rent_list', 'member_list'));
     }
 
 

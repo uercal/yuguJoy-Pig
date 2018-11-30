@@ -15,11 +15,16 @@ use think\Request;
 class Member extends MemberModel
 {
 
-    public function getList()
+    public function getList($filter = [])
     {
         $request = Request::instance();
-        return $this->with(['role'])->order(['id' => 'desc'])
+        if(empty($filter)){
+            return $this->with(['role'])->order(['id' => 'desc'])
             ->paginate(15, false, ['query' => $request->request()]);
+        }else{
+            return $this->with(['role'])->where($filter)->order(['id' => 'desc'])
+            ->select()->toArray();
+        }                
     }
 
     public function add($data)
@@ -91,13 +96,13 @@ class Member extends MemberModel
         Db::startTrans();
         try {
             // 删除当前商品
-            $status=$this->status;
-            if($status==10){
+            $status = $this->status;
+            if ($status == 10) {
                 $this->status = 40;
             }
-            if($status==40){
+            if ($status == 40) {
                 $this->status = 10;
-            }            
+            }
             $this->save();
             // 事务提交
             Db::commit();

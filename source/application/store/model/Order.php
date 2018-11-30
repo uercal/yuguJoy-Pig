@@ -135,7 +135,7 @@ class Order extends OrderModel
                 // 设备使用记录                
                 $this->usingLog()->saveAll($usingLog);
                 // 员工配送记录
-                $this->order_member()->saveAll($order_member);
+                $this->orderMember()->saveAll($order_member);
                 // 员工状态变更
                 $member_model = new Member;
                 $member_model->saveAll($member);

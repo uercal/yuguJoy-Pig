@@ -74,7 +74,7 @@ class Order extends BaseModel
     /**
      * 关联订单员工表
      */
-    public function order_member()
+    public function orderMember()
     {
         return $this->hasMany('OrderMember', 'order_id', 'order_id');
     }
@@ -160,7 +160,9 @@ class Order extends BaseModel
      */
     public static function detail($order_id)
     {
-        return self::get($order_id, ['goods' => ['spec', 'specValueName', 'equip', 'image', 'rentMode'], 'address', 'equip' => ['goodsGetName', 'specValue']]);
+        return self::get($order_id, [
+            'goods' => ['spec', 'specValueName', 'equip', 'image', 'rentMode'], 'address', 'equip' => ['goodsGetName', 'specValue']
+        ]);
     }
 
 }

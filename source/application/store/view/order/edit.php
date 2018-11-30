@@ -296,7 +296,33 @@ input::-webkit-inner-spin-button{
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>                                                                    
-                        </table>                        
+                        </table>  
+
+                        <!--  -->
+                        <div class="widget-head am-cf" style="position:relative;">
+                            <div class="widget-title am-fl">配送人员</div> 
+                        </div>                                                                                                                   
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <thead>
+                                <tr>
+                                    <th>人员id</th>
+                                    <th>姓名</th>
+                                    <th>角色</th>
+                                    <th>电话</th>                                    
+                                </tr>
+                            </thead>                                
+                            <tbody>
+                                <?php foreach ($member_list as $item) : ?>
+                                    <tr>
+                                        <td><?= $item['id'] ?></td>
+                                        <td><?= $item['name'] ?></td>
+                                        <td><?= $item['role']['role_name'] ?></td>
+                                        <td><?= $item['phone'] ?></td>                                        
+                                    </tr>                                    
+                                <?php endforeach; ?>
+                            </tbody>                                                                    
+                        </table>  
                     <?php endif; ?>
 
                 

@@ -79,7 +79,7 @@
                                         <p class="item-title"><?= $item['equip_id'] ?></p>
                                     </td>
                                     <td class="am-text-middle">
-                                        <p class="item-title"><?= $item['member'] ? $item['member']['name'] : '管理员' ?></p>
+                                        <p class="item-title"><?= $item['member_id'] == 0 ? '管理员' : ($item['member_id'] == -1 ? '用户确认' : $item['member']['name']) ?></p>
                                     </td>                                    
                                     <td class="am-text-middle"><?= $item['equip_status_text'] ?></td>
                                     <td class="am-text-middle"> <?= $item['create_time'] ?></td>                                                                        

@@ -32,5 +32,5 @@ class OrderMember extends BaseModel
     {
         $status = [10 => '进行中', '已完成'];
         return $status[$data['status']];
-    }
+    }    
 }

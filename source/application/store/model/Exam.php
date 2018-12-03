@@ -25,6 +25,8 @@ class Exam extends ExamModel
             'org_code_id' => '组织机构代码证',
             'license_id' => '营业执照',
             'idcard_ids' => '身份证正反面',
+            'other_content' => '其他信息',
+            'other_ids' => '其他图片'
         ];
         return $data;
     }
@@ -34,12 +36,19 @@ class Exam extends ExamModel
     {                        
         // 
         $obj = $this->where('id', $data['id'])->find();
-        
+
         $content = $data['content'];
         // 筛选空值 content
         foreach ($content as $key => $value) {
-            if(empty($value)) unset($content[$key]);
-        }        
+            if (empty($value)) unset($content[$key]);
+            if ($key == 'idcard_ids') {
+                if ($value == "0,0") unset($content[$key]);
+            }
+            if ($key == 'other_ids') {
+                if ($value == "0,0,0,0,0,0") unset($content[$key]);
+            }
+        }
+        
         // halt($data);
         // 开启事务
         Db::startTrans();
@@ -47,7 +56,7 @@ class Exam extends ExamModel
             // $type==10 用户认证 获得额度
             if ($obj['type'] == 10) {
                 $model = new Quota;
-                $value = bcmul($data['quota_money'], 100, 2);
+                $value = bcmul($data['quota_money'], 100, 0);
                 $quota_log = $model->allowField(true)->save([
                     'quota_type' => 10,
                     'quota_money' => $value,
@@ -67,14 +76,16 @@ class Exam extends ExamModel
                     'status' => $data['status']
                 ]);
 
+                
                 // 用户认证 更新用户资料
-                User::where('user_id',$obj['user_id'])->update($content);                
+                $user = new User;
+                $user->save($content, ['user_id' => $obj['user_id']]);
             }
             Db::commit();
             return true;
-        } catch (\Exception $e) {            
+        } catch (\Exception $e) {
             Db::rollback();
-            halt($e);            
+            halt($e);
         }
         return false;
     }

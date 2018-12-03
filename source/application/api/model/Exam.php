@@ -19,32 +19,33 @@ class Exam extends ExamModel
             [
                 'user_name' => $data['name'],
                 'company' => $data['company'],
-                'org_code_id' => $data['org_code_id'],
+                'other_content' => $data['other_content'],
                 'license_id' => $data['license_id'],
-                'idcard_ids' => $data['idcard_ids']
+                'idcard_ids' => $data['idcard_ids'],
+                'other_ids' => $data['other_ids']
             ]
         );
         Db::startTrans();
-        // 记录订单信息
-        $obj = $this->where(['user_id' => $user['user_id'], 'type' => $data['type']])->find();
-        if ($obj) {
-            $res = $this->save([
-                'content' => $content,
-                'type' => $data['type'],
-                'status' => 10,
-                'wxapp_id' => $data['wxapp_id'],
-            ], [
-                'user_id' => $user['user_id']
-            ]);
-        } else {
-            $res = $this->save([
-                'user_id' => $user['user_id'],
-                'content' => $content,
-                'type' => $data['type'],
-                'status' => 10,
-                'wxapp_id' => $data['wxapp_id'],
-            ]);
-        }
+        // 
+        // $obj = $this->where(['user_id' => $user['user_id'], 'type' => $data['type']])->find();
+        // if ($obj) {
+        //     $res = $this->save([
+        //         'content' => $content,
+        //         'type' => $data['type'],
+        //         'status' => 10,
+        //         'wxapp_id' => $data['wxapp_id'],
+        //     ], [
+        //         'user_id' => $user['user_id']
+        //     ]);
+        // } else {
+        $res = $this->save([
+            'user_id' => $user['user_id'],
+            'content' => $content,
+            'type' => $data['type'],
+            'status' => 10,
+            'wxapp_id' => $data['wxapp_id'],
+        ]);
+        // }
         Db::commit();
         return $res;
     }

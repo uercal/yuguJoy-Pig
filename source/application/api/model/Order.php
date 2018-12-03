@@ -4,7 +4,10 @@ namespace app\api\model;
 
 use think\Db;
 use app\common\model\Order as OrderModel;
-
+use app\api\model\EquipUsingLog;
+use app\api\model\Equip;
+use app\api\model\OrderMember;
+use app\api\model\Member;
 use app\common\exception\BaseException;
 
 /**
@@ -317,15 +320,63 @@ class Order extends OrderModel
      */
     public function receipt()
     {
+
         if ($this['delivery_status']['value'] === 10 || $this['receipt_status']['value'] === 20) {
             $this->error = '该订单不合法';
             return false;
         }
-        return $this->save([
+
+        $_state = [
             'receipt_status' => 20,
             'receipt_time' => time(),
             'order_status' => 30
-        ]);
+        ];
+
+        Db::startTrans();
+        try {
+            // 保存订单信息
+            $this->save($_state);
+            // 设备状态
+            Equip::where('order_id', $this['order_id'])->update([
+                'status' => 30,
+                'service_time' => time()
+            ]);
+            // 设备使用记录            
+            $data = Equip::where('order_id', $this['order_id'])->select()->toArray();
+            $_data = [];
+            foreach ($data as $key => $value) {
+                $param = [];
+                $param['order_id'] = $this['order_id'];
+                $param['equip_id'] = $value['equip_id'];
+                $param['member_id'] = -1;//用户确认 非员工操作
+                $param['equip_status'] = 30;
+                $param['wxapp_id'] = self::$wxapp_id;
+                $_data[] = $param;
+            }
+
+            $log = new EquipUsingLog;
+            $log->saveAll($_data);      
+
+            // 获取配送/维修员工
+            $member_ids = OrderMember::where('order_id', $this['order_id'])->column('member_id');
+            // 还原配送相关员工状态                
+            Member::whereIn('id', $member_ids)->update([
+                'status' => 10
+            ]);                        
+            // 更新配送员工记录
+            OrderMember::where('order_id', $this['order_id'])->update([
+                'status' => 20
+            ]);
+                       
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+
+
     }
 
     /**
@@ -353,6 +404,7 @@ class Order extends OrderModel
                 $filter['pay_status'] = 20;
                 $filter['delivery_status'] = 20;
                 $filter['receipt_status'] = 10;
+                break;
             case 'doing':
                 $filter['pay_status'] = 20;
                 $filter['delivery_status'] = 20;
@@ -380,7 +432,7 @@ class Order extends OrderModel
             'order_id' => $order_id,
             'user_id' => $user_id,
             'order_status' => ['<>', 20]
-        ], ['goods' => ['image', 'spec', 'goods', 'rentMode'], 'address'])) {
+        ], ['goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode'], 'address'])) {
             throw new BaseException(['msg' => '订单不存在']);
         }
 

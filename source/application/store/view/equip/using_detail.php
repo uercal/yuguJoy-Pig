@@ -97,7 +97,7 @@
                                         </p>                                                                  
                                         <?php endif; ?>
                                         <p class="equip-detail">
-                                            操作人：<a href="JavaScript:;"><?= $item['member'] ? $item['member']['name'] : '管理员' ?></a>
+                                            操作人：<a href="JavaScript:;"><?= $item['member_id'] == 0 ? '管理员' : ($item['member_id'] == -1 ? '用户确认' : $item['member']['name']) ?></a>
                                         </p> 
                                     </div>                               
                                 </div>

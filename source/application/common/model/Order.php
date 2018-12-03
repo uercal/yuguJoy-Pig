@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use think\Request;
 use think\Hook;
 
 /**
@@ -164,5 +165,13 @@ class Order extends BaseModel
             'goods' => ['spec', 'specValueName', 'equip', 'image', 'rentMode'], 'address', 'equip' => ['goodsGetName', 'specValue']
         ]);
     }
+
+
+
+
+    
+
+
+
 
 }

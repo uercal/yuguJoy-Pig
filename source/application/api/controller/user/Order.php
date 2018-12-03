@@ -52,7 +52,7 @@ class Order extends Controller
      */
     public function detail($order_id)
     {
-        $order = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);        
+        $order = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);
         return $this->renderSuccess(['order' => $order]);
     }
 
@@ -82,7 +82,7 @@ class Order extends Controller
      */
     public function receipt($order_id)
     {
-        $model = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);
+        $model = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);      
         if ($model->receipt()) {
             return $this->renderSuccess();
         }

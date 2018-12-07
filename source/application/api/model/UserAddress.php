@@ -89,7 +89,8 @@ class UserAddress extends UserAddressModel
     public function setDefault($user)
     {
         // 设为默认地址
-        return $user->save(['address_id' => $this['address_id']]);
+        return $user->save(['address_id' => $this['address_id']]) !== false;
+        // return $user->save(['address_id' => $this['address_id']]);
     }
 
     /**

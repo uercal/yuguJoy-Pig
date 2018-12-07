@@ -15,7 +15,20 @@ class AccountMoney extends BaseModel
     protected $name = 'account_money';
     protected $updateTime = false;
     protected $insert = ['wxapp_id' => 10001, 'open_id'];
+    protected $append = ['actual_money','actual_quota'];
 
+    public function getActualMoneyAttr($value, $data)
+    {
+        $money = $data['account_money'] - $data['freezing_account'];
+        return bcdiv($money, 100, 2);
+    }
+
+    
+    public function getActualQuotaAttr($value, $data)
+    {
+        $money = $data['quota_money'] - $data['freezing_quota'];
+        return bcdiv($money, 100, 2);
+    }
 
 
     public function getAccountMoneyAttr($value, $data)
@@ -24,11 +37,15 @@ class AccountMoney extends BaseModel
     }
 
 
-    public function getFreezingMoneyAttr($value, $data)
+    public function getFreezingAccountAttr($value, $data)
     {
-        return bcdiv($data['freezing_money'], 100, 2);
+        return bcdiv($data['freezing_account'], 100, 2);
     }
 
+    public function getFreezingQuotaAttr($value, $data)
+    {
+        return bcdiv($data['freezing_quota'], 100, 2);
+    }
 
     public function getQuotaMoneyAttr($value, $data)
     {

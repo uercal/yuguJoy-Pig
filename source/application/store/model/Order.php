@@ -522,6 +522,7 @@ class Order extends OrderModel
                 $_state['pay_status'] = 10;
                 $_state['delivery_status'] = 10;
                 $_state['receipt_status'] = 10;
+                $_state['order_status'] = 10;
                 $_state['pay_time'] = 0;
                 $_state['receipt_time'] = 0;
                 $_state['transaction_id'] = '';
@@ -533,6 +534,7 @@ class Order extends OrderModel
                 # 回到为发货  清空设备
                 $_state['delivery_status'] = 10;
                 $_state['receipt_status'] = 10;
+                $_state['order_status'] = 10;
                 $_state['receipt_time'] = 0;
                 break;
 
@@ -540,6 +542,7 @@ class Order extends OrderModel
                 $type = 3;
                 # 变更为已送达
                 $_state['receipt_status'] = 20;
+                $_state['order_status'] = 30;
                 $_state['receipt_time'] = time();
                 break;
         }
@@ -567,8 +570,7 @@ class Order extends OrderModel
             $log->saveAll($_data);      
 
             // 获取配送/维修员工
-            $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');
-        
+            $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');            
             // 是否清空设备
             if ($type == 1 || $type == 2) {
                 Equip::where('order_id', $state['order_id'])->update([
@@ -577,7 +579,8 @@ class Order extends OrderModel
                     'secure' => null,
                     'service_ids' => null,
                     'service_time' => null
-                ]);                
+                ]);
+                OrderMember::where('order_id',$state['order_id'])->delete();
             }
             
             // 是否送达设备
@@ -602,10 +605,18 @@ class Order extends OrderModel
                 $log = new EquipUsingLog;
                 $log->saveAll($_data);
 
-                // 更新配送员工记录 和 状态
-                OrderMember::where('order_id',$state['order_id'])->update([
-                    'status'=>20
-                ]);                                
+                // 新增配送员工记录 和 状态
+                $_member = [];
+                foreach ($member_ids as $key => $value) {
+                    $param = [];
+                    $param['member_id'] = $value;
+                    $param['order_id'] = $state['order_id'];
+                    $param['type'] = 10;//配送
+                    $param['status'] = 20;//已完成
+                    $_member[] = $param;
+                }
+                $orderMember = new OrderMember;
+                $orderMember->saveAll($_member);
             }
 
             // 还原配送相关员工状态                
@@ -613,7 +624,7 @@ class Order extends OrderModel
                 'status' => 10
             ]);
 
-            
+
             Db::commit();
             return true;
         } catch (\Exception $e) {

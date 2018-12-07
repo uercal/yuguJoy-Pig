@@ -42,8 +42,9 @@
                                 <th>用户ID</th>
                                 <th>用户头像</th>
                                 <th>用户余额</th>
-                                <th>冻结资金</th>
-                                <th>押金额度</th>                                
+                                <th>冻结余额</th>                                
+                                <th>押金额度</th>
+                                <th>冻结额度</th>                                
                                 <th>操作</th>                                
                             </tr>
                             </thead>
@@ -57,8 +58,9 @@
                                         </a>                                        
                                     </td>
                                     <td class="am-text-middle"><?= $item['account_money'] ? : '--' ?></td>
-                                    <td class="am-text-middle"> <?= $item['freezing_money'] ?> </td>                                    
-                                    <td class="am-text-middle"><?= $item['quota_money'] ?></td>                                                                        
+                                    <td class="am-text-middle"> <?= $item['freezing_account'] ?> </td>                                    
+                                    <td class="am-text-middle"><?= $item['quota_money'] ?></td>                                           
+                                    <td class="am-text-middle"> <?= $item['freezing_quota'] ?> </td>                                    
                                     <td class="am-text-middle">
                                         
                                     </td>

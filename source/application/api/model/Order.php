@@ -363,11 +363,19 @@ class Order extends OrderModel
             Member::whereIn('id', $member_ids)->update([
                 'status' => 10
             ]);                        
-            // 更新配送员工记录
-            OrderMember::where('order_id', $this['order_id'])->update([
-                'status' => 20
-            ]);
-                       
+            // 新增配送员工记录
+            $_member = [];
+            foreach ($member_ids as $key => $value) {
+                $param = [];
+                $param['member_id'] = $value;
+                $param['order_id'] = $this['order_id'];
+                $param['type'] = 10;//配送
+                $param['status'] = 20;//已完成
+                $_member[] = $param;
+            }
+            $orderMember = new OrderMember;
+            $orderMember->saveAll($_member);
+            
             Db::commit();
             return true;
         } catch (\Exception $e) {

@@ -33,6 +33,14 @@ class Member extends BaseModel
         return $this->hasOne('Role', 'id', 'role_id');
     }
 
+    // 关联订单表
+    public function orderLog()
+    {
+        return $this->hasMany('OrderMember', 'member_id', 'id');
+    }
+
+
+
 
     public function wxapp()
     {
@@ -44,7 +52,7 @@ class Member extends BaseModel
 
     public static function detail($id)
     {
-        return self::with('role')->find($id);
+        return self::with(['role', 'orderLog' => ['order'=>['goods'=>['image']]]])->find($id);
     }
 
 

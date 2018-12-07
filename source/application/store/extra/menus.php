@@ -110,6 +110,17 @@ return [
             ],
         ]
     ],
+    'notice' => [
+        'name' => '通知管理',
+        'icon' => 'icon-order',
+        'index' => 'notice/index',
+        'submenu' => [
+            [
+                'name' => '通知列表',
+                'index' => 'notice/index'
+            ]
+        ]
+    ],
     'finance' => [
         'name' => '财政管理',
         'icon' => 'icon-order',
@@ -161,8 +172,8 @@ return [
 
         ]
 
-    ],  
-    'statics'  =>[
+    ],
+    'statics' => [
         'name' => '统计',
         'icon' => 'icon-goods',
         'index' => 'statics/index',
@@ -171,7 +182,7 @@ return [
                 'name' => '统计',
                 'icon' => 'icon-goods',
                 'index' => 'statics/index'
-            ]            
+            ]
         ]
     ],
 //    'marketing' => [

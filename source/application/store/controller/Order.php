@@ -287,6 +287,7 @@ class Order extends Controller
     public function getMemberAjax()
     {
         $list = MemberModel::getReadyMember();
+        
         return [
             'code' => 0,
             'msg' => '',

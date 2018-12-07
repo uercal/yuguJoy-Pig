@@ -17,8 +17,8 @@ class OrderMember extends OrderMemberModel
      */
     public function getDoingCount($member_id)
     {
-        $doing = $this->where(['member_id' => $member_id, 'status' => 10])->group('order_id')->count();
-        $done = $this->where(['member_id' => $member_id, 'status' => 20])->group('order_id')->count();
+        $doing = $this->where(['member_id' => $member_id, 'status' => 10])->group('order_id,type')->count();
+        $done = $this->where(['member_id' => $member_id, 'status' => 20])->group('order_id,type')->count();        
         $count = $doing - $done;
         return $count;
     }

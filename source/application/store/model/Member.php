@@ -19,10 +19,10 @@ class Member extends MemberModel
     {
         $request = Request::instance();
         if(empty($filter)){
-            return $this->with(['role'])->order(['id' => 'desc'])
+            return $this->with(['role','orderLog'])->order(['id' => 'desc'])
             ->paginate(15, false, ['query' => $request->request()]);
         }else{
-            return $this->with(['role'])->where($filter)->order(['id' => 'desc'])
+            return $this->with(['role','orderLog'])->where($filter)->order(['id' => 'desc'])
             ->select()->toArray();
         }                
     }

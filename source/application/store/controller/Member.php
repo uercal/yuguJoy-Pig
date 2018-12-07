@@ -25,7 +25,7 @@ class Member extends Controller
     {
         $model = new MemberModel;
         $list = $model->getList();
-        // halt($list->toArray()['data'][0]['role']['role_name']);
+        // halt($list->toArray()['data'][4]);
         return $this->fetch('index', compact('list'));
     }
 

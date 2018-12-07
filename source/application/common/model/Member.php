@@ -13,12 +13,14 @@ class Member extends BaseModel
     protected $name = 'store_member';
 
 
-    public function getStatusTextAttr($value, $data)
+    public static function getStatusText($data)
     {
-        $status = [10 => '空闲', 20 => '配送中', 30 => '维修中', 40 => '休息'];
-        return $status[$data['status']];
+        if ($data['status'] == 40) {
+            return '休息';
+        } else {
+            return getMemeberStatus($data['order_log'])['msg'];
+        }
     }
-
 
 
     public function roleNameAttr()
@@ -40,8 +42,6 @@ class Member extends BaseModel
     }
 
 
-
-
     public function wxapp()
     {
         return $this->belongsTo('Wxapp');
@@ -52,7 +52,7 @@ class Member extends BaseModel
 
     public static function detail($id)
     {
-        return self::with(['role', 'orderLog' => ['order'=>['goods'=>['image']]]])->find($id);
+        return self::with(['role', 'orderLog' => ['order' => ['goods' => ['image']]]])->find($id);
     }
 
 
@@ -60,7 +60,13 @@ class Member extends BaseModel
     // 获取空闲 员工列表
     public static function getReadyMember()
     {
-        return self::with(['role', 'roleNameAttr'])->where('status', 10)->select()->append(['status_text'])->toArray();
+        $data = self::with(['role', 'roleNameAttr', 'orderLog'])->where('status', '<>', 40)->select()->toArray();
+
+        foreach ($data as $key => $value) {            
+            $data[$key]['status_text'] = self::getStatusText($value);
+        }
+
+        return $data;
 
     }
 

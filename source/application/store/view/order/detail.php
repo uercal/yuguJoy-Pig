@@ -342,7 +342,7 @@
                                         <th lay-data="{field:'name', width:160}">用户名</th>
                                         <th lay-data="{field:'phone', width:160, sort: true}">手机号</th>
                                         <th lay-data="{field:'role_name', width:80}">角色</th>
-                                        <th lay-data="{field:'status_text', width:80}">状态</th>                                                                
+                                        <th lay-data="{field:'status_text', width:80,sort:true}">状态</th>                                                                
                                         </tr>
                                     </thead>
                                 </table>                    

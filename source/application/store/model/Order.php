@@ -620,10 +620,9 @@ class Order extends OrderModel
             }
 
             // 还原配送相关员工状态                
-            Member::whereIn('id', $member_ids)->update([
-                'status' => 10
-            ]);
-
+            // Member::whereIn('id', $member_ids)->update([
+            //     'status' => 10
+            // ]);
 
             Db::commit();
             return true;

@@ -53,7 +53,7 @@
                                     <td class="am-text-middle"><?= $item['role']['role_name'] ?></td>
                                     <td class="am-text-middle"><?= $item['phone'] ?></td>                                    
                                     <td class="am-text-middle"><?= $item['function'] ?></td>                                    
-                                    <td class="am-text-middle"><?= $item['status_text'] ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['status'] == 40 ? '休息' : getMemeberStatus($item['order_log'])['msg'] ?></td>                                    
                                     <td class="am-text-middle"><?= $item['create_time'] ?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -66,7 +66,7 @@
                                             <a  onclick="reset(<?= $item['id'] ?>)" class="tpl-table-black-operation-green">
                                                 <i class="am-icon-book"></i> 修改密码
                                             </a>
-                                            <?php if ($item['status'] == 10 || $item['status'] == 40) : ?>
+                                            <?php if (getMemeberStatus($item['order_log'])['code'] == 0) : ?>
                                             <a href="javascript:;"
                                                data-id="<?= $item['id'] ?>" onclick="exchange(<?= $item['id'] ?>)">
                                                 <i class="am-icon-edit"></i> 状态切换

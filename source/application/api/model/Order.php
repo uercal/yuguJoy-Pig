@@ -358,11 +358,7 @@ class Order extends OrderModel
             $log->saveAll($_data);      
 
             // 获取配送/维修员工
-            $member_ids = OrderMember::where('order_id', $this['order_id'])->column('member_id');
-            // 还原配送相关员工状态                
-            Member::whereIn('id', $member_ids)->update([
-                'status' => 10
-            ]);                        
+            $member_ids = OrderMember::where('order_id', $this['order_id'])->column('member_id');                                
             // 新增配送员工记录
             $_member = [];
             foreach ($member_ids as $key => $value) {

@@ -168,3 +168,53 @@ function array_del(&$arr, $val)
     }
     return false;
 }
+
+
+
+
+
+
+/**
+ * 成员状态获取 by arr
+ */
+function getMemeberStatus($arr)
+{
+    if (!empty($arr)) {
+        $data = [];
+        foreach ($arr as $key => $value) {
+            $data[$value['order_id'] . '-' . $value['type']][] = $value;
+        }        
+        // 筛掉已完成        
+        foreach ($data as $key => $value) {
+            foreach ($value as $k => $v) {
+                if ($v['status'] == 20) {
+                    // 已完成
+                    unset($data[$key]);
+                }
+            }
+        }
+        if (!empty($data)) {
+            $_data = [];
+            foreach ($data as $key => $value) {
+                foreach ($value as $k => $v) {
+                    $_data[] = $v;
+                }
+            }
+            // 
+            usort($_data, function ($a, $b) {
+                return $a['create_time'] > $b['create_time'];
+            });
+            // 
+            $data = array_values($_data);
+            $msg = $data[0]['status'] == 10 ? '配送中' : '维修中';
+            $code = 1;
+        } else {
+            $msg = '空闲';
+            $code = 0;
+        }
+    } else {
+        $msg = '空闲';
+        $code = 0;
+    }
+    return compact('msg', 'code');
+}

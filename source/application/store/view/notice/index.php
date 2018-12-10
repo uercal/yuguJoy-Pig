@@ -8,6 +8,11 @@
   background: orange;
   color: #fff;
 }
+
+td{
+    white-space:nowrap;overflow:hidden;text-overflow: ellipsis;
+}
+
 </style>
 
 <div class="row-content am-cf">
@@ -32,7 +37,7 @@
                             </div>
                         </div>
                         <table width="100%" class="am-table am-table-compact am-table-striped
-                         tpl-table-black am-text-nowrap">
+                         tpl-table-black am-text-nowrap" style="table-layout: fixed;">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -83,7 +88,9 @@
 </div>
 <script>
     $(function () {
-
+        // 删除元素
+        var url = "<?= url('notice/delete') ?>";
+        $('.item-delete').delete('id', url);
     });
     function detail(id){        
         layer.prompt({title: '输入新密码', formType: 1}, function(text){      
@@ -99,6 +106,8 @@
             });
         });
     }
+
+    
     
 </script>
 

@@ -5,6 +5,7 @@ namespace app\api\controller\member;
 use app\api\controller\Controller;
 use app\api\model\Order as OrderModel;
 use app\api\model\Exam as ExamModel;
+use app\api\model\NoticeLog;
 use app\api\model\OrderMember;
 
 /**
@@ -36,15 +37,15 @@ class Index extends Controller
         $orderMember = new OrderMember;            
         $orderCount = $orderMember->getDoingCount($memberInfo['id']);
         // 通知
-
-
+        $noticeLog = new Noticelog;
+        $noticeCount = $noticeLog->getUnReadCount($memberInfo['id']);
         // 
         $memberInfo = [
             'name' => $memberInfo['name'],
             'phone' => $memberInfo['phone'],
             'function' => $memberInfo['function']
         ];
-        return $this->renderSuccess(compact('memberInfo', 'menu','orderCount'));
+        return $this->renderSuccess(compact('memberInfo', 'menu','orderCount','noticeCount'));
     }
 
 }

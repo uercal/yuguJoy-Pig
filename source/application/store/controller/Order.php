@@ -286,13 +286,13 @@ class Order extends Controller
      */
     public function getMemberAjax()
     {
-        $list = MemberModel::getReadyMember();
-        
+        $data = MemberModel::getReadyMember();
+
         return [
             'code' => 0,
             'msg' => '',
-            'count' => count($list),
-            'data' => $list
+            'count' => $data['total'],
+            'data' => $data['data']
         ];
     }
 

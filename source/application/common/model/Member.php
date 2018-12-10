@@ -3,6 +3,8 @@
 namespace app\common\model;
 
 use think\Hook;
+use think\Request;
+
 
 /**
  * member 
@@ -60,10 +62,14 @@ class Member extends BaseModel
     // 获取空闲 员工列表
     public static function getReadyMember()
     {
-        $data = self::with(['role', 'roleNameAttr', 'orderLog'])->where('status', '<>', 40)->select()->toArray();
 
-        foreach ($data as $key => $value) {            
-            $data[$key]['status_text'] = self::getStatusText($value);
+        $request = Request::instance();
+        $get = $request->request();
+
+        $data = self::with(['role', 'roleNameAttr', 'orderLog'])->where('status', '<>', 40)->paginate($get['limit'])->toArray();
+        
+        foreach ($data['data'] as $key => $value) {
+            $data['data'][$key]['status_text'] = self::getStatusText($value);
         }
 
         return $data;

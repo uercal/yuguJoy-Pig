@@ -18,13 +18,13 @@ class Member extends MemberModel
     public function getList($filter = [])
     {
         $request = Request::instance();
-        if(empty($filter)){
-            return $this->with(['role','orderLog'])->order(['id' => 'desc'])
-            ->paginate(15, false, ['query' => $request->request()]);
-        }else{
-            return $this->with(['role','orderLog'])->where($filter)->order(['id' => 'desc'])
-            ->select()->toArray();
-        }                
+        if (empty($filter)) {
+            return $this->with(['role', 'orderLog'])->order(['id' => 'desc'])
+                ->paginate(15, false, ['query' => $request->request()]);
+        } else {
+            return $this->with(['role', 'orderLog'])->where($filter)->order(['id' => 'desc'])
+                ->select()->toArray();
+        }
     }
 
     public function add($data)
@@ -119,5 +119,18 @@ class Member extends MemberModel
     public function getOne($map)
     {
         return $this->with('role')->where($map)->find();
+    }
+
+
+    public function getListAjax()
+    {
+        $request = Request::instance();
+        $get = $request->request();
+        
+        // return $this->with(['roleNameAttr'])->order(['id' => 'asc'])
+        //     ->paginate($get['limit']);
+
+        return $this->with(['roleNameAttr'])->order(['id' => 'asc'])
+            ->select();
     }
 }

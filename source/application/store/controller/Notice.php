@@ -3,6 +3,7 @@ namespace app\store\controller;
 
 
 use app\store\model\Notice as NoticeModel;
+use app\store\model\Member as MemberModel;
 use think\Request;
 
 
@@ -35,9 +36,38 @@ class Notice extends Controller
     }
 
 
-    // 获取员工列表
-    public function getMemeberAjax()
+    public function detail($id)
     {
+        $notice = NoticeModel::find($id)->append(['member'])->toArray();
+        return $this->fetch('detail', compact('notice'));
+    }
 
+
+    // 获取员工列表
+    public function getMemberAjax()
+    {
+        $model = new MemberModel;
+        $list = $model->getListAjax();
+        $list = $list->toArray();   
+        // halt($list)     ;
+        return [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($list),
+            'data' => $list
+        ];
+
+    }
+
+
+
+    // 删除
+    public function delete($id)
+    {
+        $model = NoticeModel::get($id);
+        if (!$model->remove()) {
+            return $this->renderError('删除失败');
+        }
+        return $this->renderSuccess('删除成功');
     }
 }

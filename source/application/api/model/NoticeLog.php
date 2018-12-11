@@ -24,4 +24,9 @@ class NoticeLog extends NoticeLogModel
     {
         return $this->with(['notice'])->where(['member_id' => $member_id])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
     }
+
+    public function getDetail($notice_log_id)
+    {
+        return $this->with(['notice'])->where('id', $notice_log_id)->find();
+    }
 }

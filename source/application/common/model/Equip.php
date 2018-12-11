@@ -87,4 +87,14 @@ class Equip extends BaseModel
     }
 
 
+
+
+    /**
+     * 统计
+     */
+    public function getAll()
+    {
+        return $this->with(['goods'=>['category'],'specValue'])->select()->toArray();
+    }
+
 }

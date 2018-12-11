@@ -24,11 +24,29 @@ class Notice extends Controller
         // 当前员工信息
         $memberInfo = $this->getMember();       
         // 通知列表
-        $noticeLog = new NoticeLogModel;            
-        $page = input('page');        
-        $data = $noticeLog->getMemeberNoticeList($memberInfo['id'],$page);                
+        $noticeLog = new NoticeLogModel;
+        $page = input('page');
+        $data = $noticeLog->getMemeberNoticeList($memberInfo['id'], $page);
 
         return $this->renderSuccess(compact('data'));
     }
 
+    public function detail($id)
+    {
+        $noticeLog = new NoticeLogModel;
+        $detail = $noticeLog->getDetail($id);
+        return $this->renderSuccess(compact('detail'));
+    }
+
+
+    public function read($id)
+    {
+        $noticeLog = new NoticeLogModel;
+        $res = $noticeLog->save(['is_read' => 1], ['id' => $id]);
+        if ($res !== false) {
+            return $this->renderSuccess('success');
+        } else {
+            return $this->renderError('error');
+        }
+    }
 }

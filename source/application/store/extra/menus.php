@@ -176,7 +176,19 @@ return [
     'statics' => [
         'name' => '统计',
         'icon' => 'icon-goods',
-        'index' => 'statics/index'        
+        'index' => 'statics/index',
+        'submenu' => [
+            [
+                'name' => '总统计',
+                'icon' => 'icon-user',
+                'index' => 'statics/index'
+            ],
+            [
+                'name' => '日期统计',
+                'icon' => 'icon-user',
+                'index' => 'statics/time'
+            ]        
+        ]
     ],
 //    'marketing' => [
 //        'name' => '营销管理',

@@ -29,7 +29,7 @@ class Statics extends Controller
         }
 
         foreach ($cate as $key => $value) {
-            $data = [];            
+            $data = [];
             $cate[$key]['count'] = count($value['data']);
             foreach ($value['data'] as $k => $v) {
                 $data[$v['status']]['name'] = $status[$v['status']];
@@ -72,7 +72,25 @@ class Statics extends Controller
     }
 
 
+    public function time()
+    {
+        $usinglog = new EquipUsingLog;
+        $res = $usinglog->getStatics();
+        $list = $res['data'];
+        $map = $res['map'];
+        // 
+        $state = [];
+        foreach ($list as $key => $value) {
+            $state[$value['equip_status']]['status'] = $value['equip_status'];
+            $state[$value['equip_status']]['name'] = $value['equip_status_text'];
+            $state[$value['equip_status']]['data'][] = $value;
+        }
+        foreach ($state as $key => $value) {
+            $state[$key]['count'] = count($value['data']);
+        }
 
+        return $this->fetch('time', compact('state', 'map'));
+    }
 
 
 }

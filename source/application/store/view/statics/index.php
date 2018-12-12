@@ -53,7 +53,7 @@
         },
         series : [
             {
-                name: 'leixing1',
+                name: '类型',
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],

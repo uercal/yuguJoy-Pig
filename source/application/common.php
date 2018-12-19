@@ -178,35 +178,59 @@ function array_del(&$arr, $val)
  * 成员状态获取 by arr
  */
 function getMemeberStatus($arr)
-{
+{    
     if (!empty($arr)) {
+        // 区分 派送和售后        
         $data = [];
+        $data['order'] = [];
+        $data['after'] = [];
         foreach ($arr as $key => $value) {
-            $data[$value['order_id'] . '-' . $value['type']][] = $value;
+            if(!empty($value['order_id'])){
+                $data['order'][$value['order_id']][] = $value;
+            }
+            if(!empty($value['after_id'])){
+                $data['after'][$value['after_id']][] = $value;
+            }            
         }        
         // 筛掉已完成        
-        foreach ($data as $key => $value) {
+        foreach ($data['order'] as $key => $value) {
             foreach ($value as $k => $v) {
                 if ($v['status'] == 20) {
                     // 已完成
-                    unset($data[$key]);
+                    unset($data['order'][$key]);
                 }
             }
         }
-        if (!empty($data)) {
-            $_data = [];
-            foreach ($data as $key => $value) {
-                foreach ($value as $k => $v) {
-                    $_data[] = $v;
+        foreach ($data['after'] as $key => $value) {
+            foreach ($value as $k => $v) {
+                if ($v['status'] == 20) {
+                    // 已完成
+                    unset($data['after'][$key]);
                 }
             }
+        }
+
+        $res = [];
+        foreach ($data['order'] as $key => $value) {
+            foreach ($value as $k => $v) {
+                $res[] = $v;
+            }
+        }
+        foreach ($data['after'] as $key => $value) {
+            foreach ($value as $k => $v) {
+                $res[] = $v;
+            }
+        }
+        // 
+        if (!empty($res)) {            
             // 
-            usort($_data, function ($a, $b) {
+            usort($res, function ($a, $b) {
                 return $a['create_time'] > $b['create_time'];
             });
             // 
-            $data = array_values($_data);
-            $msg = $data[0]['status'] == 10 ? '配送中' : '维修中';
+            $data = array_values($res);
+            if(!empty($data[0]['order_id'])) $msg = '配送中';
+            if(!empty($data[0]['after_id'])) $msg = '维修中';            
             $code = 1;
         } else {
             $msg = '空闲';

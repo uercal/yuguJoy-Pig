@@ -10,6 +10,16 @@
   color: #fff;
 }
 
+.tpl-table-black-operation a.tpl-table-black-operation-dis {
+  border: 1px solid #e9e9e9;
+  color: #e9e9e9;
+}
+
+.tpl-table-black-operation a.tpl-table-black-operation-dis:hover {
+  background: unset;
+  color: #e9e9e9;
+}
+
 </style>
 <div class="row-content am-cf">
     <div class="row">
@@ -72,15 +82,16 @@
                                 <th>买家</th>
                                 <th>交易状态</th>
                                 <th>操作</th>
+                                <th>售后</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $order) : ?>
                                 <tr class="order-empty">
-                                    <td colspan="6"></td>
+                                    <td colspan="7"></td>
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle am-text-left" colspan="6">
+                                    <td class="am-text-middle am-text-left" colspan="7">
                                         <span class="am-margin-right-lg"> <?= $order['create_time'] ?></span>
                                         <span class="am-margin-right-lg">订单号：<?= $order['order_no'] ?></span>
                                     </td>
@@ -152,14 +163,22 @@
                                                     删除订单</a>
                                                 </div>
                                             </td>
+                                            <td class="am-text-middle" rowspan="<?= $goodsCount ?>">                                                                                                      
+                                                <div class="tpl-table-black-operation">                                                                                                       
+                                                    <a class="tpl-table-black-operation-<?= ($order['order_status']['value'] === 30 && $order['done_status']['value'] === 10) ? 'war' : 'dis' ?>"
+                                                     data-id="<?= $order['order_id'] ?>" data-dis="<?= ($order['order_status']['value'] === 30 && $order['done_status']['value'] === 10) ? '0' : '1' ?>" 
+                                                     onclick="after(<?= $order['order_id'] ?>,this)">
+                                                    发起售后</a>
+                                                </div>                                              
+                                            </td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endforeach;
                             else : ?>
                                 <tr>
-                                    <td colspan="6" class="am-text-center">暂无记录</td>
-                                </tr>
+                                    <td colspan="7" class="am-text-center">暂无记录</td>
+                                </tr>                                
                             <?php endif; ?>
                             </tbody>
                         </table>
@@ -244,6 +263,18 @@
             
             }
         });
+    }
+
+
+    function after(order_id,e){
+        var dis = $(e).attr('data-dis');
+        if(dis==1){
+            
+        }else{
+            var url = "<?= url('order/order_after_add') ?>&order_id="+order_id;
+            window.location.href = url;
+            
+        }
     }
 
 </script>

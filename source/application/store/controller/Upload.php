@@ -5,6 +5,8 @@ namespace app\store\controller;
 use app\store\model\UploadFile;
 use app\common\library\storage\Driver as StorageDriver;
 use app\store\model\Setting as SettingModel;
+use think\Request;
+
 
 /**
  * 文件库管理
@@ -41,7 +43,7 @@ class Upload extends Controller
         // 图片上传路径
         $fileName = $StorageDriver->getFileName();
         // 图片信息
-        $fileInfo = $StorageDriver->getFileInfo();
+        $fileInfo = $StorageDriver->getFileInfo();        
         // 添加文件库记录
         $uploadFile = $this->addUploadFile($group_id, $fileName, $fileInfo, 'image');
         // 图片上传成功

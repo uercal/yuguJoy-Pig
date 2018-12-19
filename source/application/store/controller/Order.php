@@ -13,6 +13,9 @@ use app\api\model\Order as OrderApi;
 use app\store\model\User as UserModel;
 use app\store\model\Member as MemberModel;
 use app\store\model\OrderMember;
+// 
+use app\store\model\OrderAfter as OrderAfterModel;
+
 
 /**
  * 订单管理
@@ -59,13 +62,24 @@ class Order extends Controller
     }
 
     /**
+     * 租赁中订单列表
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
+    public function rent_list()
+    {
+        return $this->getList('租赁中订单列表', ['order_status' => 30]);
+    }
+
+
+    /**
      * 已完成订单列表
      * @return mixed
      * @throws \think\exception\DbException
      */
     public function complete_list()
     {
-        return $this->getList('已完成订单列表', ['order_status' => 30]);
+        return $this->getList('已完成订单列表', ['done_status' => 20]);
     }
 
     /**
@@ -114,6 +128,7 @@ class Order extends Controller
     public function detail($order_id)
     {
         $detail = OrderModel::detail($order_id);
+        // halt($detail['done_status']);
         // 订单配送人员列表
         $member_ids = OrderMember::where('order_id', $detail['order_id'])->column('member_id');
         $member = new MemberModel;
@@ -329,4 +344,77 @@ class Order extends Controller
         $res = $model->deleteAll($order_id);
         return $res;
     }
+
+
+
+
+
+
+    /**
+     * 售后
+     */
+
+    public function order_after()
+    {
+        $model = new OrderAfterModel;
+        $res = $model->getList();
+        $list = $res['data'];
+        $map = $res['map'];
+        return $this->fetch('order_after', compact('list', 'map'));
+    }
+
+
+
+    public function order_after_add()
+    {
+        if ($this->request->isAjax()) {
+            $post = input();
+            $model = new OrderAfterModel;
+            // 
+            $order_id = $post['order_id'];
+            $after = $post['after'];
+            $after['order_id'] = $order_id;
+            if ($model->addAfter($after)) {
+                return $this->renderSuccess('发起成功', url('order/order_after'));
+            }
+            $error = $model->getError() ? : '发起失败';
+            return $this->renderError($error);
+
+        } else {
+            $order_id = input()['order_id'];
+            $detail = OrderModel::detail($order_id);
+            return $this->fetch('order_after_add', compact('detail'));
+        }
+
+    }
+
+    public function after_detail()
+    {
+        if ($this->request->isAjax()) {
+            $post = input();
+            if(empty($post['after']['member_ids'])){
+                $error = '派遣人员不能为空';
+                return $this->renderError($error);
+            }
+            $post['after']['id'] = $post['id'];
+            // 
+            $model = new OrderAfterModel;                
+            if ($model->sendAfter($post['after'])) {
+                return $this->renderSuccess('派发成功', url('order/order_after'));
+            }
+            $error = $model->getError() ? : '派发失败';
+            return $this->renderError($error);
+
+        } else {
+            $after_id = input()['id'];
+            $detail = OrderModel::detail($after_id);
+            $after = OrderAfterModel::getDetail($after_id);                
+            return $this->fetch('after_detail', compact('detail','after'));
+        }
+    }
+
+
+
+
+
 }

@@ -24,8 +24,7 @@ class Member extends Controller
     public function index()
     {
         $model = new MemberModel;
-        $list = $model->getList();
-        // halt($list->toArray()['data'][4]);
+        $list = $model->getList();                
         return $this->fetch('index', compact('list'));
     }
 

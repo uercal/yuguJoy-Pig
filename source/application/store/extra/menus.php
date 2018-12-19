@@ -84,30 +84,45 @@ return [
         'index' => 'order/delivery_list',
         'submenu' => [
             [
-                'name' => '待发货',
+                'name' => '主订单',
                 'index' => 'order/delivery_list',
+                'submenu' => [
+                    [
+                        'name' => '待发货',
+                        'index' => 'order/delivery_list',
+                    ],
+                    [
+                        'name' => '待收货',
+                        'index' => 'order/receipt_list',
+                    ],
+                    [
+                        'name' => '待付款',
+                        'index' => 'order/pay_list',
+                    ],
+                    [
+                        'name' => '租赁中',
+                        'index' => 'order/rent_list',
+                    ],
+                    [
+                        'name' => '已完成',
+                        'index' => 'order/complete_list',
+        
+                    ],
+                    [
+                        'name' => '已取消',
+                        'index' => 'order/cancel_list',
+                    ],
+                    [
+                        'name' => '全部订单',
+                        'index' => 'order/all_list',
+                    ],
+                ]
             ],
             [
-                'name' => '待收货',
-                'index' => 'order/receipt_list',
-            ],
-            [
-                'name' => '待付款',
-                'index' => 'order/pay_list',
-            ],
-            [
-                'name' => '已完成',
-                'index' => 'order/complete_list',
-
-            ],
-            [
-                'name' => '已取消',
-                'index' => 'order/cancel_list',
-            ],
-            [
-                'name' => '全部订单',
-                'index' => 'order/all_list',
-            ],
+                'name' => '售后订单',
+                'index' => 'order/order_after',
+            ]
+                     
         ]
     ],
     'notice' => [

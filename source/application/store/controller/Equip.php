@@ -45,11 +45,16 @@ class Equip extends Controller
             return $this->fetch('add', compact('goods'));
         }
         $model = new EquipModel;
-        if ($model->add($this->postData('equip'))) {
-            return $this->renderSuccess('添加成功', url('equip/index'));
+        if ($this->checkSN($this->postData('equip')['sn_code'])) {
+            if ($model->add($this->postData('equip'))) {
+                return $this->renderSuccess('添加成功', url('equip/index'));
+            }
+            $error = $model->getError() ? : '添加失败';
+            return $this->renderError($error);
+        } else {
+            $error = 'SN码已存在';
+            return $this->renderError($error);
         }
-        $error = $model->getError() ? : '添加失败';
-        return $this->renderError($error);
     }
 
     /**
@@ -84,14 +89,24 @@ class Equip extends Controller
             return $this->fetch('edit', compact('model', 'goods', 'spec_list'));
         }
         // 更新记录
-        if ($model->edit($this->postData('equip'))) {
-            return $this->renderSuccess('更新成功', url('equip/index'));
+        if ($this->checkSN($this->postData('equip')['sn_code'])) {
+            if ($model->edit($this->postData('equip'))) {
+                return $this->renderSuccess('更新成功', url('equip/index'));
+            }
+            $error = $model->getError() ? : '更新失败';
+            return $this->renderError($error);
+        } else {
+            $error = 'SN码已存在';
+            return $this->renderError($error);
         }
-        $error = $model->getError() ? : '更新失败';
-        return $this->renderError($error);
     }
 
 
+    public function checkSN($code)
+    {
+        $obj = EquipModel::where(['sn_code' => $code])->find();
+        return $obj === null;
+    }
 
     public function getSku($goods_id)
     {
@@ -188,7 +203,7 @@ class Equip extends Controller
         $log = new EquipCheckLog;
         $res = $log->EquipDetail();
         $map = $res['map'];
-        $data = $res['data'];   
+        $data = $res['data'];
         return $this->fetch('check_detail', compact('map', 'data'));
     }
 

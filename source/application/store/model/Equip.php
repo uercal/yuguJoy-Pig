@@ -32,8 +32,7 @@ class Equip extends EquipModel
         $data['wxapp_id'] = $data['spec']['wxapp_id'] = self::$wxapp_id;        
         // 型号 id
         $data['spec_value_id'] = $data['spec_value_id'];
-
-        $this->allowField(true)->save($data);
+        
         // 开启事务
         Db::startTrans();
         try {

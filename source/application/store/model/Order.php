@@ -112,8 +112,7 @@ class Order extends OrderModel
             foreach ($member_ids as $key => $value) {
                 $_order_member = [];
                 $_order_member['member_id'] = $value;
-                $_order_member['order_id'] = $input['order_id'];
-                $_order_member['type'] = 10; //配送
+                $_order_member['order_id'] = $input['order_id'];                
                 $_order_member['status'] = 10; //进行中
                 $_order_member['wxapp_id'] = $wxapp_id;
                 $order_member[] = $_order_member;
@@ -610,8 +609,7 @@ class Order extends OrderModel
                 foreach ($member_ids as $key => $value) {
                     $param = [];
                     $param['member_id'] = $value;
-                    $param['order_id'] = $state['order_id'];
-                    $param['type'] = 10;//配送
+                    $param['order_id'] = $state['order_id'];                    
                     $param['status'] = 20;//已完成
                     $_member[] = $param;
                 }

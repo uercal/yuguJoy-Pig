@@ -28,6 +28,13 @@
                                 </div>
                             </div>
                             <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">设备SN码 </label>
+                                <div class="am-u-sm-9 am-u-end">
+                                    <input type="text" class="tpl-form-input"
+                                           value="<?= $model['sn_code'] ?>" name="equip[sn_code]">
+                                </div>
+                            </div>
+                            <div class="am-form-group">
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">所属产品 </label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <select name="equip[goods_id]" required id="goods_id"
@@ -100,15 +107,16 @@
          * 表单验证提交
          * @type {*}
          */
+        
+
         $('#my-form').superForm({
             // form data
             buildData: function () {
                 
             },
             // 自定义验证
-            validation: function () {
-                
-                return true;
+            validation: function () {                            
+                return true;       
             }
         });
 

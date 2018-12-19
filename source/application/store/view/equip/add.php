@@ -50,6 +50,13 @@
                             <input type="hidden" name="equip[status]" value="10">   
                             <!--  -->
                             <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">设备SN码 </label>
+                                <div class="am-u-sm-9 am-u-end">
+                                    <input type="text" class="tpl-form-input"
+                                           value="" name="equip[sn_code]" required>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">设备排序 </label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <input type="number" class="tpl-form-input" name="equip[equip_sort]"
@@ -83,8 +90,18 @@
                 
             },
             // 自定义验证
-            validation: function () {
+            validation: function (data) {
                 
+                
+                
+
+
+
+
+
+
+
+
                 return true;
             }
         });

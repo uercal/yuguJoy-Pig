@@ -141,7 +141,13 @@ class Order extends BaseModel
      */
     public function getOrderStatusAttr($value)
     {
-        $status = [10 => '进行中', 20 => '取消', 30 => '租赁中', 40 => '已完成'];
+        $status = [10 => '进行中', 20 => '取消', 30 => '租赁中'];
+        return ['text' => $status[$value], 'value' => $value];
+    }
+
+    public function getDoneStatusAttr($value)
+    {
+        $status = [10 => '进行中', 20 => '已完成'];
         return ['text' => $status[$value], 'value' => $value];
     }
 
@@ -169,7 +175,7 @@ class Order extends BaseModel
 
 
 
-    
+
 
 
 

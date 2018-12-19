@@ -33,6 +33,10 @@ input::-webkit-inner-spin-button{
     margin-bottom:unset;
 }
 
+.order-detail-progress li{
+    width:16.6666%;
+}
+
 </style>
 
 <div class="row-content am-cf">
@@ -48,7 +52,8 @@ input::-webkit-inner-spin-button{
                         $detail['pay_status']['value'] === 20 && $progress += 1;
                         $detail['delivery_status']['value'] === 20 && $progress += 1;
                         $detail['receipt_status']['value'] === 20 && $progress += 1;
-                        // $detail['order_status']['value'] === 30 && $progress += 1;
+                        $detail['order_status']['value'] === 30 && $progress += 1;
+                        $detail['done_status']['value'] === 20 && $progress += 1;
                         ?>
                         <ul class="order-detail-progress progress-<?= $progress ?>">
                             <li>
@@ -80,10 +85,18 @@ input::-webkit-inner-spin-button{
                                 <?php endif; ?>
                             </li>
                             <li>
-                                <span>完成</span>
+                                <span>租赁</span>
                                 <?php if ($detail['order_status']['value'] === 30) : ?>
                                     <div class="tip">
-                                        完成于 <?= date('Y-m-d H:i:s', $detail['receipt_time']) ?>
+                                        租赁于 <?= date('Y-m-d H:i:s', $detail['receipt_time']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </li>
+                            <li>
+                                <span>完成</span>
+                                <?php if ($detail['done_status']['value'] === 20) : ?>
+                                    <div class="tip">
+                                        完成于 <?= date('Y-m-d H:i:s', $detail['done_time']) ?>
                                     </div>
                                 <?php endif; ?>
                             </li>

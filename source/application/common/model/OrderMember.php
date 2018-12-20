@@ -40,32 +40,12 @@ class OrderMember extends BaseModel
         return $status[$data['status']];
     }
 
-
-
-    /**
-     * 获取该员工所有订单列表和状态
-     */
-    public function getMemeberOrderList($member_id)
+    public function after()
     {
-        $doing_list = $this->with(['order' => ['goods' => ['image']]])->where(['member_id' => $member_id, 'status' => 10])->group('order_id,type')->select()->toArray();
-        $done_list = $this->where(['member_id' => $member_id, 'status' => 20])->group('order_id,type')->select()->toArray();
-        $data = [];
-        // order_id + type 
-        foreach ($doing_list as $key => $value) {
-            $data[$value['order_id'] . '-' . $value['type']] = $value;
-        }
-        foreach ($done_list as $key => $value) {
-            $data[$value['order_id'] . '-' . $value['type']]['done'] = true;
-        }
-        // 划分待处理和已处理
-        $res = [];
-        foreach ($data as $key => $value) {
-            isset($value['done']) ? $res['done'][] = $value : $res['doing'][] = $value;
-        }        
-
-        return $res;
+        return $this->hasOne('OrderAfter', 'id', 'after_id');
     }
 
+    
 
     /**
      * 获取该员工状态 0:空闲 10：配送 20：维修     

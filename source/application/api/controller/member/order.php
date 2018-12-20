@@ -22,13 +22,25 @@ class Order extends Controller
      */
     public function list()
     {
+        $type = input('type');
+        $page = input('page');
         // 当前员工信息
-        $memberInfo = $this->getMember();       
+        $memberInfo = $this->getMember();        
         //订单
-        $orderMember = new OrderMember;            
-        $order = $orderMember->getMemeberOrderList($memberInfo['id']);                
+        $orderMember = new OrderMember;
+        $list = $orderMember->getMemeberOrderList($memberInfo['id'], $type, $page);
 
-        return $this->renderSuccess(compact('order'));
+        return $this->renderSuccess(compact('list'));
+    }
+
+    /**
+     * 获取单
+     */
+    public function detail($id, $type)
+    {
+        $orderMember = new OrderMember;
+        $detail = $orderMember->getDetail($id, $type);
+        return $this->renderSuccess(compact('detail'));
     }
 
 }

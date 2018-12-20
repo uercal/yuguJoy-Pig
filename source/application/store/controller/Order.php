@@ -406,9 +406,9 @@ class Order extends Controller
             return $this->renderError($error);
 
         } else {
-            $after_id = input()['id'];
-            $detail = OrderModel::detail($after_id);
-            $after = OrderAfterModel::getDetail($after_id);                
+            $after_id = input()['id'];            
+            $after = OrderAfterModel::getDetail($after_id);                                        
+            $detail = OrderModel::detail($after['order_id']);
             return $this->fetch('after_detail', compact('detail','after'));
         }
     }

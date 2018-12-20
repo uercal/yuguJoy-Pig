@@ -33,9 +33,9 @@ class Index extends Controller
             $header = explode('/', $role[0])[0];
             $menu[$header] = $role;
         }         
-        //订单条数(正在进行)    
+        //订单    
         $orderMember = new OrderMember;            
-        $orderCount = $orderMember->getDoingCount($memberInfo['id']);
+        $orderAfter = $orderMember->getOrderAfter($memberInfo['id']);
         // 通知
         $noticeLog = new Noticelog;
         $noticeCount = $noticeLog->getUnReadCount($memberInfo['id']);
@@ -45,7 +45,7 @@ class Index extends Controller
             'phone' => $memberInfo['phone'],
             'function' => $memberInfo['function']
         ];
-        return $this->renderSuccess(compact('memberInfo', 'menu','orderCount','noticeCount'));
+        return $this->renderSuccess(compact('memberInfo', 'menu','orderAfter','noticeCount'));
     }
 
 }

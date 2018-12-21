@@ -20,13 +20,18 @@ class Exam extends ExamModel
     public static function attrTextMap()
     {
         $data = [
+            // 用户认证
             'user_name' => '个人姓名',
             'company' => '公司名称',
             'org_code_id' => '组织机构代码证',
             'license_id' => '营业执照',
             'idcard_ids' => '身份证正反面',
             'other_content' => '其他信息',
-            'other_ids' => '其他图片'
+            'other_ids' => '其他图片',
+            // 送达审批
+            'order_id' => '查看订单',
+            'send_content' => '送达说明',
+            'send_pic_ids' => '送达图片说明'
         ];
         return $data;
     }

@@ -364,8 +364,7 @@ class Order extends OrderModel
             foreach ($member_ids as $key => $value) {
                 $param = [];
                 $param['member_id'] = $value;
-                $param['order_id'] = $this['order_id'];
-                $param['type'] = 10;//配送
+                $param['order_id'] = $this['order_id'];                
                 $param['status'] = 20;//已完成
                 $_member[] = $param;
             }

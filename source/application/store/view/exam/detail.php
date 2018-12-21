@@ -31,31 +31,39 @@
 
                                         <div class="am-form-group">
                                             <label class="am-u-sm-3 am-u-lg-2 am-form-label"> <?= $map[$k] ?> :</label>
-                                            <div class="am-u-sm-9 am-u-end">                                                   
-                                            <?php if (is_array($v)) : foreach ($v as $c) : ?>
-                                                <a href="<?= $c ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
-                                                    <img name="<?= $k ?>" src="<?= $c ?>" width="72" height="72" alt="">
-                                                </a>                                                                                                
-                                            <?php endforeach;
-                                            else : ?>                                                                                    
-                                                <a href="<?= $v ?>" title="点击查看大图" target="_blank">
-                                                    <img name="<?= $k ?>" src="<?= $v ?>" width="72" height="72" alt="">
-                                                </a> 
+                                            <?php if ($k == 'order_id') : ?>
+                                                <div class="tpl-table-black-operation" style="padding-top: .8rem;">
+                                                    <a href="<?= url('order/detail', ['order_id' => $v]) ?>" style="margin-left: 10px;" class="tpl-table-black-operation">点击跳转</a>
+                                                </div>
+
+                                            <?php else : ?>
+                                                <div class="am-u-sm-9 am-u-end">                                                   
+                                                <?php if (is_array($v)) : foreach ($v as $c) : ?>
+                                                    <a href="<?= $c ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                                        <img name="<?= $k ?>" src="<?= $c ?>" width="72" height="72" alt="">
+                                                    </a>                                                                                                
+                                                <?php endforeach;
+                                                else : ?>                                                                                    
+                                                    <a href="<?= $v ?>" title="点击查看大图" target="_blank">
+                                                        <img name="<?= $k ?>" src="<?= $v ?>" width="72" height="72" alt="">
+                                                    </a> 
+                                                <?php endif; ?>
+                                                </div>
                                             <?php endif; ?>
-                                            </div>
                                         </div>
 
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-                            
-                            <div class="am-form-group">
-                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">发放额度</label>
-                                <div class="am-u-sm-9 am-u-end">
-                                    <input type="number" class="tpl-form-input" style="background-color:#fff;"
-                                        value="<?= $status == 10 ? '' : $info['quota']['quota_money'] ?>" <?= $status == 10 ? '' : 'disabled="disabled"' ?>  id="quota_money">
+                            <?php if ($type != 20) : ?>
+                                <div class="am-form-group">
+                                    <label class="am-u-sm-3 am-u-lg-2 am-form-label">发放额度</label>
+                                    <div class="am-u-sm-9 am-u-end">
+                                        <input type="number" class="tpl-form-input" style="background-color:#fff;"
+                                            value="<?= $status == 10 ? '' : $info['quota']['quota_money'] ?>" <?= $status == 10 ? '' : 'disabled="disabled"' ?>  id="quota_money">
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                            
                         </form>          
                         

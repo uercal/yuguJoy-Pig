@@ -13,7 +13,25 @@ use think\Db;
 class Exam extends BaseModel
 {
     protected $name = 'exam';
+    protected $insert = ['wxapp_id' => 10001];
 
+
+    protected $append = ['order'];
+
+
+    public function getOrderAttr($value, $data)
+    {
+        if ($data['type'] == 20) {
+            $content_arr = json_decode($data['content'], true);
+            return Db::name('order')->where('order_id', $content_arr['order_id'])->find();
+        }
+        return [];
+    }
+
+    public function member()
+    {
+        return $this->hasOne('Member', 'id', 'member_id');
+    }
 
     public function user()
     {
@@ -35,7 +53,7 @@ class Exam extends BaseModel
 
     public function getTypeTextAttr($value, $data)
     {
-        $type = [10 => '用户认证'];
+        $type = [10 => '用户认证', 20 => '员工送达审批'];
         return $type[$data['type']];
     }
 
@@ -48,10 +66,22 @@ class Exam extends BaseModel
         if (!empty($map['user_id'])) $_map['user_id'] = ['=', $map['user_id']];
         if (!empty($map['status'])) $_map['status'] = ['=', $map['status']];
         if (!empty($map['type'])) $_map['type'] = ['=', $map['type']];
+        // 默认
+        if (empty($map['type'])) {
+            $_map['type'] = ['=', 10];
+            $map['type'] = 10;
+        }
 
-        $data = $this->with(['user'])->where($_map)
-            ->order(['update_time' => 'desc'])
-            ->paginate(15, false, ['query' => $request->request()]);
+        if ($map['type'] == 20) {
+            $data = $this->with(['member'])->where($_map)
+                ->order(['update_time' => 'desc'])
+                ->paginate(15, false, ['query' => $request->request()])->append(['order']);
+        } else {
+            $data = $this->with(['user'])->where($_map)
+                ->order(['update_time' => 'desc'])
+                ->paginate(15, false, ['query' => $request->request()]);
+        }
+
 
         return ['data' => $data, 'map' => $map];
     }

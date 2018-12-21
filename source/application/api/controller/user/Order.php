@@ -6,6 +6,7 @@ use app\api\controller\Controller;
 use app\api\model\Order as OrderModel;
 use app\api\model\Wxapp as WxappModel;
 use app\common\library\wechat\WxPay;
+use app\api\model\OrderAfter as OrderAfterModel;
 
 /**
  * 用户订单管理
@@ -82,7 +83,7 @@ class Order extends Controller
      */
     public function receipt($order_id)
     {
-        $model = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);      
+        $model = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);
         if ($model->receipt()) {
             return $this->renderSuccess();
         }
@@ -111,4 +112,25 @@ class Order extends Controller
         return $this->renderSuccess($wxParams);
     }
 
+
+    /**
+     * 发起售后
+     */
+    public function after()
+    {
+        $user = $this->getUser();
+        $post = input();
+        $after = [];
+        $after['user_id'] = $user['user_id'];
+        $after['order_id'] = $post['order_id'];
+        $after['request_text'] = $post['request_text'];
+        $after['request_pics_ids'] = $post['request_pics_ids'];
+        $model = new OrderAfterModel;
+        if ($model->addAfter($after)) {
+            return $this->renderSuccess('发起成功');
+        }
+        $error = $model->getError() ? : '发起失败';
+        return $this->renderError($error);
+
+    }
 }

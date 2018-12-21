@@ -43,4 +43,18 @@ class Order extends Controller
         return $this->renderSuccess(compact('detail'));
     }
 
+
+    /**
+     * 确认派送
+     */
+    public function sendDone()
+    {
+        $orderMember = new OrderMember;
+        $memberInfo = $this->getMember();
+        if ($orderMember->sendDone(input(), $memberInfo['id'])) {
+            return $this->renderSuccess('success');
+        } else {
+            return $this->renderError('error');
+        }
+    }
 }

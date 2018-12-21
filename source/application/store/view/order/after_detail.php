@@ -83,7 +83,7 @@
                                     <?= $after['pay_price'] ?>
                                 </td>
                                 <td>
-                                    <?= $after['pay_status']==10?'未支付':'已支付' ?>
+                                    <?= $after['pay_status'] == 10 ? '未支付' : '已支付' ?>
                                 </td>
                                 <td>
                                     <?= $after['status_text'] ?>
@@ -167,6 +167,20 @@
                                     <textarea style="border:1px solid #ccc;" cols="30" rows="10" disabled="disabled"><?= $after['request_text'] ?></textarea>
                                 </div>
                             </div>        
+
+                            <?php if(!empty($after['request_pics'])):?>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label"> 售后图片说明: </label>                                
+                                <div class="am-u-sm-9 am-u-end">     
+                                    <?php foreach($after['request_pics'] as $pic): ?>                                                                              
+                                    <a href="<?= $pic['file_path'].$pic['file_name'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                        <img name="" src="<?= $pic['file_path'].$pic['file_name'] ?>" width="72" height="72" alt="">
+                                    </a>                                          
+                                    <?php endforeach;?>                                                                                   
+                                </div>                               
+                            </div>
+                            <?php endif;?>
+
                             <input type="hidden" name="after[member_ids]" id="member_ids" value="">
                             <button type="submit" id="_sub" style="display:none;"></button>
                         </form>

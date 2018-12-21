@@ -17,10 +17,10 @@
                                     href="javascript:;">
                                         <span class="am-icon-pencil"></span> 审核类型                                        
                                     </a>                                    
-                                    <select name="type" class="am-field-valid" id="type" style="font-size:12px;" data-am-selected="{searchBox: 1, btnSize: 'sm',  placeholder:'请选择审核类型'}"
-                                            >
-                                        <option value=""></option>                                       
+                                    <select name="type" class="am-field-valid" id="type" style="font-size:12px;" data-am-selected="{btnSize: 'sm',  placeholder:'请选择审核类型'}"
+                                            >                                                                    
                                         <option value="10" <?php if (isset($map['type']) && $map['type'] == 10) : ?> selected <?php endif; ?>>用户认证</option>                                        
+                                        <option value="20" <?php if (isset($map['type']) && $map['type'] == 20) : ?> selected <?php endif; ?>>员工派送</option>                                        
                                     </select>
                                 </div>
                                 <div class="am-btn-group am-btn-group-xs" style="display:flex;">
@@ -65,9 +65,9 @@
                          tpl-table-black am-text-nowrap">
                             <thead>
                             <tr>
-                                <th>用户ID</th>
-                                <th>微信头像</th>
-                                <th>微信昵称</th>
+                                <th><?= $map['type'] == 20 ? '员工ID' : '用户ID' ?></th>
+                                <th><?= $map['type'] == 20 ? '员工姓名' : '微信头像' ?></th>
+                                <th><?= $map['type'] == 20 ? '订单号' : '微信昵称' ?></th>
                                 <th>手机号码</th>
                                 <th>审核类型</th>
                                 <th>提交文件</th>
@@ -78,14 +78,15 @@
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $item) : ?>                                
                                 <tr>
-                                    <td class="am-text-middle"><?= $item['user']['user_id'] ?></td>
-                                    <td class="am-text-middle">
+                                    <td class="am-text-middle"><?= $map['type'] == 20 ? $item['member']['id'] : $item['user']['user_id'] ?></td>
+                                    <td class="am-text-middle">                                    
+                                        <?= $item['member']['name'] ?>                                                                                                             
                                         <a href="<?= $item['user']['avatarUrl'] ?>" title="点击查看大图" target="_blank">
                                             <img src="<?= $item['user']['avatarUrl'] ?>" width="40" height="40" alt="">
-                                        </a>
+                                        </a>                                    
                                     </td>
-                                    <td class="am-text-middle"><?= $item['user']['nickName'] ?></td>
-                                    <td class="am-text-middle"><?= $item['user']['phone'] ? : '--' ?></td>
+                                    <td class="am-text-middle"><?= $map['type'] == 20 ? $item['order']['order_no'] : $item['user']['nickName'] ?></td>
+                                    <td class="am-text-middle"><?= $map['type'] == 20 ? $item['member']['phone'] : $item['user']['phone'] ? : '--' ?></td>
                                     <td class="am-text-middle"><?= $item['type_text'] ? : '--' ?></td>
                                     <td class="am-text-middle">
                                         <button class="am-btn am-btn-sm am-btn-secondary" onclick="detail(<?= $item['id'] ?>)">查看并审核</button>

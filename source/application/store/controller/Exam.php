@@ -18,6 +18,7 @@ class Exam extends Controller
         $res = $model->getList();
         $list = $res['data'];
         $map = $res['map'];
+        // halt($list->toArray()['data'][0]);
         return $this->fetch('list', compact('list', 'map'));
     }
 
@@ -25,7 +26,7 @@ class Exam extends Controller
     // 审核
     public function detail($id)
     {
-        $info = ExamModel::with('quota')->find($id);        
+        $info = ExamModel::with('quota')->find($id);
         $map = ExamModel::attrTextMap();
         $type = $info['type'];
         $status = $info['status'];
@@ -38,20 +39,26 @@ class Exam extends Controller
         $data['image'] = [];
         foreach ($data_arr as $key => $value) {
             if (strpos($key, 'id') !== false) {
+                // 员工派送审批
+                if ($key == 'order_id') {
+                    $data['image'][$key] = $value;
+                    continue;
+                }
+
                 // id是否是集合
                 if (strpos($value, ',') !== false) {
                     $data['image'][$key] = UploadApiFile::getFilesPath($value);
-                }else{
-                    if(!empty($value)){
+                } else {
+                    if (!empty($value)) {
                         $data['image'][$key] = UploadApiFile::getFilePath($value);
-                    }                    
-                }                
+                    }
+                }
             } else {
                 $data['input'][$key] = $value;
             }
-        }          
+        }                  
         //         
-        return $this->fetch('detail', compact('data', 'map', 'id', 'type', 'status', 'info','content'));
+        return $this->fetch('detail', compact('data', 'map', 'id', 'type', 'status', 'info', 'content'));
 
 
     }

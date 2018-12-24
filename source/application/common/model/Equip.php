@@ -83,7 +83,7 @@ class Equip extends BaseModel
 
     public static function detail($equip_id)
     {
-        return self::get($equip_id);
+        return self::with(['goodsGetName', 'specValue'])->where('equip_id',$equip_id)->find()->append(['services'])->toArray();
     }
 
 
@@ -94,7 +94,26 @@ class Equip extends BaseModel
      */
     public function getAll()
     {
-        return $this->with(['goods'=>['category'],'specValue'])->select()->toArray();
+        return $this->with(['goods' => ['category'], 'specValue'])->select()->toArray();
     }
 
+
+    // 
+    public static function ecryptdString($str)
+    {
+        $keys = 'uercal,';
+        $iv = ',xiaocaizhu';
+        $encrypted_string = base64_encode($keys . $str . $iv);
+        $encrypted_string = substr($encrypted_string, 0, -2);
+        // halt([$encrypted_string,$this->decryptStrin($encrypted_string)]);
+        return $encrypted_string;
+    }
+
+    public static function decryptStrin($str)
+    {
+        $str .= "==";
+        $decrypted_string = base64_decode($str);
+        $data = explode(',', $decrypted_string);
+        return $data[1];
+    }
 }

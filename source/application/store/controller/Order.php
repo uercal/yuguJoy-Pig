@@ -113,8 +113,7 @@ class Order extends Controller
     {
         $model = new OrderModel;
         $res = $model->getList($filter);
-        $list = $res['data'];
-        // halt($list[0]);
+        $list = $res['data'];        
         $map = $res['map'];
         return $this->fetch('index', compact('title', 'list', 'map'));
     }

@@ -24,7 +24,7 @@ class OrderAfter extends BaseModel
      */
     public function getRequestPicsAttr($value, $data)
     {
-        return UploadApiFile::whereIn('file_id', $data['request_pics_ids'])->select()->toArray();
+        return UploadApiFile::whereIn('file_id', $data['request_pics_ids'])->select()->append(['file_path'])->toArray();
     }
 
     public function getCheckedEquipAttr($value, $data)
@@ -120,5 +120,5 @@ class OrderAfter extends BaseModel
     }
 
 
-  
+
 }

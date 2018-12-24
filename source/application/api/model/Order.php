@@ -272,8 +272,9 @@ class Order extends OrderModel
             ->where('user_id', '=', $user_id)
             ->where('order_status', '<>', 20)
             ->where($filter)
-            ->order(['create_time' => 'desc'])
-            ->select();
+            ->order(['create_time' => 'desc'])            
+            ->select()
+            ->append(['after_status']);
     }
 
     /**
@@ -364,13 +365,13 @@ class Order extends OrderModel
             foreach ($member_ids as $key => $value) {
                 $param = [];
                 $param['member_id'] = $value;
-                $param['order_id'] = $this['order_id'];                
+                $param['order_id'] = $this['order_id'];
                 $param['status'] = 20;//已完成
                 $_member[] = $param;
             }
             $orderMember = new OrderMember;
             $orderMember->saveAll($_member);
-            
+
             Db::commit();
             return true;
         } catch (\Exception $e) {

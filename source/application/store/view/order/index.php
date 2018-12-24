@@ -167,7 +167,7 @@
                                                 <div class="tpl-table-black-operation">                                                                                                       
                                                     <a class="tpl-table-black-operation-<?= ($order['order_status']['value'] === 30 && $order['done_status']['value'] === 10) ? 'war' : 'dis' ?>"
                                                      data-id="<?= $order['order_id'] ?>" data-dis="<?= ($order['order_status']['value'] === 30 && $order['done_status']['value'] === 10) ? '0' : '1' ?>" 
-                                                     onclick="after(<?= $order['order_id'] ?>,this)">
+                                                     data-after="<?= $order['after_status'] ?>" onclick="after(<?= $order['order_id'] ?>,this)">
                                                     发起售后</a>
                                                 </div>                                              
                                             </td>
@@ -267,13 +267,18 @@
 
 
     function after(order_id,e){
-        var dis = $(e).attr('data-dis');
+        var dis = $(e).attr('data-dis');    
+        var after_count = $(e).attr('data-after');
         if(dis==1){
             
         }else{
-            var url = "<?= url('order/order_after_add') ?>&order_id="+order_id;
-            window.location.href = url;
-            
+
+            if(after_count==0){
+                var url = "<?= url('order/order_after_add') ?>&order_id="+order_id;
+                window.location.href = url;
+            }else{
+                layer.msg('当前订单有正在处理的售后单!');
+            }                        
         }
     }
 

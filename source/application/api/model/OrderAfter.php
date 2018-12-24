@@ -23,7 +23,7 @@ class OrderAfter extends OrderAfterModel
         // 售后单号
         $after_no = date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         $after['after_no'] = $after_no;
-
+        
         // 开启事务
         Db::startTrans();
         try {

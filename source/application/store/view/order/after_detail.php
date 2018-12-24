@@ -168,18 +168,18 @@
                                 </div>
                             </div>        
 
-                            <?php if(!empty($after['request_pics'])):?>
+                            <?php if (!empty($after['request_pics'])) : ?>
                             <div class="am-form-group">
-                                <label class="am-u-sm-3 am-u-lg-2 am-form-label"> 售后图片说明: </label>                                
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label" style="width:auto;padding-top:unset;"> 售后图片说明: </label>                                
                                 <div class="am-u-sm-9 am-u-end">     
-                                    <?php foreach($after['request_pics'] as $pic): ?>                                                                              
-                                    <a href="<?= $pic['file_path'].$pic['file_name'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
-                                        <img name="" src="<?= $pic['file_path'].$pic['file_name'] ?>" width="72" height="72" alt="">
+                                    <?php foreach ($after['request_pics'] as $pic) : ?>                                                                              
+                                    <a href="<?= $pic['file_path'] . $pic['file_name'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                        <img name="" src="<?= $pic['file_path'] . $pic['file_name'] ?>" width="72" height="72" alt="">
                                     </a>                                          
-                                    <?php endforeach;?>                                                                                   
+                                    <?php endforeach; ?>                                                                                   
                                 </div>                               
                             </div>
-                            <?php endif;?>
+                            <?php endif; ?>
 
                             <input type="hidden" name="after[member_ids]" id="member_ids" value="">
                             <button type="submit" id="_sub" style="display:none;"></button>

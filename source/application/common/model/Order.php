@@ -2,6 +2,8 @@
 
 namespace app\common\model;
 
+use app\common\model\OrderAfter;
+
 use think\Request;
 use think\Hook;
 
@@ -13,6 +15,8 @@ use think\Hook;
 class Order extends BaseModel
 {
     protected $name = 'order';
+
+    protected $append = ['after_status'];
 
     /**
      * 订单模型初始化
@@ -174,7 +178,14 @@ class Order extends BaseModel
 
 
 
-
+    /**
+     * 当前售后状态
+     */
+    public function getAfterStatusAttr($value, $data)
+    {
+        $count = OrderAfter::where('order_id', $data['order_id'])->where('status', '<>', 40)->select()->count();
+        return $count;
+    }
 
 
 

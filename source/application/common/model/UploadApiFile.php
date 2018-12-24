@@ -23,7 +23,7 @@ class UploadApiFile extends BaseModel
      * @param $data
      * @return string
      */
-    public function getFilePathAttr($data)
+    public function getFilePathAttr($value, $data)
     {
         return self::$base_url . 'uploads/' . $data['file_name'];
     }
@@ -42,10 +42,10 @@ class UploadApiFile extends BaseModel
 
     public static function getFilesPath($filesIds)
     {
-        $data = self::whereIn('file_id', $filesIds)->select()->toArray();        
+        $data = self::whereIn('file_id', $filesIds)->select()->toArray();
         foreach ($data as $key => $value) {
             $data[$key] = self::$base_url . 'uploads/' . $value['file_name'];
-        }        
+        }
         return $data;
     }
 

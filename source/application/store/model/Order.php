@@ -47,9 +47,10 @@ class Order extends OrderModel
         $data = $this->with(['goods.image', 'address', 'user'])
             ->where($filter)
             ->where($_map)
-            ->order(['create_time' => 'desc'])->paginate(10, false, [
+            ->order(['create_time' => 'desc'])
+            ->paginate(10, false, [
                 'query' => Request::instance()->request()
-            ]);
+            ])->append(['after_status']);
 
         return ['data' => $data, 'map' => $map];
     }
@@ -112,7 +113,7 @@ class Order extends OrderModel
             foreach ($member_ids as $key => $value) {
                 $_order_member = [];
                 $_order_member['member_id'] = $value;
-                $_order_member['order_id'] = $input['order_id'];                
+                $_order_member['order_id'] = $input['order_id'];
                 $_order_member['status'] = 10; //进行中
                 $_order_member['wxapp_id'] = $wxapp_id;
                 $order_member[] = $_order_member;
@@ -579,7 +580,7 @@ class Order extends OrderModel
                     'service_ids' => null,
                     'service_time' => null
                 ]);
-                OrderMember::where('order_id',$state['order_id'])->delete();
+                OrderMember::where('order_id', $state['order_id'])->delete();
             }
             
             // 是否送达设备
@@ -609,7 +610,7 @@ class Order extends OrderModel
                 foreach ($member_ids as $key => $value) {
                     $param = [];
                     $param['member_id'] = $value;
-                    $param['order_id'] = $state['order_id'];                    
+                    $param['order_id'] = $state['order_id'];
                     $param['status'] = 20;//已完成
                     $_member[] = $param;
                 }

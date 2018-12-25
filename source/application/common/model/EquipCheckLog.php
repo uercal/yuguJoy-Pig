@@ -13,6 +13,8 @@ use think\Db;
 class EquipCheckLog extends BaseModel
 {
     protected $name = 'equip_check_log';
+    protected $updateTime = false;
+    protected $insert = ['wxapp_id' => 10001];
 
     public function getCheckStatusTextAttr($value, $data)
     {

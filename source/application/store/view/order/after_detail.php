@@ -6,7 +6,7 @@
     /* margin-bottom:unset; */
 }
 .order-detail-progress li{
-    width:25%;
+    width:20%;
 }
 
 
@@ -32,7 +32,8 @@
                         $after['status'] == 10 ? $progress = 2 : '';
                         $after['status'] == 20 ? $progress = 3 : '';
                         $after['status'] == 30 ? $progress = 4 : '';
-                        $after['status'] == 40 ? $progress = 5 : '';
+                        $after['pay_status'] == 20 ? $progress = 5 : '';
+                        $after['status'] == 40 ? $progress = 6 : '';
                         ?>
                         <ul class="order-detail-progress progress-after-<?= $progress ?>">
                             <li>
@@ -46,10 +47,13 @@
                                 <span>返修中</span>
                             </li>
                             <li>
+                                <span>未付款</span>
+                            </li>
+                            <li>
                                 <span>已完成</span>
                                 <?php if ($after['status'] === 40) : ?>
                                     <div class="tip">
-                                        收货于 <?= $after['update_time'] ?>
+                                        <?= $after['update_time'] ?>
                                     </div>
                                 <?php endif; ?>
                             </li>                            
@@ -92,6 +96,35 @@
                             </tbody>
                         </table>
                     </div>
+
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title am-fl">地址信息</div>
+                    </div>
+                    <div class="am-scrollable-horizontal">
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <tbody>
+                            <tr>
+                                <th>收货人</th>
+                                <th>收货电话</th>
+                                <th>收货地址</th>
+                            </tr>
+                            <tr>
+                                <td><?= $detail['address']['name'] ?></td>
+                                <td><?= $detail['address']['phone'] ?></td>
+                                <td>
+                                    <?= $detail['address']['region']['province'] ?>
+                                    <?= $detail['address']['region']['city'] ?>
+                                    <?= $detail['address']['region']['region'] ?>
+                                    <?= $detail['address']['detail'] ?>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
 
                     <div class="widget-head am-cf">
                         <div class="widget-title am-fl">商品信息(大于3月先收3月租金)</div>
@@ -173,8 +206,8 @@
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label" style="width:auto;padding-top:unset;"> 售后图片说明: </label>                                
                                 <div class="am-u-sm-9 am-u-end">     
                                     <?php foreach ($after['request_pics'] as $pic) : ?>                                                                              
-                                    <a href="<?= $pic['file_path'] . $pic['file_name'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
-                                        <img name="" src="<?= $pic['file_path'] . $pic['file_name'] ?>" width="72" height="72" alt="">
+                                    <a href="<?= $pic['file_path'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                        <img name="" src="<?= $pic['file_path'] ?>" width="72" height="72" alt="">
                                     </a>                                          
                                     <?php endforeach; ?>                                                                                   
                                 </div>                               

@@ -14,6 +14,7 @@ class EquipUsingLog extends BaseModel
 {
     protected $name = 'equip_using_log';
     protected $updateTime = false;
+    protected $insert = ['wxapp_id' => 10001];
 
     public function getEquipStatusTextAttr($value, $data)
     {
@@ -46,11 +47,11 @@ class EquipUsingLog extends BaseModel
         $request = Request::instance();
         $map = $request->request();
         $_map = [];
-        if (!empty($map['equip_id'])) $_map['equip_id'] = ['=', $map['equip_id']];               
+        if (!empty($map['equip_id'])) $_map['equip_id'] = ['=', $map['equip_id']];
 
         if (!empty($map['startDate']) && !empty($map['endDate'])) $_map['Using_time'] = ['between', [strtotime($map['startDate']), strtotime($map['endDate'])]];
 
-        $data = $this->with(['order','member'])
+        $data = $this->with(['order', 'member'])
             ->where($_map)
             ->order(['create_time' => 'desc'])
             ->paginate(15, false, ['query' => $request->request()]);

@@ -2129,42 +2129,50 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .tpl-dropdown-menu-noti
 }
 
 .order-detail-progress.progress-after-1:after {
-  width: 25%;
+  width: 16%;
 }
 
 .order-detail-progress.progress-after-2:before {
-  width: 25%;
+  width: 16%;
 }
 
 .order-detail-progress.progress-after-2:after {
-  width: 50%;
+  width: 32%;
 }
 
 .order-detail-progress.progress-after-3:before {
-  width: 50%;
+  width: 32%;
 }
 
 .order-detail-progress.progress-after-3:after {
-  width: 75%;
+  width: 48%;
 }
 
 .order-detail-progress.progress-after-4:before {
-  width: 75%;
+  width: 48%;
 }
 
 .order-detail-progress.progress-after-4:after {
-  width: 100%;
+  width: 64%;
 }
 
 .order-detail-progress.progress-after-5:before {
-  width: 100%;
+  width: 64%;
 }
 
 .order-detail-progress.progress-after-5:after {
+  width: 80%;
+}
+
+.order-detail-progress.progress-after-6:before {
+  width: 80%;
+}
+
+.order-detail-progress.progress-after-6:after {
   width: 100%;
 }
 
-.order-detail-progress.progress-after-5 li:nth-child(4) {
+.order-detail-progress.progress-after-6 li:nth-child(6) {
   color: #fff;
 }
 
@@ -2173,25 +2181,33 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .tpl-dropdown-menu-noti
 .order-detail-progress.progress-after-2 li:nth-child(1),
 .order-detail-progress.progress-after-3 li:nth-child(1),
 .order-detail-progress.progress-after-4 li:nth-child(1),
-.order-detail-progress.progress-after-5 li:nth-child(1){
+.order-detail-progress.progress-after-5 li:nth-child(1),
+.order-detail-progress.progress-after-6 li:nth-child(1){
   color: #fff;
 }
 
 .order-detail-progress.progress-after-2 li:nth-child(2),
 .order-detail-progress.progress-after-3 li:nth-child(2),
 .order-detail-progress.progress-after-4 li:nth-child(2),
-.order-detail-progress.progress-after-5 li:nth-child(2){
+.order-detail-progress.progress-after-5 li:nth-child(2),
+.order-detail-progress.progress-after-6 li:nth-child(2){
   color: #fff;
 }
 
 .order-detail-progress.progress-after-3 li:nth-child(3),
 .order-detail-progress.progress-after-4 li:nth-child(3),
-.order-detail-progress.progress-after-5 li:nth-child(3){
+.order-detail-progress.progress-after-5 li:nth-child(3),
+.order-detail-progress.progress-after-6 li:nth-child(3){
   color: #fff;
 }
 
 .order-detail-progress.progress-after-4 li:nth-child(4),
-.order-detail-progress.progress-after-5 li:nth-child(4){
+.order-detail-progress.progress-after-5 li:nth-child(4),
+.order-detail-progress.progress-after-6 li:nth-child(4){
+  color: #fff;
+}
+.order-detail-progress.progress-after-5 li:nth-child(5),
+.order-detail-progress.progress-after-6 li:nth-child(5){
   color: #fff;
 }
 /*  */

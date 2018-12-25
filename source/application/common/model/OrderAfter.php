@@ -96,6 +96,13 @@ class OrderAfter extends BaseModel
     }
 
 
+    public function getPayStatusTextAttr($value, $data)
+    {
+        $status = [10 => '未发起', 20 => '未付款', 30 => '已付款'];
+        return $status[$data['pay_status']];
+    }
+
+
 
     public function getTypeTextAttr($value, $data)
     {

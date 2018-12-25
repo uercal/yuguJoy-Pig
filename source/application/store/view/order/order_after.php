@@ -69,9 +69,9 @@
                                             >
                                         <option value="0">不限</option>                                       
                                         <option value="10" <?php if (isset($map['status']) && $map['status'] == 10) : ?> selected <?php endif; ?>>已发起</option>                                        
-                                        <option value="30" <?php if (isset($map['status']) && $map['status'] == 20) : ?> selected <?php endif; ?>>进行中</option>
-                                        <option value="40" <?php if (isset($map['status']) && $map['status'] == 30) : ?> selected <?php endif; ?>>返修中</option>
-                                        <option value="50" <?php if (isset($map['status']) && $map['status'] == 40) : ?> selected <?php endif; ?>>已完成</option>                                        
+                                        <option value="20" <?php if (isset($map['status']) && $map['status'] == 20) : ?> selected <?php endif; ?>>进行中</option>
+                                        <option value="30" <?php if (isset($map['status']) && $map['status'] == 30) : ?> selected <?php endif; ?>>返修中</option>
+                                        <option value="40" <?php if (isset($map['status']) && $map['status'] == 40) : ?> selected <?php endif; ?>>已完成</option>                                        
                                     </select>
                                 </div>                                                            
                                 <div class="am-btn-group am-btn-group-xs" style="display:flex;">
@@ -108,10 +108,11 @@
                                 <tr>
                                     <th width="20%" class="goods-detail">售后单号</th>
                                     <th width="10%">售后类型</th>
-                                    <th width="15%">用户头像</th>
-                                    <th width="15%">用户昵称</th>
-                                    <th>主订单号</th>
-                                    <th>状态</th>                                
+                                    <th>用户头像</th>
+                                    <th>用户昵称</th>
+                                    <th>主订单</th>
+                                    <th>状态</th>    
+                                    <th>付款状态</th>                            
                                     <th>发起时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -127,8 +128,15 @@
                                             </a>                                            
                                         </td>
                                         <td class="am-text-middle"><?= $after['user']['nickName'] ?></td>
-                                        <td class="am-text-middle"><?= $after['order']['order_no'] ?></td>
-                                        <td class="am-text-middle status-bg-<?= $after['status'] ?>"><?= $after['status_text'] ?></td>                                    
+                                        <td class="am-text-middle">
+                                            <div class="tpl-table-black-operation">                                            
+                                                <a  href="<?= url('order/detail', ['order_id' => $after['order_id']]) ?>" class="tpl-table-black-operation-war">
+                                                    <i class="am-icon-book"></i> 查看
+                                                </a>                                                
+                                            </div>    
+                                        </td>
+                                        <td class="am-text-middle status-bg-<?= $after['status'] ?>"><?= $after['status_text'] ?></td>   
+                                        <td class="am-text-middle status-bg-<?= $after['pay_status'] ?>"><?= $after['pay_status_text'] ?></td>   
                                         <td class="am-text-middle"><?= $after['create_time'] ?></td>
                                         <td class="am-text-middle">
                                             <div class="tpl-table-black-operation">                                            

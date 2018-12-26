@@ -53,7 +53,7 @@
                                 <span>已完成</span>
                                 <?php if ($after['status'] === 40) : ?>
                                     <div class="tip">
-                                        <?= $after['update_time'] ?>
+                                        <?= date('Y-m-d H:i:s', $after['pay_time']) ?>
                                     </div>
                                 <?php endif; ?>
                             </li>                            
@@ -275,6 +275,117 @@
                         </table>       
 
                         <?php endif; ?>
+
+
+
+
+
+
+
+                        <!-- -->                                        
+                        <?php if ($after['type'] == 10) : ?>
+                        <div class="widget-head am-cf" style="position:relative;">
+                            <div class="widget-title am-fl">维修设备</div> 
+                        </div>                                                                                                                   
+                        <table class="regional-table am-table am-table-bordered am-table-centered
+                            am-text-nowrap am-margin-bottom-xs">
+                            <thead>
+                                <tr>
+                                    <th>维修类型</th>
+                                    <th>设备id</th>
+                                    <th>所属产品</th>
+                                    <th>型号/类型</th>
+                                    <th>保修</th>
+                                    <th>增值服务</th>
+                                    <th>状态</th>                                    
+                                </tr>
+                            </thead>                                
+                            <tbody>
+                                <?php foreach ($after['checked_equip'] as $item) : ?>
+                                    <tr>
+                                        <td>即时维修</td>
+                                        <td><?= $item['equip_id'] ?></td>
+                                        <td><?= $item['goods_name'] ?></td>
+                                        <td><?= $item['spec_value']['spec_value'] ?></td>
+                                        <td><?= $item['secure'] == 0 ? '标准保' : '意外保' ?></td>
+                                        <td><?= $item['services'] ? : '无' ?></td>
+                                        <td><?= $item['status_text'] ?></td>                                        
+                                    </tr>     
+                                <?php endforeach; ?>
+                                <?php foreach ($after['exchange_equip'] as $item) : ?>
+                                    <tr>
+                                        <td>以换代修-旧设备</td>
+                                        <td><?= $item['equip_id'] ?></td>
+                                        <td><?= $item['goods_name'] ?></td>
+                                        <td><?= $item['spec_value']['spec_value'] ?></td>
+                                        <td><?= $item['secure'] == 0 ? '标准保' : '意外保' ?></td>
+                                        <td><?= $item['services'] ? : '无' ?></td>
+                                        <td><?= $item['status_text'] ?></td>                                        
+                                    </tr>     
+                                <?php endforeach; ?>
+                                <?php foreach ($after['new_equip'] as $item) : ?>
+                                    <tr>
+                                        <td>以换代修-新设备</td>
+                                        <td><?= $item['equip_id'] ?></td>
+                                        <td><?= $item['goods_name'] ?></td>
+                                        <td><?= $item['spec_value']['spec_value'] ?></td>
+                                        <td><?= $item['secure'] == 0 ? '标准保' : '意外保' ?></td>
+                                        <td><?= $item['services'] ? : '无' ?></td>
+                                        <td><?= $item['status_text'] ?></td>                                        
+                                    </tr>     
+                                <?php endforeach; ?>
+                                <?php foreach ($after['back_equip'] as $item) : ?>
+                                    <tr>
+                                        <td>返修设备</td>
+                                        <td><?= $item['equip_id'] ?></td>
+                                        <td><?= $item['goods_name'] ?></td>
+                                        <td><?= $item['spec_value']['spec_value'] ?></td>
+                                        <td><?= $item['secure'] == 0 ? '标准保' : '意外保' ?></td>
+                                        <td><?= $item['services'] ? : '无' ?></td>
+                                        <td><?= $item['status_text'] ?></td>                                        
+                                    </tr>     
+                                <?php endforeach; ?>
+                            </tbody>                                                                    
+                        </table>        
+                        <?php endif; ?>
+
+
+                        <div class="widget-head am-cf">
+                            <div class="widget-title am-fl">售后处理说明</div>
+                        </div>                     
+                        
+                        <form id="my-form" class="am-form tpl-form-line-form" method="post">
+                            <?php if (!empty($after['check_text'])) : ?>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label" style="width:auto;padding-top:unset;">结果说明:</label>
+                                <div class="am-u-sm-9 am-u-end">                                    
+                                    <textarea style="border:1px solid #ccc;" cols="30" rows="10" disabled="disabled"><?= $after['check_text'] ?></textarea>
+                                </div>
+                            </div>        
+                            <?php endif; ?>
+
+                            <?php if (!empty($after['check_pics'])) : ?>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label" style="width:auto;padding-top:unset;"> 图片说明: </label>                                
+                                <div class="am-u-sm-9 am-u-end">     
+                                    <?php foreach ($after['check_pics'] as $pic) : ?>                                                                              
+                                    <a href="<?= $pic['file_path'] ?>" title="点击查看大图" target="_blank" style="margin-right:10px;">
+                                        <img name="" src="<?= $pic['file_path'] ?>" width="72" height="72" alt="">
+                                    </a>                                          
+                                    <?php endforeach; ?>                                                                                   
+                                </div>                               
+                            </div>
+                            <?php endif; ?>
+                            
+                            <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label" style="width:auto;padding-top:unset;"> 售后单状态: </label>                                
+                                <div class="am-u-sm-9 am-u-end" style="font-weight:bold;">                                         
+                                        <?= $after['status_text'] ?>
+                                </div>                               
+                            </div>
+
+                        </form>                                                
+                        
                 </div>
             </div>
 

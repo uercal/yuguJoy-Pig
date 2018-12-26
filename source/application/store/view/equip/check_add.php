@@ -74,7 +74,7 @@
                                     </button>
                                     <p v-if="member_info" v-show="member_info" style="display:none;">
                                         查询结果：<a href="javascript:;">{{member_info.name}}</a> <br>
-                                        角色：<a href="javascript:;">{{member_info.role[0].role_name}}</a>
+                                        角色：<a href="javascript:;">{{member_info.role.role_name}}</a>
                                     </p>                                    
                                 </div>
                             </div>  

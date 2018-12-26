@@ -136,7 +136,7 @@
                                             </div>    
                                         </td>
                                         <td class="am-text-middle status-bg-<?= $after['status'] ?>"><?= $after['status_text'] ?></td>   
-                                        <td class="am-text-middle status-bg-<?= $after['pay_status'] ?>"><?= $after['pay_status_text'] ?></td>   
+                                        <td class="am-text-middle status-bg-<?= $after['pay_status']+10 ?>"><?= $after['pay_status_text'] ?></td>   
                                         <td class="am-text-middle"><?= $after['create_time'] ?></td>
                                         <td class="am-text-middle">
                                             <div class="tpl-table-black-operation">                                            

@@ -13,7 +13,7 @@ use think\Db;
 class Equip extends BaseModel
 {
     protected $name = 'equip';
-    protected $append = ['services'];
+    protected $append = ['services','status_text'];
 
     public function getStatusTextAttr($value, $data)
     {

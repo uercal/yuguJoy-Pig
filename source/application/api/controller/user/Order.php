@@ -133,4 +133,19 @@ class Order extends Controller
         return $this->renderError($error);
 
     }
+
+
+    public function afterList($dataType)
+    {
+        $model = new OrderAfterModel;
+        $list = $model->getList($this->user['user_id'], $dataType);
+        return $this->renderSuccess(compact('list'));
+    }
+
+    public function afterDetail($after_id)
+    {
+        $model = new OrderAfterModel;
+        $detail = $model->getDetail($after_id);
+        return $this->renderSuccess(compact('detail'));
+    }
 }

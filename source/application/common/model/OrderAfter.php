@@ -17,7 +17,7 @@ class OrderAfter extends BaseModel
     protected $updateTime = 'update_time';
     protected $insert = ['wxapp_id' => 10001];
 
-    protected $append = ['request_pics', 'checked_equip', 'exchange_equip', 'new_equip', 'back_equip', 'check_pics', 'members'];
+    protected $append = ['request_pics', 'checked_equip', 'exchange_equip', 'new_equip', 'back_equip', 'check_pics', 'members', 'pay_status_text', 'status_text'];
 
     /**
      * append attr
@@ -29,22 +29,22 @@ class OrderAfter extends BaseModel
 
     public function getCheckedEquipAttr($value, $data)
     {
-        return Equip::whereIn('equip_id', $data['checked_equip_ids'])->select()->toArray();
+        return Equip::with(['goodsGetName', 'specValue'])->whereIn('equip_id', $data['checked_equip_ids'])->select();
     }
 
     public function getExchangeEquipAttr($value, $data)
     {
-        return Equip::whereIn('equip_id', $data['exchange_equip_ids'])->select()->toArray();
+        return Equip::with(['goodsGetName', 'specValue'])->whereIn('equip_id', $data['exchange_equip_ids'])->select();
     }
 
     public function getNewEquipAttr($value, $data)
     {
-        return Equip::whereIn('equip_id', $data['new_equip_ids'])->select()->toArray();
+        return Equip::with(['goodsGetName', 'specValue'])->whereIn('equip_id', $data['new_equip_ids'])->select();
     }
 
     public function getBackEquipAttr($value, $data)
     {
-        return Equip::whereIn('equip_id', $data['back_equip_ids'])->select()->toArray();
+        return Equip::with(['goodsGetName', 'specValue'])->whereIn('equip_id', $data['back_equip_ids'])->select();
     }
 
     public function getCheckPicsAttr($value, $data)
@@ -122,7 +122,7 @@ class OrderAfter extends BaseModel
     // 
     public static function getDetail($after_id)
     {
-        $obj = self::find($after_id);
+        $obj = self::with(['order' => ['goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode'], 'address']])->find($after_id);
         return $obj->append(['request_pics', 'checked_equip', 'exchange_equip', 'new_equip', 'back_equip', 'check_pics', 'members']);
     }
 

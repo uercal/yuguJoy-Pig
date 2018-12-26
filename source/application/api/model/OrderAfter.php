@@ -162,6 +162,12 @@ class OrderAfter extends OrderAfterModel
                 $_using_log['member_id'] = $after['member_id'];
                 $_using_log['equip_status'] = 30;
                 $equip_using_log[] = $_using_log;
+
+                //equip 变为维修中          
+                $_equip = [];
+                $_equip['equip_id'] = $value;
+                $_equip['status'] = 40;
+                $equip[] = $_equip;
             }
         }
         
@@ -216,4 +222,104 @@ class OrderAfter extends OrderAfterModel
 
     }
 
+
+    public function doneReback($after)
+    {
+        unset($after['member_token']);
+        unset($after['wxapp_id']);        
+
+        // order_member        
+        $member_ids = $this->where('id', $after['after_id'])->value('member_ids');
+        $member_ids = explode(',', $member_ids);
+        $order_member = [];
+                
+        // 返修结算
+        $after['pay_status'] = 20;
+        foreach ($member_ids as $key => $value) {
+            $_order_member = [];
+            $_order_member['member_id'] = $value;
+            $_order_member['after_id'] = $after['after_id'];
+            $_order_member['status'] = 20;
+            $order_member[] = $_order_member;
+        }
+               
+        //DO
+        Db::startTrans();
+        try {
+            // 保存售后信息                               
+            $id = $after['after_id'];
+            unset($after['after_id']);
+            unset($after['member_id']);
+            unset($after['update_time']);
+
+            $after['pay_price'] = bcadd($after['server_price'], $after['source_price'], 2);
+            if ($after['pay_price'] == 0) {
+                $after['pay_status'] = 30;
+                $after['pay_time'] = time();
+                $after['status'] = 40;
+            }
+            $this->where('id', $id)->update($after);             
+                        
+            // 员工
+            $orderMemberModel = new OrderMember;
+            if (!empty($order_member)) {
+                $orderMemberModel->saveAll($order_member);
+            }
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * getPayCount
+     */
+    public function getPayCount($user_id)
+    {
+        return $this->where(['user_id' => $user_id, 'pay_status' => 20])->count();
+    }
+
+
+    /**
+     * list
+     */
+    public function getList($user_id, $type)
+    {
+        // 筛选条件
+        $filter = [];
+        // 订单数据类型
+        switch ($type) {
+            case 'doing':
+                $filter['status'] = ['<', 40];
+                $filter['pay_status'] = ['=', 10];
+                break;
+            case 'unPay':
+                $filter['status'] = ['<', 40];
+                $filter['pay_status'] = ['=', 20];
+                break;
+            case 'done':
+                $filter['status'] = ['=', 40];
+                $filter['pay_status'] = ['=', 30];
+                break;
+        }
+        return $this->with(['order' => ['goods.image']])
+            ->where('user_id', '=', $user_id)
+            ->where($filter)
+            ->order(['create_time' => 'desc'])
+            ->select();
+    }
 }

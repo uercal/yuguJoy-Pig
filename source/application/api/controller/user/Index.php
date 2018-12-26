@@ -5,6 +5,7 @@ namespace app\api\controller\user;
 use app\api\controller\Controller;
 use app\api\model\Order as OrderModel;
 use app\api\model\Exam as ExamModel;
+use app\api\model\OrderAfter;
 
 
 /**
@@ -33,10 +34,14 @@ class Index extends Controller
             'doing' => $model->getCount($userInfo['user_id'], 'doing')
         ];
 
+        // 售后需要支付的总数
+        $_model = new OrderAfter;
+        $afterCount = $_model->getPayCount($userInfo['user_id']);
+
         // 个人资料是否认证  以前status
         $examModel = new ExamModel;
         $infoStatus = $examModel->getStatus($userInfo['user_id']);
-        return $this->renderSuccess(compact('userInfo', 'orderCount', 'infoStatus'));
+        return $this->renderSuccess(compact('userInfo', 'orderCount', 'infoStatus', 'afterCount'));
     }
 
 }

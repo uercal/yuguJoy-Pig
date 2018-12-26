@@ -2165,7 +2165,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .tpl-dropdown-menu-noti
 }
 
 .order-detail-progress.progress-after-6:before {
-  width: 80%;
+  width: 100%;
 }
 
 .order-detail-progress.progress-after-6:after {

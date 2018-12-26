@@ -76,4 +76,36 @@ class Order extends Controller
             return $this->renderError('error');
         }
     }
+
+
+
+    /**
+     * 售后单返修结单
+     */
+    public function afterReback($order_member_id)
+    {
+        $after_id = OrderMember::where('id', $order_member_id)->value('after_id');
+        $after = new OrderAfter;
+        $detail = $after->getDetail($after_id);
+        $detail['check_pics_ids'] = explode(',', $detail['check_pics_ids']);        
+        return $this->renderSuccess($detail);
+    }
+
+
+    /**
+     * 返修结单
+     */
+    public function rebackDone()
+    {
+        $after = new OrderAfter;
+        $memberInfo = $this->getMember();
+        $post = input();
+        $post['member_id'] = $memberInfo['id'];
+        if ($after->doneReback($post)) {
+            return $this->renderSuccess('success');
+        } else {
+            return $this->renderError('error');
+        }
+    }
+
 }

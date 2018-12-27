@@ -13,7 +13,7 @@ use think\Db;
 class Equip extends BaseModel
 {
     protected $name = 'equip';
-    protected $append = ['services','status_text'];
+    protected $append = ['services', 'status_text'];
 
     public function getStatusTextAttr($value, $data)
     {
@@ -83,7 +83,7 @@ class Equip extends BaseModel
 
     public static function detail($equip_id)
     {
-        return self::with(['goodsGetName', 'specValue'])->where('equip_id',$equip_id)->find()->append(['services'])->toArray();
+        return self::with(['goodsGetName', 'specValue', 'order'])->where('equip_id', $equip_id)->find()->append(['services'])->toArray();
     }
 
 

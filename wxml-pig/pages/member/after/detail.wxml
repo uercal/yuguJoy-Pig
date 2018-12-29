@@ -1,0 +1,127 @@
+<member-header id="header"></member-header>
+
+<!-- 配送信息 -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">维修地址</text>
+    </view>
+    <view class='card-info'>
+        <view class='info-item'>
+            <image src="/images/member/customer.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.after.order.address.name}}</text>
+            <text wx:else>{{detail.order.address.name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/position.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.after.order.address.region.province+detail.data.after.order.address.region.city+detail.data.after.order.address.region.region+detail.data.after.order.address.detail}}</text>
+            <text wx:else>{{detail.order.address.region.province+detail.order.address.region.city+detail.order.address.region.region+detail.order.address.detail}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/iphone.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.after.order.address.phone}}</text>
+            <text wx:else>{{detail.order.address.phone}}</text>
+        </view>
+    </view>
+</view>
+
+
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;" wx:if="{{!isSend}}">申请售后信息说明</text>
+        <text style="font-weight:bold;" wx:else>用户备注留言</text>
+    </view>
+    <view class='card-info' style="padding-bottom:30rpx;">
+        <text wx:if="{{!isSend}}">{{detail.data.after.request_text}}</text>
+        <text wx:else>{{detail.request_text}}</text>
+    </view>
+</view>
+
+
+<!--  -->
+<view class="card" wx:if="{{detail.data.after.request_pics.length>0 && !isSend}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">申请售后图片说明</text>
+    </view>
+    <view class='pic-info'>
+        <view class='upload' wx:for="{{detail.data.after.request_pics}}" wx:for-index="key" data-index="{{key}}">
+            <image src='{{item.file_path}}'></image>
+        </view>
+    </view>
+</view>
+
+<view class="card" wx:if="{{detail.request_pics.length>0 && isSend}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">申请售后图片说明</text>
+    </view>
+    <view class='pic-info'>
+        <view class='upload' wx:for="{{detail.request_pics}}" wx:for-index="key" data-index="{{key}}">
+            <image src='{{item.file_path}}'></image>
+        </view>
+    </view>
+</view>
+
+
+<!--  -->
+<view class="card" wx:if="{{detail.data.after.pay_status!=10 && !isSend}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">用户费用支付情况</text>
+    </view>
+    <view class='card-info'>
+        <view class='info-item'>
+            <image src="/images/member/total-sum.png" mode="widthFix"></image>
+            <text>￥{{detail.data.after.pay_price}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/deposit.png" mode="widthFix"></image>
+            <text>{{detail.data.after.pay_status_text}}</text>
+        </view>
+    </view>
+</view>
+
+
+<view class="card" wx:if="{{isSend}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">添加配送人员</text>
+    </view>
+    <view class='addBody'>
+        <view class='add-item' wx:if="{{addMember.length>0}}" wx:for="{{addMember}}">
+            <view class='add-left'>
+                <view class='add-left-title'>
+                    <text>姓名：</text>
+                    <text>联系方式：</text>
+                    <text>职能：</text>
+                </view>
+                <view class='add-left-value'>
+                    <text>{{item.name}}</text>
+                    <text>{{item.phone}}</text>
+                    <text>{{item.function}}</text>
+                </view>
+            </view>
+            <view class='add-right' bindtap='delMember' data-id="{{item.id}}">
+                <image src="/images/member/delete.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class='addMember' bindtap="addMember">
+        <text>点击添加</text>
+    </view>
+
+</view>
+
+
+<view style="height:100rpx;"></view>
+
+<!-- footer -->
+<view class='footer' wx:if="{{detail.data.after.pay_status==10 && !isSend}}">
+    <view class='sub' bindtap='sub'>
+        <text>下一步</text>
+    </view>
+</view>
+
+
+<view class='footer' wx:if="{{isSend}}">
+    <view class='sub' bindtap='subSend'>
+        <text>开始派送</text>
+    </view>
+</view>

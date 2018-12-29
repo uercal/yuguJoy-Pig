@@ -1,0 +1,227 @@
+<member-header id="header"></member-header>
+
+<!-- 配送信息 -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">配送信息</text>
+    </view>
+    <view class='card-info'>
+        <view class='info-item'>
+            <image src="/images/member/orderform.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.order.order_no}}(订单号)</text>
+            <text wx:else>{{detail.order_no}}(订单号)</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/customer.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.order.address.name}}</text>
+            <text wx:else>{{detail.address.name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/position.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.order.address.region.province+detail.data.order.address.region.city+detail.data.order.address.region.region+detail.data.order.address.detail}}</text>
+            <text wx:else>{{detail.address.region.province+detail.address.region.city+detail.address.region.region+detail.address.detail}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/iphone.png" mode="widthFix"></image>
+            <text wx:if="{{!isSend}}">{{detail.data.order.address.phone}}</text>
+            <text wx:else>{{detail.address.phone}}</text>
+        </view>
+    </view>
+</view>
+
+
+<!-- 产品信息 -->
+<view class='card' wx:for="{{detail.equip}}" wx:key="this" wx:for-index="key" wx:if="{{!isSend}}">
+    <view class='card-head'>
+        <text style="font-style:oblique;">产品信息{{key+1}}</text>
+    </view>
+    <view class='card-info'>
+        <view class='info-item'>
+            <image src="/images/member/model.png" mode="widthFix"></image>
+            <text>{{item.goods.goods_name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/spec.png" mode="widthFix"></image>
+            <text>{{item.spec.spec_value}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/number.png" mode="widthFix"></image>
+            <text>{{item.equip.length}}台</text>
+        </view>
+        <!--  -->
+        <view class='info-equip' wx:if="{{item.equip.length==1}}">
+            <image src='/images/member/sn_code.png' mode="widthFix"></image>
+            <text class="sn_code_1" wx:for="{{item.equip}}" wx:key="this" wx:for-item="child">{{child.sn_code}}</text>
+            <text class='more-equip-1'>{{item.equip.length}}条S/N码</text>
+        </view>
+        <view class='info-equip-more' wx:if="{{item.equip.length!=1}}">
+            <view class='info-equip-image'>
+                <image src='/images/member/sn_code.png' mode="widthFix"></image>
+            </view>
+            <view class='sn_code'>
+                <text wx:if="{{!item.more}}">{{item.equip[0].sn_code}}</text>
+                <text wx:if="{{item.more}}" wx:for="{{item.equip}}" wx:key="this" wx:for-item="child">{{child.sn_code}}</text>
+            </view>
+            <view class='more-equip' bindtap='moreEquip' data-index='{{key}}'>
+                <view class="more-equip-text">
+                    <text wx:if="{{!item.more}}">展开{{item.equip.length-1}}条S/N码</text>
+                    <text wx:if="{{item.more}}">收起{{item.equip.length-1}}条S/N码</text>
+                    <view class='more-oval'>
+                        <image wx:if="{{!item.more}}" src='/images/member/more-equip.png'></image>
+                        <image wx:else src='/images/member/unmore-equip.png'></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+<!-- 产品信息 -->
+<view wx:if="{{isSend}}" class='card' wx:for="{{detail.goods}}" wx:key="this" wx:for-index="key">
+    <view class='card-head'>
+        <text style="font-style:oblique;">产品信息{{key+1}}</text>
+    </view>
+    <view class='card-info' style='padding-bottom:unset;'>
+        <view class='info-item'>
+            <image src="/images/member/model.png" mode="widthFix"></image>
+            <text>{{item.goods_name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/spec.png" mode="widthFix"></image>
+            <text>{{item.spec_value}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/number.png" mode="widthFix"></image>
+            <text>{{item.total_num}}台</text>
+        </view>
+    </view>
+    <view class='card-head'>
+        <text style="font-style:oblique;">套餐信息</text>
+    </view>
+    <view class='card-info' style="flex-wrap:wrap;flex-direction:row;">
+        <view class='info-item' style="width:50%;">
+            <image style="width:10%;" src="/images/member/configure.png" mode="widthFix"></image>
+            <text>{{item.rent_price}}元/月</text>
+        </view>
+        <view class='info-item' style="width:50%;">
+            <image style="width:10%;" src="/images/member/number.png" mode="widthFix"></image>
+            <text>{{item.total_num}}台</text>
+        </view>
+        <view class='info-item' style="width:50%;">
+            <image style="width:10%;" src="/images/member/deposit.png" mode="widthFix"></image>
+            <text>{{item.goods_price}}元/月（押金）</text>
+        </view>
+        <view class='info-item' style="width:50%;">
+            <image style="width:10%;" src="/images/member/lease-term.png" mode="widthFix"></image>
+            <text>{{item.rent_num+item.rent_mode.rent_show_unit}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/guarantee.png" mode="widthFix"></image>
+            <view>
+                <text>{{item.secure==1?'意外保':'免费保'}}</text>
+                <text wx:for="{{item.service_info}}" wx:for-item="child">{{child.service_name}}</text>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+
+<!-- 添加设备 -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">添加配送设备(勾选保修/服务)</text>
+    </view>
+    <view class='addBody'>
+        <view class='add-item' wx:if="{{addEquip.length>0}}" wx:for="{{addEquip}}">
+            <view class='add-left'>
+                <view class='add-left-title'>
+                    <text>设备名称：</text>
+                    <text>设备ID：</text>
+                    <text>S/N：</text>
+                    <text>是否保修：</text>
+                    <text>增值服务：</text>
+                    <text>配置：</text>
+                </view>
+                <view class='add-left-value'>
+                    <text>{{item.goods_name}}</text>
+                    <text>{{item.equip_id}}</text>
+                    <text>{{item.sn_code}}</text>
+                    <view style="display:flex;align-items:center;margin:10rpx;">
+                        <view class='{{(!item.secure||item.secure==0)?"service-item-active":"service-item"}}' bindtap='secure' data-index="{{index}}" data-value="0">
+                            <text>免费保</text>
+                        </view>
+                        <view class='{{item.secure==1?"service-item-active":"service-item"}}' bindtap='secure' data-index="{{index}}" data-value="1">
+                            <text>意外保</text>
+                        </view>
+                    </view>
+                    <view style="display:flex;align-items:center;margin:10rpx;">
+                        <view class='{{child.checked?"service-item-active":"service-item"}}' wx:for="{{item.goods.service}}" wx:for-item="child" wx:for-index="cIndex" bindtap="service" data-p-index="{{index}}" data-index="{{cIndex}}">
+                            <text>{{child.service_name}}</text>
+                        </view>
+                    </view>
+                    <text>{{item.spec_value.spec_value}}</text>
+                </view>
+            </view>
+            <view class='add-right' bindtap='delEquip' data-id="{{item.equip_id}}">
+                <image src="/images/member/delete.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class='addEquip' bindtap="addEquip">
+        <text>扫码添加</text>
+    </view>
+
+</view>
+
+<!-- 添加配送人员 -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">添加配送人员</text>
+    </view>
+    <view class='addBody'>
+        <view class='add-item' wx:if="{{addMember.length>0}}" wx:for="{{addMember}}">
+            <view class='add-left'>
+                <view class='add-left-title'>
+                    <text>姓名：</text>
+                    <text>联系方式：</text>
+                    <text>职能：</text>
+                </view>
+                <view class='add-left-value'>
+                    <text>{{item.name}}</text>
+                    <text>{{item.phone}}</text>
+                    <text>{{item.function}}</text>
+                </view>
+            </view>
+            <view class='add-right' bindtap='delMember' data-id="{{item.id}}">
+                <image src="/images/member/delete.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class='addMember' bindtap="addMember">
+        <text>点击添加</text>
+    </view>
+
+</view>
+
+
+
+
+
+<view style="height:120rpx;"></view>
+
+<!-- footer -->
+<view class='footer' wx:if="{{detail.data.status==10&&!isSend}}">
+    <view class='sub' bindtap='sub'>
+        <text>确认送达</text>
+    </view>
+</view>
+
+<view class='footer' wx:if="{{isSend}}">
+    <view class='sub' bindtap='subSend'>
+        <text>开始派送</text>
+    </view>
+</view>

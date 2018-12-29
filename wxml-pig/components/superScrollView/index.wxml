@@ -1,0 +1,5 @@
+<!--components/superScrollView/index.wxml-->
+<scroll-view scroll-y='true'>
+    <slot></slot>
+    <load-more id="loadMoreView"></load-more>
+</scroll-view>

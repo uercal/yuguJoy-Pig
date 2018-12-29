@@ -1,0 +1,6 @@
+{
+        "navigationBarTitleText": "售后返修结单",
+        "usingComponents": {
+                "member-header": "/components/header/index"
+        }
+}

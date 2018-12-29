@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "设备管理",
+    "usingComponents": {
+        "load-more": "/components/load-more/index",
+        "member-header": "/components/header/index"
+    }
+}

@@ -1,0 +1,63 @@
+<scroll-view class='scroll' scroll-y style="height:{{system.windowHeight}}px;" bindscrolltolower='_onScrollToLower'>
+    <member-header id="memberHeader"></member-header>
+    <!-- 筛选 -->
+    <view class="container">
+        <view class="cont-box">
+            <view class="dis-flex search-input-box" style="flex-direction:row;flex-wrap:unset;">
+                <view class="search-input">
+                    <view class="dis-flex search-box">
+                        <view class="left">
+                            <icon color="rgba(239,249,255,1)" size="15" type="search"></icon>
+                        </view>
+                        <view class="right">
+                            <input bindconfirm="getSearchContent" style="font-size:12px !important;" class="input" focus="true" placeholder="请输入用户手机号" placeholderStyle="color:#aba9a9" type="text" confirm-type="search"></input>
+                        </view>
+                    </view>
+                </view>                
+            </view>
+        </view>
+    </view>
+
+    <!-- type -->
+    <view class='type'>
+        <view class='type-item {{type_index==1?"active":""}}' data-id="1" bindtap='type'>
+            <view class='type-c'>
+                <text>认证用户</text>
+            </view>
+        </view>
+        <view class='type-item {{type_index==2?"active":""}}' data-id="2" bindtap='type'>
+            <view class='type-c'>
+                <text>非认证用户</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- LIST -->
+    <view class='user' wx:for="{{data}}">
+        <view class='user-type'>{{type_index==1?'已认证':'非认证'}}</view>
+        <view class='user-info' bindtap='detail' data-id="{{item.user_id}}">
+            <view class='info-item'>
+                <image src='/images/member/customer.png'></image>
+                <text>{{item.username?item.username:item.nickName}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/position.png'></image>
+                <text>{{item.address_default.region.province+item.address_default.region.city+item.address_default.region.region
+                +item.address_default.detail}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/iphone.png'></image>
+                <text>{{item.phone?item.phone:'未绑定'}}</text>
+            </view>
+            <view class='arrow1'></view>
+        </view>
+    </view>
+
+
+
+
+
+
+
+    <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

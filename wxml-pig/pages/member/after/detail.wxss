@@ -1,0 +1,160 @@
+.card {
+    margin: 40rpx 30rpx;
+    border: 1px solid #eee;
+    background-color: #fff;
+    box-shadow: 1px 0px 5px rgba(50, 50, 50, 0.1);
+}
+
+.card-head {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 30rpx;
+}
+
+.card-head text {
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    color: #353535;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    line-height: 21px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22rpx;
+    width: 100%;
+}
+
+.info-item image {
+    /* width: 40rpx !important; */
+    width: 5%;
+    /* height: 40rpx !important; */
+}
+
+.info-item text {
+    margin-left: 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    /* line-height: 42rpx; */
+    width: 90%;
+}
+
+.pic-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10rpx;
+}
+
+.upload {
+    width: 33.3333%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10rpx;
+}
+
+.upload image {
+    width: 200rpx;
+    height: 200rpx;
+}
+
+.footer {
+    position: fixed;
+    height: 90rpx;
+    bottom: 0;
+    width: 100%;
+}
+
+.sub {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2150b7;
+}
+
+.sub text {
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #fff;
+}
+
+.addBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-item {
+    margin: 20rpx;
+    background-color: #f2f2f2;
+    display: flex;
+    padding: 20rpx;
+}
+
+.add-left {
+    width: 90%;
+    display: flex;
+}
+
+.add-left-title {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.add-left-value {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-left text {
+    margin: 10rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 10px;
+    color: #888;
+    opacity: 0.7;
+}
+
+.add-right {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-right image {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.addMember {
+    margin: 30rpx;
+    height: 80rpx;
+    background-image: linear-gradient(to right, #bde4fc, #60c6fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addMember text {
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+.header {
+        height: 60rpx;
+        background-color: #5fc6ff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        padding: 0 30rpx;
+}
+
+.header text {
+        color: #fff;
+        font-family: PingFangSC-Regular;
+}

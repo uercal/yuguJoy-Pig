@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "客户管理",
+    "usingComponents": {
+        "load-more": "/components/load-more/index",
+        "member-header": "/components/header/index"
+    }
+}

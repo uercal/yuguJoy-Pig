@@ -1,0 +1,89 @@
+.checkout_list {
+        padding: 10px 15px 0 15px;
+        background: #fff;
+        /* border-bottom: 1rpx solid #eee; */
+}
+
+.checkout_list .flow-shopList {
+        padding: 5rpx 0 10rpx;
+        border-bottom: 1rpx solid #eee;
+}
+
+.checkout_list .flow-shopList:last-child {
+        border-bottom: 0;
+}
+
+.flow-header-left {
+        padding-left: 90rpx;
+}
+
+.rent-info {
+        display: flex;
+        flex-direction: column;
+}
+
+.right-attr-text {
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #353535;
+        line-height: 22px;
+}
+
+.down-p {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+}
+
+.down-p text {
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #353535;
+        line-height: 22px;
+}
+
+.down-p::after {
+        content: '';
+        width: 15rpx;
+        height: 15rpx;
+        border-right: 2rpx solid #ccc;
+        border-top: 2rpx solid #ccc;
+        transform: rotate(135deg);
+}
+
+.down-p.active::after {
+        content: '';
+        margin-top: 7rpx;
+        width: 15rpx;
+        height: 15rpx;
+        border-right: 2rpx solid #ccc;
+        border-top: 2rpx solid #ccc;
+        transform: rotate(-45deg);
+}
+
+.attr-font {
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: #353535;
+        letter-spacing: 0;
+        text-align: center;
+}
+
+.attr-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding: 20rpx 10rpx;
+}
+
+.pad-l {
+        padding-left: 10rpx;
+}
+
+.small1 {
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: #353535;
+        line-height: 22px;
+}

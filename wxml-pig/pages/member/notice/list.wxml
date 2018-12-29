@@ -1,0 +1,12 @@
+<scroll-view class='scroll' scroll-y style="height: {{system.windowHeight}}px; " bindscrolltolower='_onScrollToLower'>
+        <view class="card" wx:for="{{data}}" wx:key="{{this}}" bindtap='read' data-id="{{item.id}}" data-isRead="{{item.is_read}}">
+                <view class='head'>
+                        <view class='title'>{{item.notice.title}}
+                                <view class='oval' wx:if="{{item.is_read==0}}"></view>
+                        </view>
+                        <text class='time'>时间：{{item.create_time}}</text>
+                </view>
+                <view class='content'>{{item.notice.content}}</view>
+        </view>
+        <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

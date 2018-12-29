@@ -1,0 +1,128 @@
+<view class="container m-b5">
+    <view class="goods-detail-box">
+        <view class="header f-28 col-3">
+            <view catchtap="bindHeaderTap" class="{{dataType==='rent'?'active':''}}" data-type="rent">售后申请</view>
+            <view bindtap="bindHeaderTap" class="{{dataType==='doing'?'active':''}}" data-type="doing">处理中</view>
+            <view bindtap="bindHeaderTap" class="{{dataType==='unPay'?'active':''}}" data-type="unPay">待确认</view>
+            <view bindtap="bindHeaderTap" class="{{dataType==='done'?'active':''}}" data-type="done">已完成</view>
+        </view>
+        <scroll-view scroll-y="{{true}}">
+            <view class="wrapper" wx:if="{{dataType=='rent'}}">
+                <view wx:if="{{list.length}}">
+                    <view class="m-top20 " wx:for="{{list}}" wx:key="this">
+                        <view class="order-box b-f">
+                            <view class="order-cont dis-flex">
+                                <view class="order-num">
+                                    <text>订单号：{{item.order_no}}</text>
+                                </view>
+                                <view class="order-time">
+                                    <text>{{item.create_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box order-img_list">
+                            <view class="order-shop">
+                                <view bindtap="detail" class="order-list-box dis-flex" data-id="{{item.order_id}}">
+                                    <view class="left">
+                                        <view class="dis-flex">
+                                            <view class="order-shop-left" wx:for="{{item.goods}}" wx:key="goods">
+                                                <image src="{{item.image.file_path}}"></image>
+                                            </view>
+                                        </view>
+                                    </view>
+                                    <view class="right p-r">
+                                        <text class="goods-number">共{{item.goods.length}}件</text>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box b-f">
+                            <view class="order-btn dis-flex">
+                                <view class="order-left">
+                                    <view class="text">
+                                        <text>合计：</text>
+                                        <text class="col-m">￥{{item.pay_price}}</text>
+                                    </view>
+                                </view>
+                                <view class="order-right">
+                                    <view class="dis-flex">
+                                        <view class="flex-box" wx:if="{{item.order_status.value===30}}">
+                                            <view bindtap="afterOrder" class="btn-main" data-id="{{item.order_id}}" data-after-status="{{item.after_status}}">发起售后</view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="yoshop-notcont">
+                        <text class="iconfont icon-meiyougengduo"></text>
+                        <text class="cont">亲，您还没有订单信息哦！</text>
+                    </view>
+                </view>
+            </view>
+            <!--  -->
+            <view class="wrapper" wx:else>
+                <view wx:if="{{list.length}}">
+                    <view class="m-top20 " wx:for="{{list}}" wx:key="this">
+                        <view class="order-box b-f">
+                            <view class="order-cont dis-flex">
+                                <view class="order-num">
+                                    <text>服务单号：{{item.after_no}}</text>
+                                </view>
+                                <view class="order-time">
+                                    <text>{{item.create_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box order-img_list">
+                            <view class="order-shop">
+                                <view bindtap="detail" class="order-list-box dis-flex" data-id="{{item.id}}" data-pay-status="{{item.pay_status}}" data-status="{{item.status}}" bindtap='afterDetail'>
+                                    <view class="left">
+                                        <view class="dis-flex">
+                                            <view class="order-shop-left" wx:for="{{item.order.goods}}" wx:key="goods">
+                                                <image src="{{item.image.file_path}}"></image>
+                                            </view>
+                                        </view>
+                                    </view>
+                                    <view class="right p-r">
+                                        <text class="goods-number">共{{item.order.goods.length}}件</text>
+                                        <text hidden='{{item.status!=40 && item.pay_status==10}}' class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box b-f">
+                            <view class="order-btn dis-flex">
+                                <view class="order-left">
+                                    <view class="text" style="display:flex;align-items:center;" wx:if="{{dataType=='unPay'}}">
+                                        <text>售后费用：</text>
+                                        <text class="col-m">￥{{item.pay_price}}</text>
+                                    </view>
+                                    <view class="text" style="display:flex;align-items:center;" wx:else>
+                                        <text>状态：</text>
+                                        <text class="col-m">{{item.status_text}}</text>
+                                    </view>
+                                </view>
+                                <view class="order-right">
+                                    <view class="dis-flex" style="justify-content:flex-end;">
+                                        <view class="" wx:if="{{dataType=='unPay'}}">
+                                            <view bindtap="payOrder" class="btn-main" data-id="{{item.order_id}}">确认</view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="yoshop-notcont">
+                        <text class="iconfont icon-meiyougengduo"></text>
+                        <text class="cont">没有相关数据</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+</view>

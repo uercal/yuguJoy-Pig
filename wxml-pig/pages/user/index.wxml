@@ -1,0 +1,168 @@
+<view class="container m-b5">
+
+    <view class='user-info'>
+        <image class='card' src='/images/card-user.png' mode="aspectFill">
+        </image>
+        <view class='user-head'>
+            <image src="{{userInfo.avatarUrl}}"></image>
+            <view class='user-attr'>
+                <text class='user-attr-name'>{{userInfo.nickName}}</text>
+                <view class='user-attr-vip'>
+                    <text wx:if="{{infoStatus.status==20}}" style="font-weight:bold;">认证用户</text>
+                    <text wx:else>非认证用户</text>
+                </view>
+            </view>
+        </view>
+        <view class='user-money'>
+            <view style="display:flex;align-item:center;margin-left:25rpx;padding-bottom:5rpx;">
+                <text>余额</text>
+                <text class='money'>￥{{userInfo.account_money.account_money}}元</text>
+            </view>
+            <image src="/images/icon_recharge.png"></image>
+        </view>
+
+        <!-- 进度条 -->
+        <!-- <progress class="progress" percent='40' color='pink' style="z-index:2;" backgroundColor="rgba(255,255,255,0.8)">                        
+                </progress>
+                <view class='pro-tips'>
+                        <text>已使用250</text>
+                        <view class='triangle'></view>
+                </view>                 -->
+    </view>
+
+    <view class='order-attr'>
+        <view class='order-all'>
+            <text class='all-title'>我的订单</text>
+            <navigator class='all-nav' url='/pages/order/index'>查看全部</navigator>
+        </view>
+        <view class='order-nav-arr'>
+            <navigator class='order-nav' url='/pages/order/index?type=payment'>
+                <image class='order-nav-img' src='/images/icon_dfk.png'> </image>
+                <text>待付款</text>
+                <image hidden='{{orderCount.payment==0}}' class='order-nav-point' src='/images/Oval.png'></image>
+            </navigator>
+            <navigator class='order-nav' url='/pages/order/index?type=delivery'>
+                <image class='order-nav-img' src='/images/icon_dsh.png'></image>
+                <text>待发货</text>
+                <image hidden='{{orderCount.delivery==0}}' class='order-nav-point' src='/images/Oval.png'></image>
+            </navigator>
+            <navigator class='order-nav' url='/pages/order/index?type=received'>
+                <image class='order-nav-img' src='/images/icon_dfh.png'></image>
+                <text>待收货</text>
+                <image hidden='{{orderCount.received==0}}' class='order-nav-point' src='/images/Oval.png'></image>
+            </navigator>
+            <navigator class='order-nav' url='/pages/order/index?type=doing'>
+                <image class='order-nav-img' src='/images/icon_zlz.png'></image>
+                <text>租赁中</text>
+                <image hidden='{{orderCount.doing==0}}' class='order-nav-point' src='/images/Oval.png'></image>
+            </navigator>
+            <navigator class='order-nav' url='/pages/order/after'>
+                <image class='order-nav-img' src='/images/icon_after.png'></image>
+                <text>售后单</text>
+                <image hidden='{{afterCount==0}}' class='order-nav-point' src='/images/Oval.png'></image>
+            </navigator>
+        </view>
+    </view>
+
+
+    <view class="m-top20 plr">
+        <navigator url="../user/info" wx:if="{{infoStatus.code==0}}">
+            <view class="user-order-title dis-flex b-f m-top20">
+                <view class="flex-box">
+                    <image src='/images/icon_mywallt.png'></image>
+                    <text class="user-orderName h4">申请免押金</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text wx:if="{{infoStatus.status==30}}" style="color:red;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+        <button class="phone" bindtap='checkStatus' data-status="{{infoStatus.status}}" wx:else>
+            <view class="user-order-title dis-flex b-f m-top20">
+                <view class="flex-box">
+                    <image src='/images/icon_mywallt.png'></image>
+                    <text class="user-orderName h4">申请免押金 
+                                        </text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text wx:if="{{infoStatus.status==10}}" style="color:orange;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
+                        <text wx:if="{{infoStatus.status==20}}" style="color:green;opacity:0.7;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </button>
+
+
+        <navigator url="../address/index">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/icon_wdzl.png'></image>
+                    <text class="user-orderName h4">收货地址</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+        <navigator url="../category/collect">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/icon_myfav.png'></image>
+                    <text class="user-orderName h4">我的收藏</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+        <button class='phone' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{userInfo.phone==null}}">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/phone.png'></image>
+                    <text class="user-orderName h4">绑定手机号</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </button>
+        <navigator url="../user/help">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/tab2.png'></image>
+                    <text class="user-orderName h4">我的帮助</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+        <navigator url="../member/index" wx:if="{{userInfo.phone}}">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/icon_member.png'></image>
+                    <text class="user-orderName h4">员工端</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+    </view>
+
+</view>

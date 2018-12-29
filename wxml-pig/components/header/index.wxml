@@ -1,0 +1,5 @@
+<view class="header">
+        <text>{{memberInfo.name}}</text>
+        <text>职能：{{memberInfo.function}}</text>
+        <view bindtap='exit' style="color:#2150B7;">退出</view>
+</view>

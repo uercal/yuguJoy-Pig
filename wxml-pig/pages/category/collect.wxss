@@ -1,0 +1,2 @@
+/* pages/category/collect.wxss */
+@import "./list.wxss";

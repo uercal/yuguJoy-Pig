@@ -1,0 +1,74 @@
+<view class="container">
+        <view class="common-header-xian"></view>
+        <!-- 搜索框 -->
+        <view class="index-search-box">
+                <navigator class="index-search " hover-class="none" openType="navigate" url="../search/index">
+                        <view class="index-cont-search t-c">
+                                <icon class="text-center" color="{{searchColor}}" size="{{searchSize}}" type="search"></icon>
+                                <text>{{searchName}}</text>
+                        </view>
+                </navigator>
+        </view>
+        <!-- 筛选栏 -->
+        <view class="filter">
+                <view class='filter-item {{filter_index==1?"item-active":""}}' data-index="1" data-value="{{filter1_value}}" bindtap='chg_filter'>
+                        <text>{{filter1_name}}</text>
+                </view>              
+                <picker class='filter-item {{filter_index==2?"item-active":""}}' bindchange="bindPickerChange" value="{{index}}" range="{{pick_arr}}">
+                        <text style="width:140%;">类别</text>
+                </picker>
+                <view class='{{filter3_name=="desc"?"arrow1":"asc-arrow"}} {{filter_index==3?"item-active":""}}' data-index="3" bindtap='chg_filter'>
+                        <text>价格</text>
+                </view>
+        </view>
+
+        <!-- liebiao -->
+        <view class="cate-name">
+                <text>{{choose_list.name}}</text>
+        </view>
+
+        <navigator class='goods-item' wx:if="{{choose_list}}" wx:for="{{choose_list.child}}" url="../goods/index?goods_id={{item.goods_id}}">
+                <image class='goods-image' src='{{item.image[0].file_path}}' mode="aspectFit"></image>
+                <view class='goods-attr'>
+                        <!-- <image></image> -->
+                        <view class='goods-attr-up'>
+                                <text class='goods-price'>￥{{item.spec[0].goods_price}}</text>
+                                <text class='goods-name'>{{item.goods_name}}</text>
+                        </view>
+                        <view class='goods-attr-bottom'>
+                                <text class='goods-spec'>({{item.spec_rel[0].spec_value}})</text>
+                                <view class='goods-service      '>
+                                        <text class='service-item' wx:for="{{item.service}}" wx:for-item="ser">{{ser.service_name}}</text>
+                                </view>
+                        </view>
+                </view>
+        </navigator>
+
+
+        <!-- <view class="cate-content">                
+                <scroll-view class="cate-left f-28 " scroll-y="true">
+                        <text bindtap="selectNav" class="type-nav {{curNav==item.category_id?'selected':''}}" data-id="{{item.category_id}}" data-index="{{index}}" wx:for="{{list}}" wx:key="cateLeft">{{item.name}}</text>
+                </scroll-view>
+
+                
+                <scroll-view class="cate-right b-f" scroll-top="{{scrollTop}}" scroll-y="true">
+                        <view wx:if="{{list[curIndex]}}">
+                                <view class="cate-right-cont">
+                                        <view class="cate-two-box">
+                                                <view class=" cate-cont-box dis-flex">
+                                                        <view class="flex-three" data-list="{{index}}" wx:for="{{list[curIndex].child}}" wx:key="cit">
+                                                                <navigator hover-class="none" url="../goods/index?goods_id={{item.goods_id}}">
+                                                                        <view class="cate-img" id="{{item.image[0].id}}">
+                                                                                <image src="{{item.image[0].file_path}}"></image>
+                                                                        </view>
+                                                                        <text>{{item.goods_name}}</text>
+                                                                </navigator>
+                                                        </view>
+                                                </view>
+                                        </view>
+                                </view>
+                        </view>
+                        <view wx:else></view>
+                </scroll-view>
+        </view> -->
+</view>

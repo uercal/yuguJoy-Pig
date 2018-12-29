@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "搜索结果",
+    "usingComponents": {
+        "load-more": "/components/load-more/index",
+        "member-header": "/components/header/index"
+    }
+}

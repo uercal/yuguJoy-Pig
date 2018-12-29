@@ -1,0 +1,130 @@
+<view class="container p-bottom">
+    <scroll-view scroll-y="true">
+        <!-- 收货地址 -->
+        <view class="b-f">
+            <view class="flow-checkout-header b-f dis-flex">
+                <view class="flow-header-left padding-box">
+                    <view class="flow-checkout-admin f-26 col-3">{{detail.order.address.name}}
+                        <text class="f-26 col-m">{{detail.order.address.phone}}</text>
+                    </view>
+                    <view class="flow-checkout-address">
+                        {{detail.order.address.region.province}} {{detail.order.address.region.city}} {{detail.order.address.region.region}} {{detail.order.address.detail}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 设备列表 -->
+        <view class="order-cont b-f m-top20">
+            <view class="padding-box b-f">
+                <view class="order-header dis-flex">
+                    <view class="flex-box t-l">
+                        <text class="title">服务信息</text>
+                    </view>
+                </view>
+            </view>
+            <view class="padding-box b-f">
+                <view class="order-cont dis-flex">
+                    <view class="order-num">
+                        <text selectable="{{true}}">服务单号：{{detail.after_no}}</text>
+                    </view>
+                    <view class="order-time">
+                        <text>{{detail.create_time}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="padding-box b-f">
+            <!-- 即时维修  -->
+            <view class="checkout_list " wx:for="{{detail.checked_equip}}" wx:key="this">
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left equip-type">
+                        即时维修
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.equip_id}}/{{item.goods_name}}/{{item.spec_value.spec_value}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}/{{item.services}}/{{item.status_text}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="small1">×1</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 以换代修-新设备 -->
+            <view class="checkout_list " wx:for="{{detail.exchange_equip}}" wx:key="this">
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left equip-type">
+                        以换代修-新设备
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.equip_id}}/{{item.goods_name}}/{{item.spec_value.spec_value}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}/{{item.services}}/{{item.status_text}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="small1">×1</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 以换代修-旧设备 -->
+            <view class="checkout_list " wx:for="{{detail.new_equip}}" wx:key="this">
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left equip-type">
+                        即时维修
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.equip_id}}/{{item.goods_name}}/{{item.spec_value.spec_value}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}/{{item.services}}/{{item.status_text}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="small1">×1</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!-- 返修设备 -->
+            <view class="checkout_list " wx:for="{{detail.back_equip}}" wx:key="this">
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left equip-type">
+                        返修设备
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.equip_id}}/{{item.goods_name}}/{{item.spec_value.spec_value}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}/{{item.services}}/{{item.status_text}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="small1">×1</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 服务金额 -->
+        <view class="flow-all-money b-f padding-box m-top20" wx:if="{{detail.pay_status!=10}}">
+            <view class="dis-flex flow-all-list">
+                <text class="flex-five">服务金额</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">服务费用:</text>
+                <text class="flex-five col-m t-r">￥{{detail.server_price}}</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">材料费用:</text>
+                <text class="flex-five col-m t-r">+￥{{detail.source_price}}</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">应付金额:</text>
+                <text class="flex-five col-m t-r">￥{{detail.pay_price}}</text>
+            </view>
+        </view>
+
+    </scroll-view>
+
+    <view class="flow-fixed-footer b-f">
+        
+    </view>
+
+</view>

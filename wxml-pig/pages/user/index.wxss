@@ -1,0 +1,373 @@
+.user-header .user-bg-box {
+        width: 100%;
+        background: #fff;
+        display: block;
+        height: 230rpx;
+        overflow: hidden;
+}
+
+.user-header .header-bg {
+        width: 100%;
+        height: 750rpx;
+        animation-name: shop;
+        animation-duration: 18s;
+        animation-iteration-count: infinite;
+        filter: blur(5px);
+        overflow: hidden;
+        display: block;
+}
+
+.header-img-box {
+        width: 140rpx;
+        height: 140rpx;
+        border: 2px solid #fff;
+        margin: 0rpx auto 0;
+        border-radius: 100%;
+        overflow: hidden;
+        box-shadow: 1px 0px 5px rgba(50, 50, 50, 0.3);
+        margin-top: -115rpx;
+}
+
+.user-admin {
+        display: block;
+        width: 190rpx;
+        font-size: 32rpx;
+        text-align: center;
+        margin: 4rpx 0 0 0;
+        color: #444;
+}
+
+.user-tag {
+        top: -8rpx;
+        right: 40rpx;
+        font-size: 22rpx;
+        background: #ff495e;
+        text-align: center;
+        line-height: 28rpx;
+        color: #fff;
+        border-radius: 100%;
+        min-height: 30rpx;
+        min-width: 30rpx;
+        padding: 1rpx;
+}
+
+.user-order-cont {
+        padding: 25rpx 0;
+        box-shadow: 1px 0px 5px rgba(50, 50, 50, 0.3);
+        color: #777;
+        font-size: 30rpx;
+        border-top: 1rpx solid #eee;
+}
+
+.user-order-cont .orderListIcon {
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+        padding-top: 10rpx;
+        color: #999;
+        font-size: 34rpx;
+}
+
+.user-order-cont .listCont {
+        display: block;
+        font-size: 24rpx;
+        color: #999;
+        text-align: center;
+        padding-top: 4rpx;
+}
+
+.user-order-cont .moneyListNum {
+        text-align: center;
+        color: #f42424;
+        font-size: 38rpx;
+        padding: 0 15rpx;
+}
+
+.user-order-title .common-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        margin-top: -20rpx;
+        font-size: 34rpx;
+        color: #777;
+}
+
+.user-order-title {
+        border-bottom: 1rpx solid #eee;
+        padding: 8rpx 0;
+        position: relative;
+}
+
+/* asd */
+
+.user-list {
+        padding: 30rpx 15rpx;
+}
+
+.user-list .li .common-icon {
+        font-size: 46rpx;
+}
+
+.user-list-service {
+        padding: 30rpx 0 0 0;
+}
+
+.user-list-service .li {
+        padding-bottom: 45rpx;
+}
+
+.phone {
+        border: unset;
+        line-height: unset;
+        background-color: #fff;
+        padding: unset;
+        display: unset;
+}
+
+/*  */
+
+.user-info {
+        height: 300rpx;
+        background-color: #fff;
+        padding-right: 35rpx;
+        padding-left: 35rpx;
+        padding-top: 20rpx;
+        display: flex;
+        position: relative;
+}
+
+.card {
+        height: 100%;
+        width: 100%;
+        border-radius: 12px;
+}
+
+.user-head {
+        left: 65rpx;
+        top: 40rpx;
+        position: absolute;
+        display: flex;
+}
+
+.user-head image {
+        width: 150rpx;
+        height: 150rpx;
+        border-radius: 50%;
+}
+
+.user-attr {
+        margin-left: 20rpx;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+}
+
+.user-attr-name {
+        font-family: PingFangSC-Medium;
+        padding-top: 15rpx;
+        font-size: 22px;
+        color: #fff;
+        letter-spacing: 0;
+        text-align: center;
+}
+
+.user-attr-vip {
+        background: #fff9ef;
+        border-radius: 4px;
+        /* width: 70rpx; */
+        height: 40rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24rpx;
+}
+
+.user-attr-vip text {
+        margin: 10rpx 12rpx;
+        font-family: HiraKakuPro-W6;
+        font-size: 10px;
+        color: #509df6;
+        letter-spacing: 0;
+        text-align: center;
+}
+
+.user-money {
+        width: 130px;
+        height: 80rpx;
+        background-color: #fff;
+        right: 35rpx;
+        position: absolute;
+        top: 85rpx;
+        background: #fff9ef;
+        border-radius: 30px 0px 0px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+}
+
+.user-money text {
+        font-family: PingFangSC-Medium;
+        font-size: 12px;
+        color: #888;
+        letter-spacing: 0;
+        text-align: center;
+}
+
+.user-money image {
+        width: 45rpx;
+        height: 45rpx;
+        margin-right: 20rpx;
+}
+
+.progress {
+        position: absolute;
+        bottom: 40rpx;
+        margin: 0 auto;
+        padding: unset;
+        width: 80%;
+        right: 0;
+        left: 0;
+}
+
+.pro-tips {
+        padding: 0 10rpx;
+        background-color: #fff;
+        height: 40rpx;
+        position: absolute;
+        bottom: 60rpx;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        left: 64%;
+        border-radius: 7px;
+        /* z-index: 2; */
+}
+
+.pro-tips text {
+        position: relative;
+        /* z-index: 2; */
+}
+
+.pro-tips::after {
+        width: 1px;
+        height:1px;
+        border-width: 15px;
+        border-style: solid;
+        border-color: #fff #fff #fff #fff;
+        position: absolute;
+        top:0;
+}
+
+/* .triangle {
+        width: 0px;
+        height: 0px;
+        border-width: 15rpx;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+        position: absolute;
+        top: 30rpx;
+        z-index: 1;
+} */
+
+.money {
+        color: #f9aa30 !important;
+}
+
+/* order  */
+
+.order-attr {
+        height: 200rpx;
+        background-color: #fff;
+        padding: 0 35rpx;
+        display: flex;
+        flex-direction: column;
+}
+
+.order-all {
+        height: 38.55555%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10rpx;
+        border-bottom: 1px solid #e5e5e5;
+}
+
+.all-title {
+        font-family: PingFangSC-Medium;
+        font-size: 16px;
+        font-weight: bold;
+        color: #353535;
+        letter-spacing: 0;
+        text-align: center;
+}
+
+.all-nav {
+        font-family: PingFangSC-Regular;
+        font-size: 12px;
+        color: #999;
+        letter-spacing: -0.29px;
+        display: flex;
+        align-items: center;
+}
+
+.all-nav::after {
+        content: "";
+        width: 15rpx;
+        height: 15rpx;
+        border-top: 1rpx solid #ccc;
+        border-right: 1rpx solid #ccc;
+        transform: rotate(45deg);
+}
+
+.order-nav-arr {
+        height: 61.4444444%;
+        display: flex;
+        padding: 10rpx 5rpx;
+}
+
+.order-nav {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+}
+
+.order-nav-img {
+        width: 50rpx;
+        height: 50rpx;
+}
+
+.order-nav-point {
+        width: 20rpx;
+        height: 20rpx;
+        position: absolute;
+        right: 40rpx;
+        top: 10rpx;
+}
+
+.order-nav text {
+        font-size: 12px;
+        margin-top: 10rpx;
+}
+
+/*  */
+
+.plr {
+        padding: 0 35rpx;
+        background-color: #fff;
+}
+
+.flex-box {
+        position: relative;
+}
+
+.flex-box image {
+        width: 50rpx;
+        height: 50rpx;
+        position: absolute;
+        left: 20rpx;
+        top: 15rpx;
+}

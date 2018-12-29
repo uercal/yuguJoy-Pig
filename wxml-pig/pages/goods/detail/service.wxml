@@ -1,0 +1,46 @@
+<view class="top-nav b-f b-b">
+        <view class="top-nav-bar show-bar cell cell-top">
+                <image src="/images/repair.png"></image>
+                <text class="s-title">保修服务</text>
+        </view>
+        <view class="top-nav-bar show-bar cell cell-body" bindtap='secure' data-status="0">
+                <view class='cell-head'>
+                        <image wx:if="{{secure_status==0}}" src="/images/check-active.png"></image>
+                        <image wx:else src="/images/check.png"></image>
+                        <text class="cell-title">标准保（免费）</text>
+                        <text class='cell-num'>￥ 0 </text>
+                </view>
+                <!-- <view class='cell-content'>123123123</view> -->
+        </view>
+        <view class="top-nav-bar show-bar cell cell-body" bindtap='secure' data-status="1">
+                <view class='cell-head'>
+                        <image wx:if="{{secure_status==1}}" src="/images/check-active.png"></image>
+                        <image wx:else src="/images/check.png"></image>
+                        <text class="cell-title">意外保</text>
+                        <text class='cell-num'>￥ {{secure_price}} </text>
+                </view>
+                <!-- <view class='cell-content'>123123123</view> -->
+        </view>
+</view>
+<view class='divider'></view>
+<view class="top-nav b-f b-b">
+        <view class="top-nav-bar show-bar cell cell-top">
+                <image src="/images/repair.png"></image>
+                <text class="s-title">增值服务</text>
+        </view>
+        <view class="top-nav-bar show-bar cell cell-body" wx:for="{{service}}" wx:for-index="index" wx:key="this" bindtap='service_tap' data-index="{{index}}">
+                <view class='cell-head'>
+                        <image wx:if="{{item.checked}}" src="/images/check-active.png"></image>
+                        <image wx:else src="/images/check.png"></image>
+                        <text class="cell-title">{{item.service_name}}</text>
+                        <text class='cell-num'>￥ {{item.service_price}} </text>
+                </view>
+                <view class='cell-content'>{{item.service_content}}</view>
+        </view>
+</view>
+
+<view style="height:90rpx;"></view>
+
+<view class="footer-fixed f-30">
+        <view class="default-btn" style="width:100%;background-color: #ff495e;" bindtap='hideModal'>确定</view>
+</view>

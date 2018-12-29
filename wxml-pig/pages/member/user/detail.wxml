@@ -1,0 +1,74 @@
+<member-header id="memberHeader"></member-header>
+
+<!--  -->
+<view class='user'>
+    <view class='user-type' style="background-color:#D2E8C1;">注册信息</view>
+    <view class='user-info'>
+        <view class='info-item'>
+            <image src='/images/member/user-name.png'></image>
+            <text>{{detail.nickName}}</text>
+        </view>
+        <view class='info-item'>
+            <image src='/images/member/ordertime.png'></image>
+            <text>{{detail.create_time}}</text>
+        </view>
+        <view class='info-item'>
+            <image src='/images/member/customer.png'></image>
+            <text>{{detail.user_name}}</text>
+        </view>
+    </view>
+</view>
+
+
+<!-- 基础信息 -->
+<view class='user'>
+    <view class='user-type'>默认地址信息</view>
+    <view class='user-info'>
+        <view class='info-item'>
+            <image src='/images/member/user-name.png'></image>
+            <text>{{detail.address_default.name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src='/images/member/position.png'></image>
+            <text>{{detail.create_time}}</text>
+        </view>
+        <view class='info-item'>
+            <image src='/images/member/customer.png'></image>
+            <text>{{detail.user_name}}</text>
+        </view>
+    </view>
+</view>
+
+
+<!-- 认证信息 -->
+<view class='user' style="box-shadow:unset !important;">
+    <view class='user-type' style="background-color:#fbcdc4;">认证信息</view>
+    <view class='user-info' wx:if="{{detail.license.length!=0}}">
+        <view class='info-title'>
+            <view class='er'></view>
+            <text>公司营业执照</text>
+        </view>
+        <view class='image-info'>
+            <image mode="aspectFit" src='{{detail.license[0].file_path}}'></image>
+        </view>
+    </view>
+    <view class='user-info' wx:if="{{detail.idcard.length!=0}}">
+        <view class='info-title'>
+            <view class='er'></view>
+            <text>法人身份证正反面</text>
+        </view>
+        <view class='image-info-2'>
+            <image mode='aspectFill' src='{{detail.idcard[0].file_path}}'></image>
+            <image mode='aspectFill' src='{{detail.idcard[1].file_path}}'></image>
+        </view>
+    </view>
+    <view class='user-info' wx:if="{{detail.other.length!=0}}">
+        <view class='info-title'>
+            <view class='er'></view>
+            <text>其他信息</text>
+        </view>
+        <view class='image-info-3'>
+            <image mode='aspectFill' wx:for="{{detail.other}}" src='{{item.file_path}}'></image>
+        </view>
+    </view>
+</view>

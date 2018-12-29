@@ -1,0 +1,131 @@
+<view class="container p-bottom">
+        <view class="flow-list">
+
+                <view wx:if="{{goods_list.length}}">
+                        <view wx:for="{{goods_list}}" wx:key="this">
+                                <view class='dish-head'>
+                                        <view class="dish-item" data-index="{{index}}" style="{{item.txtStyle}}">
+                                                <view class='dish-item-check' bindtap='checkIndex' data-index="{{index}}">
+                                                        <view class='dish-item-check-item'>
+                                                                <image wx:if="{{item.checked}}" src='/images/check-active.png'></image>
+                                                                <image wx:else src='/images/check.png'></image>
+                                                        </view>
+                                                </view>
+                                                <view class="dish-item-wrp">
+                                                        <navigator hover-class="none">
+                                                                <view class="dish-item-pic">
+                                                                        <image class="image" src="{{item.image[0].file_path}}"></image>
+                                                                </view>
+                                                        </navigator>
+                                                        <view class="dish-item-info">
+                                                                <navigator hover-class="none" url="../goods/index?goods_id={{item.goods_id}}">
+                                                                        <view class="goods-name">
+                                                                                <text bindtap="flowDetail" class="twolist-hidden f-30 col-3">{{item.goods_name}}</text>
+                                                                        </view>
+                                                                        <view class="goods-attr">
+                                                                                <text class="col-7 f-24">{{item.goods_sku.goods_attr}}</text>
+                                                                        </view>
+                                                                        <!-- <view class="goods-attr">
+                                                                        <text class="col-7 f-24">租赁模式:{{item.rent_info.name}}</text>
+                                                                </view>
+                                                                <view class="goods-attr">
+                                                                        <text class="col-7 f-24">保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price+'/月)'}}</text>
+                                                                </view>
+                                                                <view class="goods-attr">
+                                                                        <text class="col-7 f-24">起始日期:{{item.rent_date}}</text>
+                                                                </view>
+                                                                <view class="goods-attr">                                                                        
+                                                                        <text class="col-7 f-24" wx:if="{{item.rent_num>3&&item.rent_info.is_static==1}}">租赁金额:￥{{item.rent_price}} * 3月(先收取3月租金,之后每月扣款) = {{item.rent_total_price}}</text>
+                                                                         <text class="col-7 f-24" wx:else>租赁金额:￥{{item.rent_price}} * {{item.rent_num}}{{item.rent_info.is_static==1?"月":"日" }} = {{item.rent_total_price}}</text>             
+                                                                </view>
+                                                                <view class='goods-attr'>
+                                                                        <text class='col-7 f-24'>押金:￥ {{item.goods_price}}</text>
+                                                                </view>
+                                                                <view class='goods-attr'>
+                                                                        <text class='col-7 f-24'>总金额:￥ {{item.total_price}}</text>
+                                                                </view> -->
+                                                                        <view class="wx-goods_price">
+                                                                                <text class="dish-item-money">￥{{item.goods_price}}</text>
+                                                                        </view>
+                                                                </navigator>
+                                                                <view class="selectNumber">
+                                                                        <button bindtap="minusCount" class="default {{item.total_num>1?'':' default-active'}}" data-index="{{index}}" data-goods_spec_id="{{item.goods_spec_id}}" data-rent_id="{{item.rent_info.id}}" data-rent_num="{{item.rent_num}}" data-rent_date="{{item.rent_date}}"
+                                                                                data-secure="{{item.secure}}" data-service_ids="{{item.service_ids}}" type="default">-</button>
+                                                                        <input bindinput="import" disabled="{{true}}" type="number" value="{{item.total_num}}"></input>
+                                                                        <button bindtap="addCount" class="default" data-index="{{index}}" data-goods_spec_id="{{item.goods_spec_id}}" data-rent_id="{{item.rent_info.id}}" data-rent_num="{{item.rent_num}}" data-rent_date="{{item.rent_date}}" data-secure="{{item.secure}}" data-service_ids="{{item.service_ids}}"
+                                                                                type="default">+</button>
+                                                                </view>
+                                                                <view catchtap="del" class="flow-dete" data-goods-id="{{item.goods_id}}" data-goods_spec_id="{{item.goods_spec_id}}" data-rent_id="{{item.rent_info.id}}" data-rent_num="{{item.rent_num}}" data-rent_date="{{item.rent_date}}" data-secure="{{item.secure}}"
+                                                                        data-service_ids="{{item.service_ids}}">
+                                                                        <text class="iconfont icon-lajixiang"></text>
+                                                                </view>
+                                                        </view>
+                                                </view>
+                                        </view>
+                                        <view class='dish-service'>
+                                                <view class='dish-other'>
+                                                        <view class='other'>
+                                                                <!-- 租赁 -->
+                                                                <view class='other-item' bindtap='changeRent' data-goods-id="{{item.goods_id}}" data-goods_spec_id="{{item.goods_spec_id}}" data-total_num="{{item.total_num}}" data-rent_id="{{item.rent_info.id}}" data-rent_num="{{item.rent_num}}" data-rent_date="{{item.rent_date}}"
+                                                                        data-secure="{{item.secure}}" data-service_ids="{{item.service_ids}}">
+                                                                        <text class='item-title'>租金</text>
+                                                                        <text class="item-content arrow" wx:if="{{item.rent_num>3&&item.rent_info.is_static==1}}">￥{{item.rent_price}} X {{item.rent_num}}月(先收取3月租金,之后每月扣款) = {{item.rent_total_price}}</text>
+                                                                        <text class="item-content arrow" wx:else>￥{{item.rent_price}} X {{item.rent_num}}{{item.rent_info.is_static==1?"月":"日" }} = ￥{{item.rent_total_price}}</text>
+                                                                </view>
+                                                                <view style="height:10rpx;width:auto;background-color:#fff;margin-left:-20rpx;margin-right:-20rpx;"></view>
+                                                                <!-- 服务 -->
+                                                                <view class='other-item'>
+                                                                        <text class='item-title'>服务</text>
+                                                                        <view class='item-content arrow' bindtap='changeService' data-goods-id="{{item.goods_id}}" data-goods_spec_id="{{item.goods_spec_id}}" data-total_num="{{item.total_num}}" data-rent_id="{{item.rent_info.id}}" data-rent_num="{{item.rent_num}}" data-rent_date="{{item.rent_date}}"
+                                                                                data-secure="{{item.secure}}" data-service_ids="{{item.service_ids}}">
+                                                                                <view class='item-body'>
+                                                                                        <!-- 保修 -->
+                                                                                        <view class='item-head'>
+                                                                                                <text class='head-title'>{{item.secure==0?'标准保（免费）':'意外保'}}</text>
+                                                                                                <text class='head-num'>￥{{item.secure==0?'0':item.secure_price}}</text>
+                                                                                        </view>
+                                                                                        <!-- 增值 -->
+                                                                                        <view class='item-head' wx:for="{{item.service_info}}" wx:for-item="first">
+                                                                                                <text class='head-title'>{{first.service_name}}</text>
+                                                                                                <text class='head-num'>￥{{first.service_price}}</text>
+                                                                                        </view>
+                                                                                </view>
+                                                                        </view>
+                                                                </view>
+                                                        </view>
+                                                </view>
+                                        </view>
+                                </view>
+
+
+
+
+                        </view>
+                        <view class="cart-tab-wrp">
+                                <view class="all-check-body">
+                                        <view class='all-check' bindtap='allCheck'>
+                                                <image wx:if="{{!is_all}}" src='/images/check.png'></image>
+                                                <image wx:else src='/images/check-active.png'></image>
+                                                <text class=''>全选</text>
+                                        </view>
+                                        <view class='all-check w4'>
+                                                <text class='' style="width:160%;">合计:￥{{order_total_price}}</text>
+                                                <view bindtap="submit" class="cart-tab-item-btn h4">去结算</view>
+                                        </view>
+
+                                </view>
+                        </view>
+                </view>
+
+
+
+
+                <view wx:else>
+                        <view class="yoshop-notcont">
+                                <text class="iconfont icon-meiyougengduo"></text>
+                                <text class="cont">亲，购物车还没有商品哦</text>
+                                <view bindtap="goShopping" class="flow-btn-min">去购物</view>
+                        </view>
+                </view>
+        </view>
+</view>

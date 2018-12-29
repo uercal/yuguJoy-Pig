@@ -1,0 +1,272 @@
+.card {
+    margin: 40rpx 30rpx;
+    border: 1px solid #eee;
+    background-color: #fff;
+    box-shadow: 1px 0px 5px rgba(50, 50, 50, 0.1);
+}
+
+.card-head {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 30rpx;
+}
+
+.card-head text {
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    color: #353535;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 22rpx 30rpx;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22rpx;
+    width: 100%;
+}
+
+.info-item image {
+    /* width: 40rpx !important; */
+    width: 5%;
+    /* height: 40rpx !important; */
+}
+
+.info-item text {
+    margin-left: 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    line-height: 42rpx;
+    width: 90%;
+}
+
+.info-equip {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22rpx;
+    width: 100%;
+}
+
+.info-equip image {
+    width: 5%;
+}
+
+.sn_code_1 {
+    margin-left: 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    line-height: 42rpx;
+    width: 50%;
+}
+
+.more-equip {
+    width: 35%;
+    font-family: PingFangSC-Regular;
+    font-size: 10px;
+    color: #2150b7;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.more-equip-text {
+    display: flex;
+    align-items: center;
+}
+
+.more-oval {
+    margin-left: 10rpx;
+    width: 20rpx;
+    height: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.more-oval image {
+    width: 100%;
+    height: 100%;
+}
+
+.more-equip-1 {
+    width: 45%;
+    margin-right: 10rpx;
+    text-align: right;
+    font-family: PingFangSC-Regular;
+    font-size: 10px;
+    color: #2150b7;
+}
+
+.sn_code {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 60%;
+}
+
+.sn_code text {
+    margin-left: 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20rpx;
+    width: 100%;
+}
+
+.info-equip-more {
+    display: flex;
+    width: 100%;
+}
+
+.info-equip-image {
+    /* width: 36rpx; */
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.info-equip-image image {
+    width: 100%;
+    height: 100%;
+}
+
+/*  */
+
+.footer {
+    position: fixed;
+    height: 90rpx;
+    bottom: 0;
+    width: 100%;
+}
+
+.sub {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5fc6ff;
+}
+
+.sub text {
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #fff;
+}
+
+.addEquip {
+    margin: 30rpx;
+    height: 80rpx;
+    background-image: linear-gradient(to right, #ffce00, #ffa400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addMember {
+    margin: 30rpx;
+    height: 80rpx;
+    background-image: linear-gradient(to right, #bde4fc, #60c6fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addEquip text {
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.addMember text {
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.addBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-item {
+    margin: 20rpx;
+    background-color: #f2f2f2;
+    display: flex;
+    padding: 20rpx;
+}
+
+.add-left {
+    width: 90%;
+    display: flex;
+}
+
+.add-left-title {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.add-left-value {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-left text {
+    margin: 10rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 10px;
+    color: #888;
+    opacity: 0.7;
+}
+
+.add-right {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-right image {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.service-item {
+    height: 30rpx;
+    border-radius: 5px;
+    border: 1px solid #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8rpx;
+}
+
+.service-item-active {
+    background-color: #ffa400;
+    height: 30rpx;
+    border-radius: 5px;
+    border: 1px solid #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8rpx;
+}
+
+.service-item-active text {
+    color: #fff;
+}

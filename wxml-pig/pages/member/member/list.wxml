@@ -1,0 +1,64 @@
+<scroll-view class='scroll' scroll-y style="height:{{system.windowHeight}}px;" bindscrolltolower='_onScrollToLower'>
+    <member-header id="memberHeader"></member-header>
+    <!-- 筛选 -->
+    <view class="container" wx:if="{{!choose}}">
+        <view class="cont-box">
+            <view class="dis-flex search-input-box" style="flex-direction:row;flex-wrap:unset;">
+                <view class="search-input">
+                    <view class="dis-flex search-box">
+                        <view class="left">
+                            <icon color="rgba(239,249,255,1)" size="15" type="search"></icon>
+                        </view>
+                        <view class="right">
+                            <input bindconfirm="getSearchContent" style="font-size:12px !important;" class="input" focus="true" placeholder="请输入员工手机号/姓名" placeholderStyle="color:#aba9a9" type="text" confirm-type="search"></input>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- type -->
+    <view class='type'>
+        <view class='type-item {{status==1?"active":""}}' data-id="1" bindtap='type'>
+            <view class='type-c'>
+                <text>空闲</text>
+            </view>
+        </view>
+        <view class='type-item {{status==2?"active":""}}' data-id="2" bindtap='type'>
+            <view class='type-c'>
+                <text>维修中</text>
+            </view>
+        </view>
+        <view class='type-item {{status==3?"active":""}}' data-id="3" bindtap='type'>
+            <view class='type-c'>
+                <text>派送中</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- LIST -->
+    <view class='user' wx:for="{{data}}" wx:key="this">
+        <view class='user-type' style="background-color:#{{status==1?'D2E8C1':(status==2?'FBCDC4':'5FC6FF')}};">{{item.role.role_name}}</view>
+        <view class='user-info'>
+            <view class='info-item'>
+                <image src='/images/member/customer.png'></image>
+                <text>{{item.name}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/user-name.png'></image>
+                <text>{{item.function}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/iphone.png'></image>
+                <text>{{item.phone}}</text>
+            </view>
+            <view wx:if="{{choose}}" class='choose-btn' bindtap='choose' data-index="{{index}}">
+                <image wx:if="{{!item.checked}}" src='/images/member/multiple_unchecked.png'></image>
+                <image wx:else src='/images/member/multiple_checked.png'></image>
+            </view>
+        </view>
+    </view>
+
+    <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

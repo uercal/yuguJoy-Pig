@@ -1,0 +1,11 @@
+<scroll-view class='scroll' scroll-y style="height: {{system.windowHeight}}px; " bindscrolltolower='_onScrollToLower'>
+        <view class="card">
+                <view class='head'>
+                        <view class='title'>{{detail.notice.title}}
+                                <view class='oval' wx:if="{{detail.is_read==0}}"></view>
+                        </view>
+                        <text class='time'>时间：{{detail.create_time}}</text>
+                </view>
+                <view class='content'>{{detail.notice.content}}</view>
+        </view>        
+</scroll-view>

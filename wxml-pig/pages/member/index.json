@@ -1,0 +1,7 @@
+{
+        "navigationBarTitleText": "员工端",
+        "usingComponents": {
+                "load-more": "/components/load-more/index",
+                "member-header":"/components/header/index"
+        }
+}

@@ -1,0 +1,154 @@
+<view class="container p-bottom">
+        <!-- 配送地址 -->
+        <view catchtap="selectAddress">
+                <view wx:if="{{address.address_id}}">
+                        <view class="b-f">
+                                <view class="flow-checkout-header">
+                                        <text class="iconfont icon-dingwei1"></text>
+                                        <view class="flow-header-left">
+                                                <view class="flow-checkout-admin f-30 col-3">
+                                                        <text>{{address.name}}</text>
+                                                        <text>{{address.phone}}</text>
+                                                        <text class="col-m"></text>
+                                                </view>
+                                                <view class="flow-checkout-address">
+                                                        {{address.region.province}} {{address.region.city}} {{address.region.region}} {{address.detail}}
+                                                </view>
+                                        </view>
+                                        <view class="flow-header-right pr-12">
+                                                <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                                        </view>
+                                </view>
+                        </view>
+                </view>
+                <view wx:else>
+                        <view class="flow-checkout-header">
+                                <text class="iconfont icon-dingwei1"></text>
+                                <view class="flow-header-left">
+                                        <view class="f-28 col-6">去选择配送地址
+                                        </view>
+                                </view>
+                                <view class="flow-header-right p-r15">
+                                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                                </view>
+                        </view>
+                </view>
+        </view>
+
+        <!-- 商品列表 -->
+        <view class="m-top20">
+                <view class="checkout_list " wx:for="{{goods_list}}" wx:key="this">
+
+                        <view class="dis-flex flow-shopList" data-index="{{index}}">
+                                <view class="flow-list-left">
+                                        <image mode="scaleToFill" src="{{item.image[0].file_path}}"></image>
+                                </view>
+                                <view class="flow-list-right rent-info">
+                                        <navigator url="../goods/index?goods_id={{item.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
+                                                <text class="f-30 col-3 twolist-hidden">{{item.goods_name}}</text>
+                                                <text class="flow-cont">￥{{item.total_price}}</text>
+                                        </navigator>
+
+                                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                                                <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.goods_sku.goods_attr}}/{{item.rent_info.name}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}</text>
+                                                <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                                        <text class="right-attr-text">{{item.rent_num}}{{item.rent_info.is_static==1?"月":"日" }}</text>
+                                                        <text class="small1">×{{item.total_num}}</text>
+                                                </view>
+                                        </view>
+                                        
+                                        <view class="flow-list-cont" style="height:60rpx;">
+                                                <view class='down-p {{item.detailed?"active":""}}' bindtap='chgDetail' data-index="{{index}}" style="height:100%;padding-right:10rpx;">
+                                                        <text style="margin-right:10rpx;">详情</text>
+                                                </view>
+                                        </view>
+                                </view>
+                                <!-- 详情 -->
+                                <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
+                                        <view class='attr-line'>
+                                                <text class='attr-font pad-l'>应付租金</text>
+                                                <text class='attr-font'>￥{{item.rent_total_price}}</text>
+                                        </view>
+                                        <view class='attr-line'>
+                                                <text class='attr-font pad-l'>应付押金</text>
+                                                <text class='attr-font'>￥{{item.goods_price}}</text>
+                                        </view>
+                                        <view class='attr-line'>
+                                                <text class='attr-font pad-l'>保修金额</text>
+                                                <text class='attr-font'>￥{{item.secure==0?'0':item.secure_price}}</text>
+                                        </view>
+                                        <view class='attr-line'>
+                                                <text class='attr-font pad-l'>增值金额</text>
+                                                <text class='attr-font'>￥{{item.service_price}}</text>
+                                        </view>
+                                        <view class='attr-line'>
+                                                <text class='attr-font pad-l'>应付金额</text>
+                                                <text class='attr-font'>￥{{item.all_total_price}}</text>
+                                        </view>
+
+                                </view>
+                        </view>
+                </view>
+                <!-- <view class="flow-num-box b-f padding-box">
+                        <text>共{{order_total_num}}件商品，合计：</text>
+                        <text class="flow-money col-m">￥{{order_total_price}}</text>
+                </view> -->
+        </view>
+
+        <!-- 商品金额 -->
+        <view class="flow-all-money b-f padding-box m-top20">
+                <view class="dis-flex flow-all-list">
+                        <text class="flex-five">总金额:</text>
+                        <view class="flex-five t-r">
+                                <text class="col-m">￥{{order_total_price}}</text>
+                        </view>
+                </view>
+                <!-- <view class="dis-flex flow-all-list">
+                        <text class="flex-five">配送费用:</text>
+                        <view class="flex-five t-r">
+                                <view wx:if="{{address.address_id}}">
+                                        <text class="col-m" wx:if="{{intra_region}}">+￥{{express_price}}</text>
+                                        <text wx:else>不在配送范围</text>
+                                </view>
+                                <view wx:else>
+                                        <text class="col-7">请先选择配送地址</text>
+                                </view>
+                        </view>
+                </view> -->
+        </view>
+
+        <!-- 提交订单 -->
+        <view class="flow-fixed-footer b-f m-top10">
+                <view class="dis-flex chackout-box">
+                        <view class=" chackout-left pl-12 ">实付款：
+                                <text class="col-m">￥{{order_total_price}}</text>
+                        </view>
+                        <view bindtap="submitOrder" class="chackout-right">
+                                <text class="flow-btn">确定提交</text>
+                        </view>
+                </view>
+        </view>
+
+        <!-- 快捷导航 -->
+        <!-- <view class="filter-menu {{nav_select?'active':''}}">
+                <view class="filter-menu-list ts-5">
+                        <custom-ul>
+                                <custom-li bindtap="nav" data-index="home">
+                                        <text class="iconfont icon-home"></text>
+                                </custom-li>
+                                <custom-li bindtap="nav" data-index="fenlei">
+                                        <text class="iconfont icon-fenlei"></text>
+                                </custom-li>
+                                <custom-li bindtap="nav" data-index="cart">
+                                        <text class="iconfont icon-cart"></text>
+                                </custom-li>
+                                <custom-li bindtap="nav" data-index="profile">
+                                        <text class="iconfont icon-profile"></text>
+                                </custom-li>
+                                <custom-li class="w"></custom-li>
+                        </custom-ul>
+                </view>
+                <view bindtap="commonNav" class="filter-menu-title"></view>
+        </view> -->
+
+</view>

@@ -1,0 +1,39 @@
+<member-header id="header"></member-header>
+
+<!-- -->
+<form bindsubmit='sub'>
+        <view class="card">
+                <view class='card-head'>
+                        <text style="font-weight:bold;">送达文字说明</text>
+                </view>
+                <view class='card-info'>
+                        <textarea name="send_content" placeholder="请填写文字说明" placeholder-class="area-place" maxlength='140' />
+                </view>
+                <view class='text-bonus'>
+                        <text>文字说明不超过140个字</text>
+                </view>
+        </view>
+
+        <!--  -->
+        <view class="card">
+                <view class='card-head'>
+                        <text style="font-weight:bold;">添加送达图片</text>
+                </view>
+                <view class='pic-info'>
+                        <view class='upload' bindtap='uploadImg' wx:for="{{pic_paths}}" wx:for-index="key" data-index="{{key}}">
+                                <image wx:if="{{item==''}}" src='/images/member/upload.png'></image>
+                                <image wx:else src='{{item}}'></image>
+                        </view>
+                </view>
+        </view>
+
+
+
+        <!-- footer -->
+        <view class='footer'>
+                <button class='sub' form-type="submit">
+                        <text>确认提交</text>
+                </button>
+        </view>
+
+</form>

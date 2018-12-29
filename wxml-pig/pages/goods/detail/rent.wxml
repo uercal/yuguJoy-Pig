@@ -1,0 +1,61 @@
+<view class="cart bright789_view_hide {{showView?'bright789_view_show':''}}">
+        <view class="modal_cont_box">
+                <view class="cf tmall-types">
+                        <view class="tipstxt">租赁方式</view>
+                        <view class="cf cartypelist">
+                                <view bindtap="secure" wx:for="{{rent_list}}" wx:for-item="item" wx:for-index="index" wx:key="key" data-index="{{index}}" class="cartypeitem {{rent_index==index?'cur':''}}" bindtap='chooseRent'>{{item.name}}</view>
+                        </view>
+                </view>
+
+
+                <view class="cf tmall-types">
+                        <view class="tipstxt">租赁说明</view>
+                        <view class="rent-item">
+                                <text class='rent-header'>租金{{rentInfo.show_price}}/{{rentInfo.price_type_text}}</text>
+                                <view class='rent-body'>
+                                        <text class='rent-title'>{{rentInfo.name}}:</text>
+                                        <text class='rent-content'>{{rentInfo.content}}</text>
+                                </view>
+                        </view>
+
+                </view>
+                
+                <view class="cf tmall-types">
+                        <view class="tipstxt">开始日期</view>
+                        <view class='date-item'>
+                                <picker class='time-picker' mode="date" fields="day" start="{{start_date}}" bindchange="changeDate">
+                                        <view class="f-28 col-6 time-c">{{startDate}}
+                                        </view>
+                                </picker>
+                        </view>
+                </view>
+
+
+                <view class="cf tmall-types" style='margin-top:20rpx;margin-bottom:50px;'>
+                        <view class="tipstxt">租赁时间</view>
+                        <view class='rent-mode-number' wx:if="{{rent_index!=3}}">
+                                <view class="selectNumber">
+                                        <button bindtap="downRent" wx:if="{{rent_index!=2}}" class="default  {{rent_num>1?'':' default-active'}}" type="default">-</button>
+                                        <button bindtap="downRent" wx:else class="default  {{rent_num>6?'':' default-active'}}" type="default">-</button>
+
+                                        <input bindinput="import" type="number" value="{{rent_num}}" disabled></input>
+
+                                        <button bindtap="upRent" wx:if="{{rent_index==1}}" class="default {{rent_num<5?'':' default-active'}}" type="default">+</button>
+                                        <button bindtap="upRent" wx:else class="default" type="default">+</button>
+                                </view>
+                                <text style='padding-left:10rpx;'>{{rentInfo.price_type_text}}</text>
+                        </view>
+
+                        <view class="cf cartypelist" wx:if="{{rent_index==3}}">
+                                <view bindtap="chooseRentNum" class="cartypeitem {{rent_num==item?'cur':''}}" wx:for="{{[12,24]}}" data-num="{{item}}">
+                                        {{item}}月({{item/12}}年)
+                                </view>
+                        </view>
+                </view>
+
+        </view>
+</view>
+
+<view class="footer-fixed f-30">
+        <view class="default-btn" style="width:100%;background-color: #ff495e;" bindtap='hideModal'>确定</view>
+</view>

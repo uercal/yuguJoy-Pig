@@ -1,0 +1,33 @@
+<member-header id="memberHeader"></member-header>
+
+<!-- 配送信息 -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">产品信息</text>
+        <view class='state'>
+            <text>{{detail.status_text}}</text>
+        </view>
+    </view>
+    <view class='card-info'>
+        <view class='info-item'>
+            <image src="/images/member/model.png" mode="widthFix"></image>
+            <text>{{detail.goods_name}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/spec.png" mode="widthFix"></image>
+            <text>{{detail.spec_value.spec_value}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/ordertime.png" mode="widthFix"></image>
+            <text>采购于{{detail.create_time}}</text>
+        </view>
+        <view class='info-item'>
+            <image src="/images/member/sn_code.png" mode="widthFix"></image>
+            <text>{{detail.sn_code}}</text>
+        </view>
+        <view class='info-item' wx:if="{{detail.order_id}}">
+            <image src="/images/member/orderform.png" mode="widthFix"></image>
+            <text style="color:blue;" bindtap='go2order' data-order-id="{{detail.order_id}}">{{detail.order[0].order_no}}</text>
+        </view>
+    </view>
+</view>

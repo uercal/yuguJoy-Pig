@@ -1,0 +1,30 @@
+<view class="cart bright789_view_hide {{showView?'bright789_view_show':''}}">
+        <view class="modal_cont_box">
+                <view class="cf tmall-types" wx:for="{{specData.spec_attr}}" wx:for-item="attr" wx:for-index="attr_idx" wx:key="key">
+                        <view class="tipstxt" data-id="{{attr.group_id}}">{{attr.group_name}}</view>
+                        <view class="cf cartypelist" wx:for="{{attr.spec_items}}" wx:for-index="item_idx" wx:key="ikey">
+                                <view wx:if="{{item.checked}}">
+                                        <view bindtap="modelTap" class="cartypeitem cur" data-attr-idx="{{attr_idx}}" data-item-idx="{{item_idx}}">{{item.spec_value}}</view>
+                                </view>
+                                <view wx:else>
+                                        <view bindtap="modelTap" class="cartypeitem" data-attr-idx="{{attr_idx}}" data-item-idx="{{item_idx}}">{{item.spec_value}}</view>
+                                </view>
+                        </view>
+                </view>
+
+                <view class="cf tmall-types" style='margin-bottom:50px;'>
+                        <view class="buyNumber f-28">
+                                <text>购买数量</text>
+                        </view>
+                        <view class="selectNumber">
+                                <button bindtap="down" class="default  {{goods_num>1?'':' default-active'}}" type="default">-</button>
+                                <input bindinput="import" type="number" value="{{goods_num}}" disabled></input>
+                                <button bindtap="up" class="default" type="default">+</button>
+                        </view>
+                </view>
+        </view>
+</view>
+
+<view class="footer-fixed f-30">
+         <view class="default-btn" style="width:100%;background-color: #ff495e;" bindtap='hideModal'>确定</view>
+</view>

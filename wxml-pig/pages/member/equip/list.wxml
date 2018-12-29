@@ -1,0 +1,106 @@
+<!--屏幕背景变暗的背景  -->
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<!--弹出框  -->
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}" catchtouchmove="ture">
+    <block>
+        <view class='filter-body'>
+            <view class='filter-head'>
+                <view class='filter-title'>设备状态</view>
+                <view class='filter-content'>
+                    <view class='{{index===state_index?"filter-item":"filter-item-un"}}' wx:for="{{equip_status}}" data-index="{{index}}" bindtap='filter_state' wx:key="this">
+                        <text>{{item.name}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class='filter-head'>
+                <view class='filter-title'>设备类型</view>
+                <view class='filter-content'>
+                    <view class='{{index===cate_index?"filter-item":"filter-item-un"}}' wx:for="{{cate_option}}" data-index="{{index}}" bindtap='filter_cate' wx:key="this">
+                        <text>{{item.name}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class='filter-head'>
+                <view class='filter-title'>采购时间</view>
+                <view class='filter-content'>
+
+                    <picker mode="date" value="{{date}}" bindchange="bindDateChange1">
+                        <view class="filter-item-un" style="color:#bbb;padding:5rpx 40rpx;">{{start_time?start_time:"起始时间"}}</view>
+                    </picker>
+                    <view class='line'></view>
+                    <picker mode="date" value="{{date}}" bindchange="bindDateChange2">
+                        <view class="filter-item-un" style="color:#bbb;padding:5rpx 40rpx;">{{end_time?end_time:"截止时间"}}</view>
+                    </picker>
+                </view>
+            </view>
+
+            <view class='filter-footer'>
+                <view class='btn-reset' bindtap="reset">
+                    <text>重置</text>
+                </view>
+                <view class='btn-sub' bindtap='filter_sub'>
+                    <text>确定</text>
+                </view>
+            </view>
+        </view>
+    </block>
+</view>
+
+
+<scroll-view class='scroll' scroll-y style="height:{{system.windowHeight}}px;" bindscrolltolower='_onScrollToLower'>
+    <member-header id="memberHeader"></member-header>
+    <!-- 筛选 -->
+    <view class="container">
+        <view class="cont-box">
+            <view class="dis-flex search-input-box" style="flex-direction:row;">
+                <view class="search-input">
+                    <view class="dis-flex search-box">
+                        <view class="left">
+                            <icon color="rgba(239,249,255,1)" size="15" type="search"></icon>
+                        </view>
+                        <view class="right">
+                            <input bindconfirm="getSearchContent" class="input" focus="true" placeholder="请输入设备ID" placeholderStyle="color:#aba9a9" type="text" confirm-type="search"></input>
+                        </view>
+                    </view>
+                </view>
+                <view class="serch-button" bindtap='showModal'>
+                    <image src='/images/member/filter.png' wx:if="{{!filter_state}}"></image>
+                    <image src='/images/member/filter-active.png' wx:else></image>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!--筛选项目 -->
+    <view class='filter-option' wx:if="{{filter_state}}">
+        <text>本次筛选项目:</text>
+        <view class='filter-option-child'>
+            <view class='filter-item' style="margin-top:unset !important;" wx:if="{{state_index!==null}}">
+                <text>{{equip_status[state_index].name}}</text>
+            </view>
+            <view class='filter-item' style="margin-top:unset !important;" wx:if="{{cate_index!==null}}">
+                <text>{{cate_option[cate_index].name}}</text>
+            </view>
+            <view class='filter-item' style="margin-top:unset !important;" wx:if="{{start_time&&end_time}}">
+                <text>{{start_time}}到{{end_time}}</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- LIST -->
+    <view class='title'>
+        <text class='id'>设备ID</text>
+        <text class='goods_name'>所属产品</text>
+        <text class='spec'>配置型号</text>
+    </view>
+    <view class='list'>
+        <view class='list-item' wx:for="{{data}}" wx:key="this" data-id="{{item.equip_id}}" bindtap="equipDetail">
+            <text class='equip-id'>{{item.equip_id}}</text>
+            <text class='equip-goods'>{{item.goods_name}}</text>
+            <text class='equip-spec'>{{item.spec_value.spec_value}}</text>
+        </view>
+    </view>
+    <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

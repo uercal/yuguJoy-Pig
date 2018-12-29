@@ -1,0 +1,159 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.4",
+	"appid": "wxb9de7de8697ceb37",
+	"projectname": "demo",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 18,
+			"list": [
+				{
+					"id": -1,
+					"name": "user",
+					"pathName": "pages/user/index",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "goods",
+					"pathName": "pages/goods/index",
+					"query": "goods_id=3"
+				},
+				{
+					"id": -1,
+					"name": "flow",
+					"pathName": "pages/flow/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "info",
+					"pathName": "pages/user/info",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "order",
+					"pathName": "pages/order/detail",
+					"query": "order_id=5"
+				},
+				{
+					"id": -1,
+					"name": "comment",
+					"pathName": "pages/goods/comment",
+					"query": "goods_id=4"
+				},
+				{
+					"id": 6,
+					"name": "order",
+					"pathName": "pages/order/afterDetail",
+					"query": "after_id=8"
+				},
+				{
+					"id": -1,
+					"name": "cate",
+					"pathName": "pages/category/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "member_login",
+					"pathName": "pages/member/login",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "member_index",
+					"pathName": "pages/member/index",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "checkout",
+					"pathName": "pages/flow/checkout",
+					"query": "order_type=cart"
+				},
+				{
+					"id": -1,
+					"name": "myOrder",
+					"pathName": "pages/member/myOrder",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "notice_list",
+					"pathName": "pages/member/notice/list",
+					"query": ""
+				},
+				{
+					"id": 13,
+					"name": "equip_list",
+					"pathName": "pages/member/equip/list",
+					"query": ""
+				},
+				{
+					"id": 14,
+					"name": "equip_detail",
+					"pathName": "pages/member/equip/detail",
+					"query": "equip_id=1023"
+				},
+				{
+					"id": 15,
+					"name": "equip_user",
+					"pathName": "pages/member/user/detail",
+					"query": "user_id=547"
+				},
+				{
+					"id": -1,
+					"name": "m_member_list",
+					"pathName": "pages/member/member/list",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "sendorder",
+					"pathName": "pages/member/order/send",
+					"query": "id=7&from=send"
+				},
+				{
+					"id": -1,
+					"name": "sendafter",
+					"pathName": "pages/member/after/detail",
+					"query": "id=10&from=send"
+				}
+			]
+		}
+	}
+}

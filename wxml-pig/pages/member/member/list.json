@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "成员状态",
+    "usingComponents": {
+        "load-more": "/components/load-more/index",
+        "member-header": "/components/header/index"
+    }
+}

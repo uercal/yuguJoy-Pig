@@ -1,0 +1,83 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/category/index",
+        "pages/category/list",
+        "pages/category/collect",
+        "pages/goods/index",
+        "pages/goods/comment",
+        "pages/search/index",
+        "pages/flow/index",
+        "pages/flow/checkout",
+        "pages/flow/service",
+        "pages/flow/rent",
+        "pages/user/index",
+        "pages/user/info",
+        "pages/user/help",
+        "pages/order/index",
+        "pages/order/after",
+        "pages/order/detail",
+        "pages/order/afterDetail",
+        "pages/order/afterSend",
+        "pages/address/index",
+        "pages/address/create",
+        "pages/address/detail",
+        "pages/member/login",
+        "pages/member/index",
+        "pages/member/notice/list",
+        "pages/member/notice/detail",
+        "pages/member/order/detail",
+        "pages/member/order/send",
+        "pages/member/order/sendDone",
+        "pages/member/after/detail",
+        "pages/member/after/edit",
+        "pages/member/after/reback",
+        "pages/member/equip/list",
+        "pages/member/equip/detail",
+        "pages/member/user/list",
+        "pages/member/user/detail",
+        "pages/member/member/list",
+        "pages/member/member/search",
+        "pages/login/login"
+    ],
+    "window": {
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTitleText": "",
+        "navigationBarTextStyle": "black",
+        "backgroundTextStyle": "dark"
+    },
+    "tabBar": {
+        "color": "#6e6d6b",
+        "selectedColor": "#F35437",
+        "borderStyle": "black",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "images/home.png",
+                "selectedIconPath": "images/home-active.png"
+            },
+            {
+                "pagePath": "pages/category/index",
+                "text": "分类",
+                "iconPath": "images/cate.png",
+                "selectedIconPath": "images/cate-active.png"
+            },
+            {
+                "pagePath": "pages/flow/index",
+                "text": "购物车",
+                "iconPath": "images/flow.png",
+                "selectedIconPath": "images/flow-active.png"
+            },
+            {
+                "pagePath": "pages/user/index",
+                "text": "我的",
+                "iconPath": "images/user.png",
+                "selectedIconPath": "images/user-active.png"
+            }
+        ],
+        "position": "bottom"
+    },
+    "debug": true
+}

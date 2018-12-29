@@ -1,0 +1,6 @@
+{
+        "navigationBarTitleText": "送达说明",
+        "usingComponents": {
+                "member-header": "/components/header/index"
+        }
+}

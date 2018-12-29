@@ -1,0 +1,27 @@
+<view class="am-g">
+        <!-- LOGO -->
+        <view class="" style="display:flex;align-items:center;justify-content:center;">
+                <image src='/images/member_login_logo.png' mode="aspectFit" style='width:80%;'></image>
+        </view>
+        <!-- 登陆框 -->
+        <view class="am-u-sm-11 am-u-sm-centered">
+                <form class="am-form" bindreset="formReset" bindsubmit="saveData">
+                        <view class="">
+                                <view class="bor-input">
+                                        <image wx:if="{{!chgPhone}}" class='input-img' src='/images/login_phone.png' mode="aspectFit"></image>
+                                        <image wx:else class='input-img' src='/images/login_phone_active.png' mode="aspectFit"></image>
+                                        <input type="text" name="phone" class=" input-info {{chgPhone?'hover':''}}" placeholder="请输入手机号码" bindinput='chgPhone' placeholder-style='color:#dfdfdf;'>
+                                        </input>
+                                </view>
+                                <view class="bor-input">
+                                        <image wx:if="{{!chgPass}}" class='input-img' src='/images/login_password.png' mode="aspectFit"></image>
+                                        <image wx:else class='input-img' src='/images/login_password_active.png' mode="aspectFit"></image>
+                                        <input password='true' name="password" class=" input-info {{chgPass?'hover':''}}" placeholder="请输入密码" bindinput='chgPass' placeholder-style='color:#dfdfdf;font-size:14px;'>
+                                        </input>
+
+                                </view>
+                        </view>
+                        <button formType="submit" class="sub-btn" disabled='{{!allExist?"disabled":""}}'>登 陆</button>
+                </form>
+        </view>
+</view>

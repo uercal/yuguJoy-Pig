@@ -1,0 +1,37 @@
+<scroll-view class='scroll' scroll-y style="height:{{system.windowHeight}}px;" bindscrolltolower='_onScrollToLower'>
+    <member-header id="memberHeader"></member-header>
+    <!-- 筛选 -->
+
+    <!-- type -->
+
+    <!-- LIST -->
+    <view class='user' wx:for="{{data}}">
+        <view class='user-type' style="background-color:#{{item.status_api=='empty'?'D2E8C1':(item.status_api=='check'?'FBCDC4':'5FC6FF')}};">{{item.role.role_name}}</view>
+        <view class='user-info'>
+            <view class='info-item'>
+                <image src='/images/member/customer.png'></image>
+                <text>{{item.name}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/user-name.png'></image>
+                <text>{{item.function}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/iphone.png'></image>
+                <text>{{item.phone}}</text>
+            </view>
+            <view class='info-item'>
+                <image src='/images/member/orderform.png'></image>
+                <text>{{item.status_api=='empty'?'空闲':(item.status_api=='check'?'维修中':'派送中')}}</text>
+            </view>
+        </view>
+    </view>
+
+
+
+
+
+
+
+    <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

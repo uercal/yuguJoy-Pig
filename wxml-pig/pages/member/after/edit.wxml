@@ -1,0 +1,237 @@
+<member-header id="header"></member-header>
+
+<!--  -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">售后类型</text>
+    </view>
+    <view class='card-info' style="flex-direction:row;">
+        <view class='radio' bindtap='type' data-index='1'>
+            <image wx:if="{{type_index==1}}" src='/images/member/single_pressed.png'></image>
+            <image wx:else src='/images/member/single_normal.png'></image>
+            <text>维修</text>
+        </view>
+        <view class='radio' bindtap='type' data-index='2'>
+            <image wx:if="{{type_index==2}}" src='/images/member/single_pressed.png'></image>
+            <image wx:else src='/images/member/single_normal.png'></image>
+            <text>其他</text>
+        </view>
+    </view>
+</view>
+
+
+<!-- 维修类型  -->
+<view class="card" wx:if="{{type_index==1}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">维修类型</text>
+    </view>
+    <view class='card-info'>
+        <!-- 即时维修  -->
+        <view class='card-item'>
+            <view class='item-head'>
+                <view class='item-title' data-type="0" bindtap='checkType'>
+                    <image wx:if="{{check_type[0]===true}}" src='/images/member/multiple_checked.png'></image>
+                    <image wx:else src='/images/member/multiple_unchecked.png'></image>
+                    <text>即时维修</text>
+                </view>
+                <view class='scan' bindtap='scan' data-type='0'>
+                    <image wx:if="{{check_type[0]===true}}" class='scan' src='/images/member/scan-done.png' mode='aspectFit'></image>
+                    <image wx:else class='scan' src='/images/member/scan-undo.png' mode='aspectFit'></image>
+                </view>
+            </view>
+            <view class='card-equip'>
+                <view class='equip-item' wx:for="{{equip_0}}">
+                    <view class='equip-left'>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备名称：</text>
+                            <text class='info-value'>{{item.goods_name}},{{item.spec_value.spec_value}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备ID：</text>
+                            <text class='info-value'>{{item.equip_id}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>增值服务：</text>
+                            <text class='info-value'>{{item.services}}</text>
+                        </view>
+                    </view>
+                    <view class='equip-right' bindtap='delEquip' data-type="0" data-id='{{item.equip_id}}'>
+                        <image src="/images/member/delete.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 以换代修  坏 -->
+        <view class='card-item'>
+            <view class='item-head'>
+                <view class='item-title' data-type="1" bindtap='checkType'>
+                    <image wx:if="{{check_type[1]===true}}" src='/images/member/multiple_checked.png'></image>
+                    <image wx:else src='/images/member/multiple_unchecked.png'></image>
+                    <text>以换代修-损坏设备</text>
+                </view>
+                <view class='scan' bindtap='scan' data-type='1'>
+                    <image wx:if="{{check_type[1]===true}}" class='scan' src='/images/member/scan-done.png' mode='aspectFit'></image>
+                    <image wx:else class='scan' src='/images/member/scan-undo.png' mode='aspectFit'></image>
+                </view>
+            </view>
+            <view class='card-equip'>
+                <view class='equip-item' wx:for="{{equip_1}}">
+                    <view class='equip-left'>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备名称：</text>
+                            <text class='info-value'>{{item.goods_name}},{{item.spec_value.spec_value}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备ID：</text>
+                            <text class='info-value'>{{item.equip_id}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>增值服务：</text>
+                            <text class='info-value'>{{item.services}}</text>
+                        </view>
+                    </view>
+                    <view class='equip-right' bindtap='delEquip' data-type="1" data-id='{{item.equip_id}}'>
+                        <image src="/images/member/delete.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 以换代修  新 -->
+        <view class='card-item'>
+            <view class='item-head'>
+                <view class='item-title' data-type="2" bindtap='checkType'>
+                    <image wx:if="{{check_type[2]===true}}" src='/images/member/multiple_checked.png'></image>
+                    <image wx:else src='/images/member/multiple_unchecked.png'></image>
+                    <text>以换代修-新设备</text>
+                </view>
+                <view class='scan' bindtap='scan' data-type='2'>
+                    <image wx:if="{{check_type[2]===true}}" class='scan' src='/images/member/scan-done.png' mode='aspectFit'></image>
+                    <image wx:else class='scan' src='/images/member/scan-undo.png' mode='aspectFit'></image>
+                </view>
+            </view>
+            <view class='card-equip'>
+                <view class='equip-item' wx:for="{{equip_2}}">
+                    <view class='equip-left'>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备名称：</text>
+                            <text class='info-value'>{{item.goods_name}},{{item.spec_value.spec_value}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备ID：</text>
+                            <text class='info-value'>{{item.equip_id}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>增值服务：</text>
+                            <text class='info-value'>{{item.services}}</text>
+                        </view>
+                    </view>
+                    <view class='equip-right' bindtap='delEquip' data-type="2" data-id='{{item.equip_id}}'>
+                        <image src="/images/member/delete.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 整机返修 -->
+        <view class='card-item'>
+            <view class='item-head'>
+                <view class='item-title' data-type="3" bindtap='checkType'>
+                    <image wx:if="{{check_type[3]===true}}" src='/images/member/multiple_checked.png'></image>
+                    <image wx:else src='/images/member/multiple_unchecked.png'></image>
+                    <text>整机返修</text>
+                </view>
+                <view class='scan' bindtap='scan' data-type='3'>
+                    <image wx:if="{{check_type[3]===true}}" class='scan' src='/images/member/scan-done.png' mode='aspectFit'></image>
+                    <image wx:else class='scan' src='/images/member/scan-undo.png' mode='aspectFit'></image>
+                </view>
+            </view>
+            <view class='card-equip'>
+                <view class='equip-item' wx:for="{{equip_3}}">
+                    <view class='equip-left'>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备名称：</text>
+                            <text class='info-value'>{{item.goods_name}},{{item.spec_value.spec_value}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>设备ID：</text>
+                            <text class='info-value'>{{item.equip_id}}</text>
+                        </view>
+                        <view class='equip-info'>
+                            <text class='info-name'>增值服务：</text>
+                            <text class='info-value'>{{item.services}}</text>
+                        </view>
+                    </view>
+                    <view class='equip-right' bindtap='delEquip' data-type="3" data-id='{{item.equip_id}}'>
+                        <image src="/images/member/delete.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+<!-- 售后费用 -->
+<view class="card" wx:if="{{equip_3.length==0}}">
+    <view class='card-head'>
+        <text style="font-weight:bold;">售后费用</text>
+    </view>
+    <view class='card-info'>
+        <view class='price'>
+            <view class='price-title'>
+                <text>总材料费</text>
+            </view>
+            <view class='price-value'>
+                <input type='digit' placeholder='0.00' placeholder-class='price-holder' bindinput='source_price' value=""></input>
+            </view>
+        </view>
+        <view class='price' style="border-bottom:unset !important;">
+            <view class='price-title'>
+                <text>总服务费</text>
+            </view>
+            <view class='price-value'>
+                <input type='digit' placeholder='0.00' placeholder-class='price-holder' bindinput='server_price' bindblur='digitValid' value=""></input>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+
+
+<!--  -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">故障信息说明</text>
+    </view>
+    <view class='card-info' style="padding: 0 30rpx;height: 200rpx;font-size: 14px;">
+        <textarea name="check_text" bindinput='check_text' placeholder="请填写文字说明" placeholder-class='price-holder' maxlength='140' />
+    </view>
+    <view class='text-bonus'>
+        <text>文字说明不超过140个字</text>
+    </view>
+</view>
+
+<!--  -->
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">故障说明图片</text>
+    </view>
+    <view class='pic-info'>
+        <view class='upload' bindtap='uploadImg' wx:for="{{check_pics_paths}}" wx:for-index="key" data-index="{{key}}" wx:key="this">
+            <image wx:if="{{item==''}}" src='/images/member/upload.png'></image>
+            <image wx:else src='{{item}}'></image>
+        </view>
+    </view>
+</view>
+
+<view style="height:120rpx;"></view>
+
+<!-- footer -->
+<view class='footer'>
+    <view class='sub' bindtap='sub'>
+        <text>确认提交</text>
+    </view>
+</view>

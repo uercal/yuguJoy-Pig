@@ -1,0 +1,156 @@
+.cart {
+        background-color: #fff;
+}
+
+.modal_cont_box {
+        padding: 20rpx 12px;
+        border-top: 1rpx solid #eee;
+}
+
+.tmall-types.mb20 {
+        margin-bottom: 20rpx;
+}
+
+.tipstxt {
+        font-size: 28rpx;
+        color: #888;
+        margin-bottom: 10rpx;
+}
+
+.cartypelist {
+        display: inline-block;
+}
+
+.cartypeitem {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        height: 60rpx;
+        font-size: 31rpx;
+        line-height: 60rpx;
+        padding: 0 30rpx;
+        margin: 0 20rpx 20rpx 0;
+        border: 1rpx solid #f3f2f8;
+        background: #f3f2f8;
+        border-radius: 10rpx;
+        color: #444;
+}
+
+.cartypeitem.cur {
+        background: #ff495e;
+        color: #fff;
+        border: 1rpx solid #ff495e;
+}
+
+.cartypeitem.cur:after {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        content: '';
+        display: inline-block;
+        width: 16rpx;
+        height: 16rpx;
+}
+
+.cartypeitem.disabled {
+        color: #dedede;
+        cursor: not-allowed;
+        background: #eee;
+        border: 2rpx dashed #dedede;
+}
+
+.rent-item {
+        padding-top: 20rpx;
+        padding-left: 20rpx;
+        padding-right: 20rpx;
+        padding-bottom: 16rpx;
+        height: 120rpx;
+        border: 1px solid #c1c1c1;
+        border-radius: 10px;
+        margin-bottom: 20rpx;
+        display: flex;
+        flex-direction: column;
+}
+
+.rent-item-active {
+        border: 1px solid rgb(243, 84, 84);
+}
+
+.rent-header {
+        height: 40rpx;
+        font-size: 14px;
+        font-weight: 400;
+        color: #666;
+}
+
+.rent-body {
+        display: flex;
+}
+
+.rent-title {
+        font-size: 28rpx;
+        font-weight: 600;
+        color: #444;
+        width: 21%;
+}
+
+.rent-content {
+        padding-top: 5rpx;
+        width: 70%;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: rgb(243, 84, 84);
+}
+
+.date-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
+.time-picker {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 80%;
+        height: 60rpx;
+        display: flex;
+        position: relative;
+}
+
+.time-c {
+        width: 100%;
+        height: 100%;
+        display: unset;
+        position: absolute;
+        text-align: center;
+        line-height: 60rpx;
+}
+
+.rent-mode-number {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+}
+
+.footer-fixed .goods-fixed-icon {
+        width: 150rpx;
+        background: #fff;
+        margin: 0 auto;
+        padding: 0 6rpx;
+        border-left: 1rpx solid #eee;
+        height: 46px;
+        position: relative;
+}
+
+.footer-fixed .goods-fixed-icon:first-child {
+        border-left: none;
+}
+
+.default-btn {
+        width: 50%;
+        background-color: #ccc;
+        color: #fff;
+        text-align: center;
+        line-height: 46px;
+}

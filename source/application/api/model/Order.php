@@ -17,6 +17,9 @@ use app\common\exception\BaseException;
  */
 class Order extends OrderModel
 {
+
+    public $error;
+
     /**
      * 隐藏字段
      * @var array
@@ -272,7 +275,7 @@ class Order extends OrderModel
             ->where('user_id', '=', $user_id)
             ->where('order_status', '<>', 20)
             ->where($filter)
-            ->order(['create_time' => 'desc'])            
+            ->order(['create_time' => 'desc'])
             ->select()
             ->append(['after_status']);
     }
@@ -482,5 +485,130 @@ class Order extends OrderModel
     {
         return !empty($this->error);
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * 员工端发货
+     */
+    public function delivery($input, $member_id)
+    {
+        $input['equip'] = json_decode(htmlspecialchars_decode($input['equip']), true);
+        if (empty($input['equip'])) {
+            $this->error = "请添加设备";
+            return false;
+        } else {
+            if (empty($input['member_ids'])) {
+                $this->error = "请添加配送员";
+                return false;
+            }
+            $equip = $input['equip'];
+            $order_id = $input['order_id'];
+
+            $equips = [];
+            foreach ($equip as $key => $value) {
+                $_equips = [];
+                $_equips['equip_id'] = $value['equip_id'];
+                $_equips['secure'] = !$value['secure'] ? 0 : $value['secure'];
+                $_equips['service_ids'] = [];
+                foreach ($value['goods']['service'] as $k => $v) {
+                    if (isset($v['checked']) && $v['checked']) {
+                        $_equips['service_ids'][] = $v['id'];
+                    }
+                }
+                sort($_equips['service_ids']);
+                $_equips['service_ids'] = !empty($_equips['service_ids']) ? implode(',', $_equips['service_ids']) : '';
+                $equips[] = $_equips;
+            }
+
+
+            $data = [];
+            foreach ($equips as $key => $value) {
+                $_data = [];
+                $_data['equip_id'] = $value['equip_id'];
+                $_data['secure'] = $value['secure'];
+                $_data['service_ids'] = $value['service_ids'];
+                $_data['status'] = 20; // 已发货
+                $_data['order_id'] = $order_id;
+                $data[] = $_data;
+            }
+            
+            // 
+            $usingLog = [];
+            foreach ($data as $key => $value) {
+                $_usingLog = [];
+                $_usingLog['order_id'] = $value['order_id'];
+                $_usingLog['equip_id'] = $value['equip_id'];
+                $_usingLog['member_id'] = $member_id;
+                $_usingLog['equip_status'] = $value['status'];
+                $_usingLog['wxapp_id'] = 10001;
+                $usingLog[] = $_usingLog;
+            }
+            
+
+
+            // 员工配送记录
+            $order_member = [];
+            $member = [];
+            $member_ids = explode(',', $input['member_ids']);
+            foreach ($member_ids as $key => $value) {
+                $_order_member = [];
+                $_order_member['member_id'] = $value;
+                $_order_member['order_id'] = $input['order_id'];
+                $_order_member['status'] = 10; //进行中
+                $_order_member['wxapp_id'] = 10001;
+                $order_member[] = $_order_member;
+            }
+            
+            
+
+            // 开启事务
+            Db::startTrans();
+            try {
+                // 设备
+                $equip = new Equip;
+                $equip->saveAll($data);
+                // 设备使用记录                                
+                $this->usingLog()->saveAll($usingLog);                
+                // 员工配送记录
+                $this->orderMember()->saveAll($order_member);                                
+                // 订单
+                $this->save([
+                    'delivery_status' => 20,
+                    'delivery_time' => time()
+                ], ['order_id' => $order_id]);                
+                Db::commit();
+                return true;
+            } catch (\Exception $e) {
+                Db::rollback();
+                $this->error = $e->getMessage();
+                return false;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

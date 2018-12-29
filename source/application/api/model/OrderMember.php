@@ -3,6 +3,7 @@
 namespace app\api\model;
 
 use app\common\model\OrderMember as OrderMemberModel;
+use app\api\model\Order;
 use app\api\model\Equip;
 use app\api\model\EquipUsingLog;
 use app\api\model\Exam;
@@ -73,7 +74,7 @@ class OrderMember extends OrderMemberModel
             case 1:
                 return $this->with(['order' => ['address']])->where('order_id', 'NOT IN', function ($query) {
                     $query->name('order_member')->where('status', 20)->whereNotNull('order_id')->field('order_id');
-                })->whereNull('after_id')->where('member_id', $member_id)->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);;
+                })->whereNull('after_id')->where('member_id', $member_id)->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
                 break;
             case 2:
                 return $this->with(['after' => ['order' => ['address']]])->where('after_id', 'NOT IN', function ($query) {
@@ -102,7 +103,7 @@ class OrderMember extends OrderMemberModel
             case 'after':
                 $data = $this->with(['after' => ['order' => ['address', 'equip' => ['goods', 'specValue']]]])->where('id', $id)->find();
                 $equip = $data['after']['order']['equip'];
-                break;
+                break;           
         }
 
         $equip = $equip->toArray();

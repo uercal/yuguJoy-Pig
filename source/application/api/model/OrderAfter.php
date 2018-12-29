@@ -278,7 +278,43 @@ class OrderAfter extends OrderAfterModel
 
 
 
-
+    /**
+     * sendAfter
+     */
+    /**
+     * 派发
+     */
+    public function sendAfter($after, $member_id)
+    {
+        $launch_member_id = $member_id;
+        // 
+        $after['status'] = 20;
+        $after['launch_member_id'] = $launch_member_id;
+        // 
+        $member_arr = explode(',', $after['member_ids']);
+        $order_member = [];
+        foreach ($member_arr as $key => $value) {
+            $_order_member = [];
+            $_order_member['member_id'] = $value;
+            $_order_member['status'] = 10;
+            $order_member[] = $_order_member;
+        }
+        
+        // 开启事务
+        Db::startTrans();
+        try {
+            // halt($after);
+            $this->allowField(true)->save($after, ['after_id' => $after['after_id']]);            
+            // 
+            $this->order_log()->saveAll($order_member);            
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
 
 
 
@@ -321,5 +357,13 @@ class OrderAfter extends OrderAfterModel
             ->where($filter)
             ->order(['create_time' => 'desc'])
             ->select();
+    }
+
+    public function getSendList($page)
+    {
+        return $list = $this->with(['order' => ['address']])->where([
+            'pay_status' => 10,
+            'status' => 10
+        ])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);;
     }
 }

@@ -34,6 +34,80 @@ class Order extends Controller
         return $this->renderSuccess(compact('list'));
     }
 
+
+
+
+    /**
+     * 获取 库管订单管理 列表
+     * param @type 1 配送 2售后 @page 当前页数
+     */
+    public function orderList($type, $page)
+    {
+        switch ($type) {
+            case 1:
+                $model = new OrderModel;
+                $list = $model->getSendOrderList($page);
+                break;
+
+            case 2:
+                $model = new OrderAfter;
+                $list = $model->getSendList($page);
+                break;
+        }
+        return $this->renderSuccess(compact('list'));
+    }
+
+
+    public function sendOrderDetail($id)
+    {
+        $model = new OrderModel;
+        $detail = $model->detail($id);
+        return $this->renderSuccess(compact('detail'));
+    }
+
+
+    public function sendAfterDetail($id)
+    {
+        $model = new OrderAfter;
+        $detail = $model::getDetail($id);
+        return $this->renderSuccess(compact('detail'));
+    }
+
+
+    /**
+     * 派送发起
+     */
+    public function delivery()
+    {
+        $model = OrderModel::detail(input()['order_id']);
+        $memberInfo = $this->getMember();
+        if ($model->delivery(input(), $memberInfo['id'])) {
+            return $this->renderSuccess('success');
+        } else {
+            return $this->renderError($order->error);
+        }
+    }
+
+
+
+
+    /**
+     * 维修派送发起
+     */
+    public function sendAfter()
+    {
+        $model = OrderAfter::getDetail(input()['after_id']);
+        $memberInfo = $this->getMember();
+        if ($model->sendAfter(input(), $memberInfo['id'])) {
+            return $this->renderSuccess('success');
+        } else {
+            return $this->renderError($order->error);
+        }
+    }
+
+
+
+
     /**
      * 获取单
      */
@@ -87,7 +161,7 @@ class Order extends Controller
         $after_id = OrderMember::where('id', $order_member_id)->value('after_id');
         $after = new OrderAfter;
         $detail = $after->getDetail($after_id);
-        $detail['check_pics_ids'] = explode(',', $detail['check_pics_ids']);        
+        $detail['check_pics_ids'] = explode(',', $detail['check_pics_ids']);
         return $this->renderSuccess($detail);
     }
 

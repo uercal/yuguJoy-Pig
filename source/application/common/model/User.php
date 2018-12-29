@@ -12,6 +12,39 @@ use think\Request;
 class User extends BaseModel
 {
     protected $name = 'user';
+    protected $append = ['license', 'idcard', 'other'];
+
+    public function getLicenseAttr($value, $data)
+    {
+        if (!empty($data['license_id'])) {
+            return UploadApiFile::whereIn('file_id', $data['license_id'])->select()->toArray();
+        } else {
+            return [];
+        }
+
+    }
+
+
+    public function getIdcardAttr($value, $data)
+    {
+        if (!empty($data['idcard_ids'])) {
+            return UploadApiFile::whereIn('file_id', $data['idcard_ids'])->select()->toArray();
+        } else {
+            return [];
+        }
+    }
+
+
+    public function getOtherAttr($value, $data)
+    {
+        if (!empty($data['other_ids'])) {
+            return UploadApiFile::whereIn('file_id', $data['other_ids'])->select()->toArray();
+        } else {
+            return [];
+        }
+    }
+
+
 
     // 性别
     private $gender = ['未知', '男', '女'];

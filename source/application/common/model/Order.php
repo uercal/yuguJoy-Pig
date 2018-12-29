@@ -189,6 +189,16 @@ class Order extends BaseModel
 
 
 
+    /**
+     * 获取配送的订单列表
+     */
+    public function getSendOrderList($page)
+    {
+        return $list = $this->with(['address'])->where([
+            'pay_status' => 20,
+            'delivery_status' => 10
+        ])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
+    }
 
 
 }

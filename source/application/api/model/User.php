@@ -170,5 +170,32 @@ class User extends UserModel
 
 
 
+    /**
+     * userlist
+     */
+    public function getTypeList($type, $page)
+    {
+        switch ($type) {
+            // 认证用户
+            case 1:
+                return $this->with(['address', 'addressDefault'])->where('user_id', 'IN', function ($query) {
+                    $query->name('exam')->where(['status' => 20, 'type' => 10])->field('user_id');
+                })->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
+                break;
+            // 非认证用户
+            case 2:
+                return $this->with(['address', 'addressDefault'])->where('user_id', 'NOT IN', function ($query) {
+                    $query->name('exam')->where(['status' => 20, 'type' => 10])->field('user_id');
+                })->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
+                break;
+        }
+    }
+
+
+    public function getDetail($user_id)
+    {
+        return $this->with(['address', 'addressDefault'])->where('user_id', $user_id)->find()->append(['license', 'idcard', 'other']);
+    }
+
 
 }

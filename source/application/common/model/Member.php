@@ -13,6 +13,17 @@ use think\Request;
 class Member extends BaseModel
 {
     protected $name = 'store_member';
+    protected $append = ['status_api'];
+
+
+    public static function getStatusApiAttr($data)
+    {
+        if ($data['status'] == 40) {
+            return null;
+        } else {
+            return getMemeberStatus($data['order_log'])['api'];
+        }
+    }
 
 
     public static function getStatusText($data)
@@ -67,7 +78,7 @@ class Member extends BaseModel
         $get = $request->request();
 
         $data = self::with(['role', 'roleNameAttr', 'orderLog'])->where('status', '<>', 40)->paginate($get['limit'])->toArray();
-        
+
         foreach ($data['data'] as $key => $value) {
             $data['data'][$key]['status_text'] = self::getStatusText($value);
         }

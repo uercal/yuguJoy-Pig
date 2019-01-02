@@ -111,7 +111,7 @@ class OrderAfter extends OrderAfterModel
             foreach ($exchange_equip_ids as $key => $value) {
                 // using  变为维修中   
                 $_using_log = [];
-                $_using_log['order_id'] = $after['order_id'];
+                $_using_log['order_id'] = null;
                 $_using_log['equip_id'] = $value;
                 $_using_log['member_id'] = $after['member_id'];
                 $_using_log['equip_status'] = 40;
@@ -306,7 +306,7 @@ class OrderAfter extends OrderAfterModel
             // halt($after);
             $this->allowField(true)->save($after, ['after_id' => $after['after_id']]);            
             // 
-            $this->order_log()->saveAll($order_member);            
+            $this->order_log()->saveAll($order_member);
             Db::commit();
             return true;
         } catch (\Exception $e) {

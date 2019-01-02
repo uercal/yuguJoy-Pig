@@ -95,8 +95,8 @@
                                         <p class="item-title"><?= $item['spec_value']['spec_value'] ?></p>
                                     </td>                                    
                                     <td class="am-text-middle"><?= $item['sort'] ?></td>
-                                    <td class="am-text-middle <?= $item['status']==30?'am-primary':($item['status']==20?'am-success':'')?>"><?= $item['status_text'] ?></td>                                    
-                                    <td class="am-text-middle"><?= $item['service_time']?date('Y-m-d',$item['service_time']):'' ?></td>
+                                    <td class="am-text-middle <?= $item['status'] == 30 ? 'am-primary' : ($item['status'] == 20 ? 'am-success' : '') ?>"><?= $item['status_text'] ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['service_time'] ? date('Y-m-d', $item['service_time']) : '' ?></td>
                                     <td class="am-text-middle">
                                         <a href="<?= url(
                                                     'equip/madeQrCode',
@@ -106,7 +106,7 @@
                                         </a>
                                     </td>
                                     <td class="am-text-middle">
-                                    <?php if ($item['status'] == 10): ?>
+                                    <?php if ($item['status'] == 10) : ?>
                                         <div class="tpl-table-black-operation">
                                             <a href="<?= url(
                                                         'equip/edit',
@@ -119,7 +119,7 @@
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
-                                    <?php else :?>
+                                    <?php elseif ($item['order_id']) : ?>
                                     <div class="tpl-table-black-operation">                                                                                                                               
                                         <a href="<?= url(
                                                     'order/detail',
@@ -128,7 +128,12 @@
                                             <i class="am-icon-book"></i> 查看归属订单
                                         </a> 
                                     </div>
-
+                                    <?php else : ?>
+                                    <div class="tpl-table-black-operation">                                                                                                                               
+                                        <a href="javascript:;" class="am-btn am-btn-xs am-radius">
+                                            <i class="am-icon-book"></i> 已解除订单
+                                        </a> 
+                                    </div>
                                     <?php endif; ?>
                                     </td>
                                 </tr>

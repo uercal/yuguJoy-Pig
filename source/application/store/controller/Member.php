@@ -24,7 +24,7 @@ class Member extends Controller
     public function index()
     {
         $model = new MemberModel;
-        $list = $model->getList();                
+        $list = $model->getList();
         return $this->fetch('index', compact('list'));
     }
 
@@ -162,7 +162,7 @@ class Member extends Controller
     public function privilege_add()
     {
         if (!$this->request->isAjax()) {
-            $menu = $this->menus();
+            $menu = $this->menus();            
             return $this->fetch('privilege/add', compact('menu'));
         }
         $model = new PrivilegeModel;

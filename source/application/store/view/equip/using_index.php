@@ -74,7 +74,7 @@
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $item) : ?>
                                 <tr>
-                                    <td class="am-text-middle"><?= $item['order'] ? $item['order']['order_no'] : '解绑' ?></td>                                    
+                                    <td class="am-text-middle"><?= $item['order'] ? $item['order']['order_no'] : '/' ?></td>                                    
                                     <td class="am-text-middle">
                                         <p class="item-title"><?= $item['equip_id'] ?></p>
                                     </td>

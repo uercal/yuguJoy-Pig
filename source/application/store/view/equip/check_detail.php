@@ -110,14 +110,14 @@
     $(function () {
         var $modal = $('#your-modal');                
         $('#search').on('click', function(e) {
-            var url = "<?php echo url('equip/usingLog') ?>";
+            var url = "<?php echo url('equip/checkLog') ?>";
             var param = $('#form').serialize();
             var html = url + '&' + param;
             window.location.href = html;            
         });
         //  
         $('#detail').on('click', function(e) {         
-            var url = "<?php echo url('equip/usingDetail') ?>";
+            var url = "<?php echo url('equip/checkDetail') ?>";
             var param = $('#form').serialize();
             var equip_id = $('#equip_id').val();
             var html = url + '&' + param;

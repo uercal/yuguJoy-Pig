@@ -54,7 +54,12 @@ class Member extends MemberModel
         return $this->token;
     }
 
-
+    public function resetPass($member_id, $password)
+    {
+        return $this->save(['password' => yoshop_hash($password)], [
+            'id' => $member_id
+        ]);
+    }
 
     /**
      * 生成用户认证的token

@@ -32,9 +32,9 @@ class Member extends Controller
     {
         $data = MemberModel::with(['order_log', 'role'])->where('phone|name', 'like', "%$phone%")->select()->toArray();
         if (!empty($data)) {
-            return $this->renderSuccess('SUCCESS');;
+            return $this->renderSuccess('SUCCESS');
         } else {
-            return $this->renderError('员工不存在');;
+            return $this->renderError('员工不存在');
         }
     }
 
@@ -46,5 +46,24 @@ class Member extends Controller
         return $this->renderSuccess(compact('list'));
     }
 
+
+    /**
+     * 修改密码
+     */
+    public function resetPass($origin, $password)
+    {
+        $memberInfo = $this->getMember()->toArray();
+        if (yoshop_hash($origin) == $memberInfo['password']) {
+            $model = new MemberModel;
+            if ($model->resetPass($memberInfo['id'], $password)) {
+                return $this->renderSuccess('SUCCESS');
+            } else {
+                return $this->renderError('更新失败');
+            }
+        } else {
+            return $this->renderError('原密码错误');
+        }
+
+    }
 
 }

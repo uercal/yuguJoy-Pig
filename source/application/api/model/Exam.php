@@ -55,7 +55,7 @@ class Exam extends ExamModel
     // 获取审核情况
     public function getStatus($user_id, $type = 10)
     {
-        $obj = $this->where(['user_id' => $user_id, 'type' => $type, 'status' => 20])->find();
+        $obj = $this->where(['user_id' => $user_id, 'type' => $type])->find();
         if ($obj) {
             return ['code' => 1, 'status' => $obj['status'], 'status_text' => $obj['status_text']];
         } else {

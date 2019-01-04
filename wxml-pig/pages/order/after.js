@@ -78,8 +78,10 @@ Page({
      * 切换标签
      */
     bindHeaderTap: function(e) {
+        wx.showLoading();
         this.setData({
-            dataType: e.target.dataset.type
+            dataType: e.target.dataset.type,
+            list: []
         });
         // 获取订单列表
         if (this.data.dataType == 'rent') {
@@ -88,6 +90,7 @@ Page({
         } else {
             this.getAfterList(e.target.dataset.type);
         }
+        wx.hideLoading();
     },
 
 

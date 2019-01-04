@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "免押额度",
+    "usingComponents": {
+        "load-more": "/components/load-more/index"        
+    }
+}

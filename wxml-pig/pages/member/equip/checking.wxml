@@ -23,27 +23,26 @@
         </view>
         <view class='info-item'>
             <image src="/images/member/ordertime.png" mode="widthFix"></image>
-            <text>采购于{{detail.create_time}}</text>
-        </view>
-        <view class='info-item'>
-            <image src="/images/member/sn_code.png" mode="widthFix"></image>
-            <text>{{detail.sn_code}}</text>
-        </view>
-        <view class='info-item' wx:if="{{detail.order_id}}">
-            <image src="/images/member/orderform.png" mode="widthFix"></image>
-            <text style="color:blue;" bindtap='go2order' data-order-id="{{detail.order_id}}">{{detail.order[0].order_no}}</text>
+            <text>维修开始时间：{{checkDetail.create_time}}</text>
         </view>
     </view>
 </view>
 
-
+<view class="card">
+    <view class='card-head'>
+        <text style="font-weight:bold;">维修说明（选填）</text>
+    </view>
+    <view class='card-info'>
+        <textarea name="send_content" bindinput='content' placeholder="请填写文字说明" placeholder-class="area-place" maxlength='140' />
+    </view>
+    <view class='text-bonus'>
+        <text>文字说明不超过140个字</text>
+    </view>
+</view>
 
 <!-- footer -->
-<view class='footer' wx:if="{{isCheck}}">
-    <view class='sub' bindtap='changeEquip'>
-        <text>停用/在库</text>
-    </view>
-    <view class='sub' style='background-color:#5FC6FF;' bindtap='checkEquip'>
-        <text>维修</text>
+<view class='footer'>
+    <view class='sub' style='background-color:#5FC6FF;' bindtap='checkDone'>
+        <text>选择维修结果</text>
     </view>
 </view>

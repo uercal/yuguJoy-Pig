@@ -1,0 +1,64 @@
+<member-header id="memberHeader"></member-header>
+
+<!-- 我的订单 -->
+<view>
+    <view class='type'>
+        <view class='type-item {{type_index==1?"active":""}}' data-id="1" bindtap='type'>
+            <view class='type-c'>
+                <image wx:if="{{orderAfter.orderCount>0}}" class='oval' src='/images/oval.png'></image>
+                <text>待派送</text>
+            </view>
+        </view>
+        <view class='type-item {{type_index==2?"active":""}}' data-id="2" bindtap='type'>
+            <view class='type-c'>
+                <image wx:if="{{orderAfter.afterCount>0}}" class='oval' src='/images/oval.png'></image>
+                <text>待维修</text>
+            </view>
+        </view>
+        <view class='type-item {{type_index==3?"active":""}}' data-id="3" bindtap='type'>
+            <view class='type-c'>
+                <text>已完成</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- order-card -->
+    <scroll-view class='scroll' scroll-y style="height: {{system.windowHeight}};" bindscrolltolower='_onScrollToLower'>
+        <view class="card" wx:for="{{data}}" wx:key="{{this}}">
+            <view class='card-head'>
+                <image wx:if="{{item.after_id==null&&item.status==10}}" src="/images/member/deliver.png" mode='widthFix'></image>
+                <image wx:if="{{item.after_id==null&&item.status==20}}" src="/images/member/deliver-done.png" mode='widthFix'></image>
+                <image wx:if="{{item.order_id==null&&item.status==10&&item.after.status==20}}" src="/images/member/repair.png" mode='widthFix'></image>
+                <image wx:if="{{item.order_id==null&&item.status==10&&item.after.status==30}}" src="/images/member/reback.png" mode='widthFix'></image>
+                <image wx:if="{{item.order_id==null&&item.status==20}}" src="/images/member/repair-done.png" mode='widthFix'></image>
+                <view class='more' bindtap='orderDetail' data-id="{{item.id}}" data-type="{{item.after_id==null?'order':'after'}}" data-after-status="{{item.after.status}}">
+                    <text>查看更多</text>
+                </view>
+            </view>
+            <view class='card-info'>
+                <view class='info-item'>
+                    <image src="/images/member/customer.png"></image>
+                    <text wx:if="{{item.after_id==null}}">{{item.order.address.name}}</text>
+                    <text wx:if="{{item.order_id==null}}">{{item.after.order.address.name}}</text>
+                </view>
+                <view class='info-item'>
+                    <image src="/images/member/position.png"></image>
+                    <text wx:if="{{item.after_id==null}}">{{item.order.address.region.province+item.order.address.region.city+item.order.address.region.region+item.order.address.detail}}</text>
+                    <text wx:if="{{item.order_id==null}}">{{item.after.order.address.region.province+item.after.order.address.region.city+item.after.order.address.region.region+item.after.order.address.detail}}</text>
+                </view>
+                <view class='info-item'>
+                    <image src="/images/member/iphone.png"></image>
+                    <text wx:if="{{item.after_id==null}}">{{item.order.address.phone}}</text>
+                    <text wx:if="{{item.order_id==null}}">{{item.after.order.address.phone}}</text>
+                </view>
+                <view class='info-item'>
+                    <image src="/images/member/ordertime.png"></image>
+                    <text>{{item.create_time}}</text>
+                </view>
+            </view>
+            <image wx:if="{{item.status==20}}" class='angle' src='/images/member/order-done.png'></image>
+        </view>
+        <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+    </scroll-view>
+
+</view>

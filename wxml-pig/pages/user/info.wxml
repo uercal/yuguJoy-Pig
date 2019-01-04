@@ -1,39 +1,40 @@
 <view class="container">
-        <view class="common-header-xian"></view>
-        <!-- 表单 -->
-        <form bindreset="formReset" bindsubmit="saveData">
+    <view class="common-header-xian"></view>
+    <!-- 表单 -->
+    <form bindreset="formReset" bindsubmit="saveData">
 
-                <view class="address-cont-title b-f rel">
-                        <image src='/images/card_info.png' mode='aspectFill'></image>
-                        <text class='quota_title'>我的免押额度(元)</text>
-                        <text class="quota_num">0.00</text>
-                        <view class='quota_bonus'>
-                                <text>认证以下信息，最高可获得</text>
-                                <text style="color:red;">1000元</text>
-                                <text>免押额度</text>
-                        </view>
+        <view class="address-cont-title b-f rel">
+            <image src='/images/card_info.png' mode='aspectFill'></image>
+            <text class='quota_title'>我的免押额度(元)</text>
+            <text class="quota_num">{{isExist?applyInfo.account_money.quota_money:0.00}}</text>
+            <view class='quota_bonus'>
+                <text>认证以下信息，最高可获得</text>
+                <text style="color:red;">1000元</text>
+                <text>免押额度</text>
+            </view>
+        </view>
+
+        <view class='b-f' style='padding-left:30rpx;padding-right:30rpx;padding-bottom:30rpx;'>
+            <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
+                <view class="left-name">
+                    <text>个人姓名：</text>
                 </view>
+                <view class="right-cont">
+                    <input name="name" placeholder="" bindinput="name" wx:if="{{!isExist}}"></input>
+                    <input name="name" placeholder="" bindinput="name" wx:else value="{{applyInfo.user_name}}"></input>
+                </view>
+            </view>
 
-                <view class='b-f' style='padding-left:30rpx;padding-right:30rpx;padding-bottom:30rpx;'>
-                        <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
-                                <view class="left-name">
-                                        <text>个人姓名：</text>
-                                </view>
-                                <view class="right-cont">
-                                        <input name="name" placeholder="" bindinput="name"></input>
-                                </view>
-                        </view>
+            <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
+                <view class="left-name">
+                    <text>公司名称：</text>
+                </view>
+                <view class="right-cont">
+                    <input name="company" placeholder="" bindinput='company' value="{{isExist?applyInfo.company:''}}"></input>
+                </view>
+            </view>
 
-                        <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
-                                <view class="left-name">
-                                        <text>公司名称：</text>
-                                </view>
-                                <view class="right-cont">
-                                        <input name="company" placeholder="" bindinput='company'></input>
-                                </view>
-                        </view>
-
-                        <!-- <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
+            <!-- <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
                                 <view class="left-name" style="width:unset;">
                                         <text>组织机构代码：</text>
                                         <text style='font-size: 10px;color: #B2B2B2;'>支持jpg/png格式图片，单张大小1MB以内</text>
@@ -44,69 +45,69 @@
                                 </view>
                         </view> -->
 
-                        <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
-                                <view class="left-name" style="width:unset;">
-                                        <text>企业营业执照：</text>
-                                        <text style='font-size: 10px;color: #B2B2B2;'>支持jpg/png格式图片，单张大小1MB以内</text>
-                                </view>
-                                <view class="left-name" bindtap='uploadImg' data-type="license">
-                                        <image wx:if="{{!license}}" src='/images/upload_image.png' style="height:180rpx;width:180rpx;"></image>
-                                        <image wx:else src='{{license_path}}' name="license" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
-                                </view>
-                        </view>
+            <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
+                <view class="left-name" style="width:unset;">
+                    <text>企业营业执照：</text>
+                    <text style='font-size: 10px;color: #B2B2B2;'>支持jpg/png格式图片，单张大小1MB以内</text>
+                </view>
+                <view class="left-name" bindtap='uploadImg' data-type="license">
+                    <image wx:if="{{!license}}" src='/images/upload_image.png' style="height:180rpx;width:180rpx;"></image>
+                    <image wx:else src='{{license_path}}' name="license" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
+                </view>
+            </view>
 
-                        <view class='list address-box dis-flex' style="display:flex;flex-direction:column;justify-content:space-between;">
-                                <view class="left-name" style="width:unset;">
-                                        <text>身份证正反面：</text>
-                                        <text style='font-size: 10px;color: #B2B2B2;'>支持jpg/png格式图片，单张大小1MB以内</text>
-                                </view>
-                                <view style="display:flex;">
-                                        <view class="left-name" bindtap='uploadImg' data-type="idcard_p">
-                                                <image wx:if="{{!idcard_p}}" src='/images/idcard_p.png' style="height:180rpx;width:180rpx;"></image>
-                                                <image wx:else src='{{idcard_p_path}}' name="idcard_p" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
-                                        </view>
+            <view class='list address-box dis-flex' style="display:flex;flex-direction:column;justify-content:space-between;">
+                <view class="left-name" style="width:unset;">
+                    <text>身份证正反面：</text>
+                    <text style='font-size: 10px;color: #B2B2B2;'>支持jpg/png格式图片，单张大小1MB以内</text>
+                </view>
+                <view style="display:flex;">
+                    <view class="left-name" bindtap='uploadImg' data-type="idcard_p">
+                        <image wx:if="{{!idcard_p}}" src='/images/idcard_p.png' style="height:180rpx;width:180rpx;"></image>
+                        <image wx:else src='{{idcard_p_path}}' name="idcard_p" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
+                    </view>
 
-                                        <view class="left-name" bindtap='uploadImg' data-type="idcard_n" style="margin-left:40rpx;">
-                                                <image wx:if="{{!idcard_n}}" src='/images/idcard_n.png' style="height:180rpx;width:180rpx;"></image>
-                                                <image wx:else src='{{idcard_n_path}}' name="idcard_n" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
-                                        </view>
-                                </view>
-                        </view>
+                    <view class="left-name" bindtap='uploadImg' data-type="idcard_n" style="margin-left:40rpx;">
+                        <image wx:if="{{!idcard_n}}" src='/images/idcard_n.png' style="height:180rpx;width:180rpx;"></image>
+                        <image wx:else src='{{idcard_n_path}}' name="idcard_n" mode="aspectFilt" style="height:180rpx;width:180rpx;"></image>
+                    </view>
+                </view>
+            </view>
 
-                        <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
-                                <view class="left-name">
-                                        <text>其他信息：</text>
-                                </view>
-                                <view class="right-cont">
-                                        <input name="other_content" placeholder="" bindinput='other_content'></input>
-                                </view>
-                        </view>
+            <view class='list address-box dis-flex b-b' style="display:flex;justify-content:space-between;">
+                <view class="left-name">
+                    <text>其他信息：</text>
+                </view>
+                <view class="right-cont">
+                    <input name="other_content" placeholder="" bindinput='other_content'></input>
+                </view>
+            </view>
 
-                        <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
-                                <view class="left-name" style="width:unset;">
-                                        <text>其他图片：</text>
-                                        <text style='font-size: 10px;color: #B2B2B2;'>单张大小1MB以内，最多上传6张.</text>
-                                </view>
-
-                                <view style='display:flex;flex-wrap:wrap;'>
-                                        <view class="left-name" wx:if="{{other_paths[0]!=''}}" wx:for="{{other_paths}}" wx:if="{{item!=''}}">
-                                                <image wx:if="{{item!=''}}" mode="aspectFilt" style="height:180rpx;width:180rpx;" src="{{item}}"></image>
-                                        </view>
-                                        <view class='left-name' bindtap='uploadImg' data-type="other_ids">
-                                                <image wx:if="{{other_paths[5]==''}}" src='/images/upload_image.png' style="height:180rpx;width:180rpx;"></image>
-                                        </view>
-                                </view>
-
-                        </view>
-
-
+            <view class='list address-box dis-flex b-b' style="display:flex;flex-direction:column;justify-content:space-between;">
+                <view class="left-name" style="width:unset;">
+                    <text>其他图片：</text>
+                    <text style='font-size: 10px;color: #B2B2B2;'>单张大小1MB以内，最多上传6张.</text>
                 </view>
 
-                <view class='list address-box dis-flex b-f' style="height:100rpx;"></view>
-
-                <view class="profile-btn">
-                        <button formType="submit" class='sub {{disabled?"dis-sub":""}}'>提交审核</button>
+                <view style='display:flex;flex-wrap:wrap;'>
+                    <view class="left-name" wx:if="{{other_paths[0]!=''}}" wx:for="{{other_paths}}" wx:if="{{item!=''}}">
+                        <image wx:if="{{item!=''}}" mode="aspectFilt" style="height:180rpx;width:180rpx;" src="{{item}}"></image>
+                    </view>
+                    <view class='left-name' bindtap='uploadImg' data-type="other_ids">
+                        <image wx:if="{{other_paths[5]==''}}" src='/images/upload_image.png' style="height:180rpx;width:180rpx;"></image>
+                    </view>
                 </view>
 
-        </form>
+            </view>
+
+
+        </view>
+
+        <view class='list address-box dis-flex b-f' style="height:100rpx;"></view>
+
+        <view class="profile-btn">
+            <button formType="submit" class='sub {{disabled?"dis-sub":""}}'>提交审核</button>
+        </view>
+
+    </form>
 </view>

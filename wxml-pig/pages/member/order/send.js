@@ -100,7 +100,7 @@ Page({
                     showCancel: false,
                     success(res) {
                         if (res.confirm) {
-                            wx.navigateTo({
+                            wx.reLaunch({
                                 url: '/pages/member/index'
                             })
                         }

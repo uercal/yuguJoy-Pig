@@ -1,0 +1,128 @@
+page {
+    height: 100%;
+}
+
+.header {
+    height: 70%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+}
+
+.card {
+    height: 90%;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 1px 5px 15px rgba(50, 50, 50, 0.3);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-head {
+    height: 55%;
+    width: 100%;
+    position: relative;
+}
+
+.card-head image {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.avatar {
+    position: absolute;
+    height: 200rpx !important;
+    width: 200rpx !important;
+    border-radius: 50% !important;
+    left: 50%;
+    bottom: 50%;
+    margin-bottom: -150rpx;
+    margin-left: -100rpx;
+}
+
+.card-info {
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name {
+    font-family: PingFangSC-Medium;
+    font-size: 20px;
+    color: #096dd9;
+    text-align: center;
+    margin-top: 30rpx;
+}
+
+.function {
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #353535;
+    text-align: center;
+    margin-bottom: 80rpx;
+}
+
+.member-id {
+    font-family: PingFangSC-Regular;
+    font-size: 16px;
+    color: #353535;
+    text-align: center;
+    margin-bottom: 80rpx;
+}
+
+/*  */
+
+.group {
+    margin-top: 5%;
+    height: 25%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.group-item {
+    height: 70rpx;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 10rpx 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item-name {
+    font-family: PingFangSC-Regular;
+    font-size: 17px;
+    color: #353535;
+}
+
+.item-nav {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #2150b7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90rpx;
+}
+
+.footer text {
+    ont-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}

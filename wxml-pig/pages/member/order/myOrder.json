@@ -1,0 +1,7 @@
+{
+        "navigationBarTitleText": "我的订单",
+        "usingComponents": {
+                "load-more": "/components/load-more/index",
+                "member-header":"/components/header/index"
+        }
+}

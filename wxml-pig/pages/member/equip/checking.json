@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "维修设备中",
+    "usingComponents": {
+        "member-header": "/components/header/index"
+    }
+}

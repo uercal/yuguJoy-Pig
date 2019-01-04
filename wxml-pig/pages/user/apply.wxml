@@ -1,0 +1,55 @@
+<scroll-view class='scroll' scroll-y style="height:{{system.windowHeight}}px;" bindscrolltolower='_onScrollToLower'>
+
+    <view class="address-cont-title b-f rel" style="border-bottom:1px solid #eee;">
+        <image src='/images/card_info.png' style="height:100%;" mode='aspectFill'></image>
+        <text class='quota_title'>可用免押额度(元)</text>
+        <text class="quota_num">{{account.actual_quota}}</text>
+        <view class='bottom_text'>
+            <text>总免押额度：{{account.quota_money}}</text>
+            <text style='text-align:right;'>冻结额度：{{account.freezing_quota}}</text>
+        </view>
+    </view>
+
+    <view style="height:40rpx;"></view>
+
+    <view class="user-order-title dis-flex b-f" style="height:80rpx;border-top:1px solid #eee;border-bottom:1px solid #eee;" bindtap='info'>
+        <view class="flex-box">
+            <text class="user-orderName h4" style="left:60rpx;font-size:14px;color: #9c9c9c;letter-spacing: 0;text-align: center;">免押账户认证</text>
+        </view>
+        <view class="flex-box">
+            <view class="user-orderContBox" style="height:60rpx;width:360rpx;display:flex;align-items:center;justify-content:flex-end;">
+                <text style="font-family: PingFangSC-Regular;font-size: 12px;color: #fbc8bf;letter-spacing: -0.22px;letter-spacing: 0;text-align: center;margin-right:15rpx;margin-bottom:4rpx;">提高免押额度</text>
+                <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+            </view>
+        </view>
+    </view>
+
+    <view style="height:40rpx;"></view>
+
+    <view class='exam-detail'>
+        <view class='exam-title'>
+            <text>免押账户明细</text>
+            <navigator>按时间</navigator>
+        </view>
+    </view>
+
+    <!-- list -->
+    <view class='log-list'>
+        <view class='log-item' wx:for="{{data}}">
+            <view class='log-left'>
+                <text style="margin-bottom:5rpx;">{{item.type==10?'免押额度申请':''}}</text>
+                <text style="margin-top:5rpx;">{{item.create_time}}</text>
+            </view>
+            <view class='log-right'>
+                <text wx:if="{{item.status==20}}" class='quota'>+免押额度{{item.quota.quota_money}}元</text>
+                <text class='result result-{{item.status}}'>{{item.status==20?'审核通过':(item.status==10?'审核中':'审核未通过')}}</text>
+            </view>
+        </view>
+
+
+    </view>
+
+
+
+    <load-more id="loadMoreView" bindloadMoreListener='loadMoreListener' bindclickLoadMore='clickLoadMore'></load-more>
+</scroll-view>

@@ -1,0 +1,124 @@
+@import "./info.wxss";
+@import "./index.wxss";
+
+.bottom_text {
+    position: absolute;
+    bottom: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bottom_text text {
+    width: 50%;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: -0.12px;
+}
+
+page {
+    background-color: #e5e5e5;
+}
+
+.scroll {
+    /* background-color: #fff; */
+}
+
+.exam-detail {
+    height: 100rpx;
+    padding: 0 20rpx;
+    display: flex;
+    background-color: #fff;
+}
+
+.exam-title {
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 20rpx 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.exam-title text {
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #353535;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.exam-title navigator {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #b2b2b2;
+    letter-spacing: -0.34px;
+}
+
+.log-list {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20rpx;
+}
+
+.log-item {
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    padding: 20rpx;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.log-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.log-left text {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0;
+}
+
+.log-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;    
+}
+
+.quota {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #417505;
+    letter-spacing: 0;
+    opacity: 0.7;
+    text-align: right;
+    margin-bottom: 5rpx;
+}
+
+.result {
+    margin-top: 5rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-align: right;
+}
+
+.result-10 {
+    color: #f0882f;
+}
+
+.result-20 {
+    color: blue;
+}
+
+.result-30 {
+    color: #f46148;
+}

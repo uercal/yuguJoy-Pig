@@ -1,0 +1,24 @@
+<view class="header">
+    <view class='card'>
+        <view class='card-head'>
+            <image src='/images/member/setting-back.png' mode='top'></image>
+            <image class='avatar' src="{{userInfo.avatarUrl}}"></image>
+        </view>
+        <view class='card-info'>
+            <text class='name'>{{memberInfo.name}}</text>
+            <text class='function'>{{memberInfo.function}}</text>
+            <text class='member-id'>员工ID：{{member_id}}</text>
+        </view>
+    </view>
+</view>
+
+<view class='group'>
+    <view class='group-item' bindtap='resetPass'>
+        <text class='item-name'>个人密码</text>
+        <text class='item-nav'>修改</text>
+    </view>
+</view>
+
+<view class='footer' bindtap='exit'>
+    <text>退出登录</text>
+</view>

@@ -23,21 +23,29 @@ Component({
      */
     methods: {
         exit: function(e) {
-            console.log(e);
-            wx.removeStorage({
-                key: 'member_info'
-            });
-            wx.removeStorage({
-                key: 'member_id'
-            });
-            wx.removeStorage({
-                key: 'member_token',
-                success: function() {
-                    wx.navigateTo({
-                        url: '/pages/member/login'
-                    })
-                },
-            });
+            wx.showModal({
+                title: '确认',
+                content: '是否确认退出员工端？',
+                showCancel: true,
+                cancelText: '取消',
+                confirmText: '确认',
+                success: function(res) {
+                    if (res.confirm) {
+                        wx.removeStorage({
+                            key: 'member_info'
+                        });
+                        wx.removeStorage({
+                            key: 'member_id'
+                        });
+                        wx.removeStorage({
+                            key: 'member_token'
+                        });
+                        wx.switchTab({
+                            url: '/pages/user/index'
+                        })
+                    }
+                }
+            })
         },
         loadData: function() {
             let _this = this;

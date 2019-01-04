@@ -13,7 +13,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wxb9de7de8697ceb37",
+	"appid": "wx6682137370263e1b",
 	"projectname": "demo",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 18,
+			"current": 23,
 			"list": [
 				{
 					"id": -1,
@@ -152,6 +152,35 @@
 					"name": "sendafter",
 					"pathName": "pages/member/after/detail",
 					"query": "id=10&from=send"
+				},
+				{
+					"id": -1,
+					"name": "equip/checking",
+					"pathName": "pages/member/equip/checking",
+					"query": "equip_id=1013"
+				},
+				{
+					"id": -1,
+					"name": "member/setting",
+					"pathName": "pages/member/setting/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "member/setting/pass",
+					"pathName": "pages/member/setting/password",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "statics",
+					"pathName": "pages/member/statics/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "apply",
+					"pathName": "pages/user/apply"
 				}
 			]
 		}

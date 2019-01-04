@@ -73,8 +73,7 @@
                     <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">
-                    <view class="user-orderContBox">
-                        <text wx:if="{{infoStatus.status==30}}" style="color:red;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
+                    <view class="user-orderContBox">                       
                         <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
                     </view>
                 </view>
@@ -84,13 +83,10 @@
             <view class="user-order-title dis-flex b-f m-top20">
                 <view class="flex-box">
                     <image src='/images/icon_mywallt.png'></image>
-                    <text class="user-orderName h4">申请免押金 
-                                        </text>
+                    <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">
                     <view class="user-orderContBox">
-                        <text wx:if="{{infoStatus.status==10}}" style="color:orange;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
-                        <text wx:if="{{infoStatus.status==20}}" style="color:green;opacity:0.7;font-size:12px;margin-right:10rpx;">{{infoStatus.status_text}}</text>
                         <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
                     </view>
                 </view>

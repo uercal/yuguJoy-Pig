@@ -305,9 +305,9 @@ Page({
                         content: '成功',
                         showCancel: false,
                         success: function(res) {
-                            wx.navigateTo({
+                            wx.reLaunch({
                                 url: '/pages/member/index'
-                            })
+                            }) 
                         }
                     })
                 }
@@ -337,9 +337,9 @@ Page({
                             content: '成功',
                             showCancel: false,
                             success: function(res) {
-                                wx.navigateTo({
+                                wx.reLaunch({
                                     url: '/pages/member/index'
-                                })
+                                }) 
                             }
                         })
                     }
@@ -385,9 +385,9 @@ Page({
                             content: '成功',
                             showCancel: false,
                             success: function(res) {
-                                wx.navigateTo({
+                                wx.reLaunch({
                                     url: '/pages/member/index'
-                                })
+                                }) 
                             }
                         })
                     }

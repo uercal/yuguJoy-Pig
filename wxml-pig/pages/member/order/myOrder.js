@@ -12,8 +12,7 @@ Page({
         menu_index: 1,
         system: {},
         data: [],
-        dataInfo: {},
-        isShowOrder: false,
+        dataInfo: {}
     },
 
     /**
@@ -57,49 +56,19 @@ Page({
         let _this = this;
         App.member_get('member.index/detail', {}, function(result) {
             _this.setData(result.data);
-            if (result.data.menu.order) {
-                _this.setData({
-                    isShowOrder: true
-                });
-                _this.getOrderList();
-            } else {
-                _this.getList();
-            }
+            _this.getList();
         });
     },
 
 
-    scanEquip: function(e) {
-        let _this = this;
-        wx.showLoading({
-            title: '读取中',
-            mask: true
-        });
-
+    scanEquip: function() {
         wx.scanCode({
             onlyFromCamera: true,
-            scanType: [],
-            success: function(res) {
-                let code = res.result;
-                App.member_post('member.Equip/decrypt', {
-                    code: code
-                }, function(res) {
-                    let equip_id = res.data.detail.equip_id;                    
-                    wx.navigateTo({
-                        url: '/pages/member/equip/detail?equip_id=' + equip_id + '&from=scan'
-                    })
-                });
-            },
-            fail: function() {
-                App.showError('扫描错误');
-            },
-            complete: function() {
-                
+            success(res) {
+                console.log(res)
             }
-        })        
-
+        })
     },
-
 
     type: function(e) {
         let _this = this;
@@ -114,22 +83,6 @@ Page({
         // 真加载
         this.getList();
     },
-
-
-    order_type: function(e) {
-        let _this = this;
-        let index = e.currentTarget.dataset.id;
-        page = 1;
-        this.setData({
-            order_type_index: index,
-            data: []
-        });
-        // 伪加载
-        loadMoreView.loadMoreVirtual();
-        // 真加载
-        this.getOrderList();
-    },
-
 
     menu: function(e) {
         let index = e.currentTarget.dataset.menu;
@@ -197,53 +150,6 @@ Page({
             loadMoreView.loadMoreComplete(res.data.list);
         });
     },
-
-
-    // 需
-    sendDetail: function(e) {
-        let id = e.currentTarget.dataset.id;
-        let order_type = e.currentTarget.dataset.orderType;
-        if (order_type == 1) {
-            //派送
-            wx.navigateTo({
-                url: '/pages/member/order/send?id=' + id + '&from=send'
-            })
-        }
-        if (order_type == 2) {
-            // 售后派遣
-            wx.navigateTo({
-                url: '/pages/member/after/detail?id=' + id + '&from=send'
-            })
-        }
-    },
-
-
-    getOrderList: function() {
-        let _this = this;
-        let type = this.data.order_type_index;
-        App.member_get('member.Order/orderList', {
-            page: page,
-            type: type
-        }, function(res) {
-            _this.setData({
-                dataInfo: res.data.list
-            });
-            if (page == 1) {
-                _this.setData({
-                    data: res.data.list.data
-                });
-            } else {
-                let _data = _this.data.data;
-                _data = _data.concat(res.data.list.data);
-                _this.setData({
-                    data: _data
-                });
-            }
-            loadMoreView.loadMoreComplete(res.data.list);
-        });
-    },
-
-
 
 
     _onScrollToLower: function() {

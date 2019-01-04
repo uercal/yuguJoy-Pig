@@ -83,7 +83,7 @@
 
 .sub {
     height: 100%;
-    width: 50%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,4 +111,18 @@
     font-size: 11px;
     color: #fff;
     text-align: center;
+}
+
+.text-bonus {
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20rpx 30rpx;
+}
+
+.text-bonus text {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #ccc;
 }

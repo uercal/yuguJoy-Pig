@@ -22,15 +22,15 @@
             <image src='/images/member/help.png'></image>
             <text>帮助中心</text>
         </navigator>
-        <navigator class='work-nav'>
+        <navigator class='work-nav' url='/pages/member/statics/index'>
             <image src='/images/member/date.png'></image>
             <text>数据统计</text>
         </navigator>
-        <navigator class='work-nav'>
+        <navigator class='work-nav' url='/pages/member/setting/index'>
             <image src='/images/member/setting.png'></image>
             <text>个人设置</text>
         </navigator>
-        <navigator class='work-nav' wx:if="{{isShowOrder}}">
+        <navigator class='work-nav' url='/pages/member/order/myOrder' wx:if="{{isShowOrder}}">
             <image src='/images/member/my-order.png'></image>
             <text>我的订单</text>
         </navigator>

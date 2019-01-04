@@ -1,0 +1,97 @@
+<member-header id="memberHeader"></member-header>
+
+
+<scroll-view scroll-x='{{true}}' class='type'>
+    <view class='type-item {{item.category_id==cate_id?"active":""}}' data-id="{{item.category_id}}" bindtap='cate' wx:for="{{list}}">
+        <view class='type-c'>
+            <text>{{item.name}}</text>
+        </view>
+    </view>
+</scroll-view>
+
+
+<view class='detail'>
+    <!-- total -->
+    <view class='total'>
+        <view class='title'>
+            <text>总数据</text>
+        </view>
+        <!--  -->
+        <view class='total-detail'>
+            <view class='total-item'>
+                <image src='/images/member/count1.png'></image>
+                <text class='total-name'>总数</text>
+                <text class='total-num'>{{equip_count}}</text>
+            </view>
+            <view class='total-item'>
+                <image src='/images/member/count2.png'></image>
+                <text class='total-name'>租赁中</text>
+                <text class='total-num'>{{all_list[30]?all_list[30].count:0}}</text>
+            </view>
+            <view class='total-item'>
+                <image src='/images/member/count3.png'></image>
+                <text class='total-name'>维修中</text>
+                <text class='total-num'>{{all_list[40]?all_list[40].count:0}}</text>
+            </view>
+            <view class='total-item'>
+                <image src='/images/member/count4.png'></image>
+                <text class='total-name'>运送中</text>
+                <text class='total-num'>{{all_list[20]?all_list[20].count:0}}</text>
+            </view>
+            <view class='total-item'>
+                <image src='/images/member/count4.png'></image>
+                <text class='total-name'>在库</text>
+                <text class='total-num'>{{all_list[10]?all_list[10].count:0}}</text>
+            </view>
+        </view>
+    </view>
+
+
+    <!--  -->
+
+    <view class='detail-list'>
+        <view class='list-item' wx:for="{{detail_list}}">
+            <view class='item-img'>
+                <image src='{{item.goods.image[0].file_path}}'></image>
+            </view>
+            <view class='item-info'>
+                <view class='info-title'>
+                    <text>{{item.goods.goods_name}}</text>
+                </view>
+                <view class='info-count'>
+                    <view class='count'>
+                        <text class='count-name'>总数</text>
+                        <text class='count-value'>{{item.count}}</text>
+                    </view>
+                    <view class='count'>
+                        <text class='count-name'>租赁中</text>
+                        <text class='count-value'>{{item.data[30]?item.data[30].count:0}}</text>
+                    </view>
+                    <view class='count'>
+                        <text class='count-name'>维修中</text>
+                        <text class='count-value'>{{item.data[40]?item.data[40].count:0}}</text>
+                    </view>
+                    <view class='count'>
+                        <text class='count-name'>运送中</text>
+                        <text class='count-value'>{{item.data[20]?item.data[20].count:0}}</text>
+                    </view>
+                    <view class='count'>
+                        <text class='count-name'>在库</text>
+                        <text class='count-value'>{{item.data[10]?item.data[10].count:0}}</text>
+                    </view>
+                </view>
+
+            </view>
+
+        </view>
+
+
+
+
+
+
+    </view>
+
+
+
+</view>

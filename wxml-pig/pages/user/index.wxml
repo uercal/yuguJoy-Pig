@@ -69,7 +69,7 @@
         <navigator url="../user/info" wx:if="{{infoStatus.code==0}}">
             <view class="user-order-title dis-flex b-f m-top20">
                 <view class="flex-box">
-                    <image src='/images/icon_mywallt.png'></image>
+                    <image src='/images/icon_no deposit.png'></image>
                     <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">
@@ -82,7 +82,7 @@
         <button class="phone" bindtap='checkStatus' data-status="{{infoStatus.status}}" wx:else>
             <view class="user-order-title dis-flex b-f m-top20">
                 <view class="flex-box">
-                    <image src='/images/icon_mywallt.png'></image>
+                    <image src='/images/icon_no deposit.png'></image>
                     <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">

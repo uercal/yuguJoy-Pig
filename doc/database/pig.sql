@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2018-12-29 18:25:09
+Date: 2019-01-04 18:14:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `pig_account_money` (
 -- ----------------------------
 -- Records of pig_account_money
 -- ----------------------------
-INSERT INTO `pig_account_money` VALUES ('547', 'ojeDM4nTZvAFUWwT54aSO24UjvIk', '0', '0', '0', '111011', '10001', '1542965168');
+INSERT INTO `pig_account_money` VALUES ('547', 'ojeDM4nTZvAFUWwT54aSO24UjvIk', '0', '0', '0', '112211', '10001', '1542965168');
 
 -- ----------------------------
 -- Table structure for pig_category
@@ -167,17 +167,17 @@ CREATE TABLE `pig_equip` (
 INSERT INTO `pig_equip` VALUES ('1010', '1', '4', '', '100', '30', '1', '0', '', '1543819149', '10001', '1540859901', '1545796652');
 INSERT INTO `pig_equip` VALUES ('1011', '1', '3', '', '100', '30', '39', '0', '2,3', '1542696495', '10001', '1540859909', '1542696156');
 INSERT INTO `pig_equip` VALUES ('1012', '1', '5', '', '100', '10', null, null, null, null, '10001', '1540859917', '1545287723');
-INSERT INTO `pig_equip` VALUES ('1013', '1', '5', '', '100', '40', null, '0', null, '1543818871', '10001', '1540859925', '1545732961');
+INSERT INTO `pig_equip` VALUES ('1013', '1', '5', '', '100', '10', null, '0', null, '1543818871', '10001', '1540859925', '1546422262');
 INSERT INTO `pig_equip` VALUES ('1014', '2', '9', '', '100', '30', '39', '0', '2,1', '1542696495', '10001', '1540859940', '1542696157');
 INSERT INTO `pig_equip` VALUES ('1015', '2', '9', '', '100', '30', '5', '0', '2,1', '1544167455', '10001', '1540859947', '1544166285');
-INSERT INTO `pig_equip` VALUES ('1016', '2', '11', '123456', '100', '30', '3', '1', '2,1', '1545205548', '10001', '1540859958', '1545796873');
+INSERT INTO `pig_equip` VALUES ('1016', '2', '11', '123456', '100', '30', '3', '1', '2,1', '1545205548', '10001', '1540859958', '1546424680');
 INSERT INTO `pig_equip` VALUES ('1017', '1', '4', '', '100', '30', '4', '0', '2', '1544077695', '10001', '1541037075', '1544077660');
 INSERT INTO `pig_equip` VALUES ('1018', '1', '4', '1234567', '100', '30', '3', '1', '2,3', '1545205548', '10001', '1545030414', '1545200264');
 INSERT INTO `pig_equip` VALUES ('1019', '1', '4', '00000000', '100', '30', '6', '0', '2', '1545376777', '10001', '1545300214', '1545376761');
-INSERT INTO `pig_equip` VALUES ('1020', '3', '12', '10101010101010', '100', '10', null, null, null, null, '10001', '1545300225', '1545376379');
+INSERT INTO `pig_equip` VALUES ('1020', '3', '12', '10101010101010', '100', '10', null, null, null, null, '10001', '1545300225', '1546422339');
 INSERT INTO `pig_equip` VALUES ('1021', '1', '6', '123123457', '100', '10', null, null, null, null, '10001', '1545300233', '1545300397');
-INSERT INTO `pig_equip` VALUES ('1022', '3', '12', '123124441', '100', '30', '2', null, null, '1545732961', '10001', '1545300242', '1545732961');
-INSERT INTO `pig_equip` VALUES ('1023', '3', '12', '123104754', '100', '20', '7', '0', '14,15', null, '10001', '1545300250', '1546077180');
+INSERT INTO `pig_equip` VALUES ('1022', '3', '12', '123124441', '100', '30', '2', null, null, '1545732961', '10001', '1545300242', '1546424416');
+INSERT INTO `pig_equip` VALUES ('1023', '3', '12', '123104754', '100', '30', '7', '0', '14,15', '1546585492', '10001', '1545300250', '1546077180');
 
 -- ----------------------------
 -- Table structure for pig_equip_check_log
@@ -194,7 +194,7 @@ CREATE TABLE `pig_equip_check_log` (
   `wxapp_id` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_equip_check_log
@@ -218,6 +218,16 @@ INSERT INTO `pig_equip_check_log` VALUES ('44', '3', '1018', '2', '20', '1545796
 INSERT INTO `pig_equip_check_log` VALUES ('45', '3', '1016', '2', '10', '1545797183', null, '10001', '1545797185');
 INSERT INTO `pig_equip_check_log` VALUES ('46', '3', '1016', '0', '10', '1545797185', null, '10001', '1545797185');
 INSERT INTO `pig_equip_check_log` VALUES ('47', '3', '1016', '2', '20', '1545797203', null, '10001', '1545797210');
+INSERT INTO `pig_equip_check_log` VALUES ('48', null, '1013', '2', '10', '1546416749', null, '10001', '1546416749');
+INSERT INTO `pig_equip_check_log` VALUES ('49', null, '1020', '2', '10', '1546416810', null, '10001', '1546416810');
+INSERT INTO `pig_equip_check_log` VALUES ('50', null, '1013', '2', '20', '1546422262', '1111111\n9999', '10001', '1546422262');
+INSERT INTO `pig_equip_check_log` VALUES ('51', null, '1020', '2', '30', '1546422320', '', '10001', '1546422320');
+INSERT INTO `pig_equip_check_log` VALUES ('52', '2', '1022', '2', '10', '1546422592', null, '10001', '1546422592');
+INSERT INTO `pig_equip_check_log` VALUES ('53', '2', '1022', '2', '20', '1546422611', '50', '10001', '1546422611');
+INSERT INTO `pig_equip_check_log` VALUES ('54', '2', '1022', '2', '10', '1546424394', null, '10001', '1546424394');
+INSERT INTO `pig_equip_check_log` VALUES ('55', '2', '1022', '2', '20', '1546424416', '嘻嘻嘻嘻嘻', '10001', '1546424416');
+INSERT INTO `pig_equip_check_log` VALUES ('56', '3', '1016', '2', '10', '1546424676', null, '10001', '1546424676');
+INSERT INTO `pig_equip_check_log` VALUES ('57', '3', '1016', '2', '20', '1546424680', '', '10001', '1546424680');
 
 -- ----------------------------
 -- Table structure for pig_equip_using_log
@@ -232,7 +242,7 @@ CREATE TABLE `pig_equip_using_log` (
   `wxapp_id` int(11) DEFAULT NULL,
   `create_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_equip_using_log
@@ -346,6 +356,19 @@ INSERT INTO `pig_equip_using_log` VALUES ('204', '3', '1016', '2', '30', '10001'
 INSERT INTO `pig_equip_using_log` VALUES ('205', '3', '1016', '0', '40', '10001', '1545797185');
 INSERT INTO `pig_equip_using_log` VALUES ('206', '3', '1016', '0', '30', '10001', '1545797210');
 INSERT INTO `pig_equip_using_log` VALUES ('210', '7', '1023', '2', '20', '10001', '1546077180');
+INSERT INTO `pig_equip_using_log` VALUES ('211', null, '1020', '2', '50', '10001', '1546413412');
+INSERT INTO `pig_equip_using_log` VALUES ('212', null, '1020', '2', '10', '10001', '1546413481');
+INSERT INTO `pig_equip_using_log` VALUES ('213', null, '1020', '2', '50', '10001', '1546416810');
+INSERT INTO `pig_equip_using_log` VALUES ('214', null, '1013', '2', '10', '10001', '1546422262');
+INSERT INTO `pig_equip_using_log` VALUES ('215', null, '1020', '2', '50', '10001', '1546422320');
+INSERT INTO `pig_equip_using_log` VALUES ('216', null, '1020', '2', '10', '10001', '1546422339');
+INSERT INTO `pig_equip_using_log` VALUES ('217', '2', '1022', '2', '30', '10001', '1546422409');
+INSERT INTO `pig_equip_using_log` VALUES ('218', null, '1022', '2', '30', '10001', '1546422611');
+INSERT INTO `pig_equip_using_log` VALUES ('219', '2', '1022', '2', '30', '10001', '1546424376');
+INSERT INTO `pig_equip_using_log` VALUES ('220', '2', '1022', '2', '30', '10001', '1546424416');
+INSERT INTO `pig_equip_using_log` VALUES ('221', '3', '1016', '2', '30', '10001', '1546424649');
+INSERT INTO `pig_equip_using_log` VALUES ('222', '3', '1016', '2', '30', '10001', '1546424680');
+INSERT INTO `pig_equip_using_log` VALUES ('223', '7', '1023', '-1', '30', '10001', '1546585492');
 
 -- ----------------------------
 -- Table structure for pig_exam
@@ -362,14 +385,14 @@ CREATE TABLE `pig_exam` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_exam
 -- ----------------------------
-INSERT INTO `pig_exam` VALUES ('10', '547', null, '{\"user_name\":\"\",\"company\":\"\",\"other_content\":\"\",\"license_id\":\"\",\"idcard_ids\":\"0,0\",\"other_ids\":\"168,169,170,0,0,0\"}', '10', '20', '10001', '1543824967', '1543825397');
-INSERT INTO `pig_exam` VALUES ('11', '547', null, '{\"user_name\":\"000\",\"company\":\"0000\",\"other_content\":\"\",\"license_id\":\"\",\"idcard_ids\":\"0,0\",\"other_ids\":\"0,0,0,0,0,0\"}', '10', '20', '10001', '1543827412', '1543827412');
 INSERT INTO `pig_exam` VALUES ('17', null, '2', '{\"order_id\":\"6\",\"send_content\":\"5555\",\"send_pic_ids\":\"183,0,0\"}', '20', '20', '10001', '1545376777', '1545376777');
+INSERT INTO `pig_exam` VALUES ('25', '547', null, '{\"user_name\":\"00\",\"company\":\"\",\"other_content\":\"\",\"license_id\":\"\",\"idcard_ids\":\"0,0\",\"other_ids\":\"0,0,0,0,0,0\"}', '10', '20', '10001', '1546596295', '1546596295');
+INSERT INTO `pig_exam` VALUES ('26', '547', null, '{\"user_name\":\"\",\"company\":\"\",\"other_content\":\"\",\"license_id\":\"223\",\"idcard_ids\":\"0,0\",\"other_ids\":\"168,169,170,222,0,0\"}', '10', '20', '10001', '1546596442', '1546596442');
 
 -- ----------------------------
 -- Table structure for pig_goods
@@ -627,7 +650,7 @@ CREATE TABLE `pig_order` (
   `update_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_no` (`order_no`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_order
@@ -638,7 +661,8 @@ INSERT INTO `pig_order` VALUES ('3', '2018120353485453', '1200.08', '1200.08', '
 INSERT INTO `pig_order` VALUES ('4', '2018120452101981', '1000.00', '1000.00', '20', '1544077644', '0.00', '', '', '20', '1544077660', '20', '1544077695', '20', '0', '30', '10', '0', null, '变更状态支付', '547', '10001', '1543887268', '1544077695');
 INSERT INTO `pig_order` VALUES ('5', '2018120557971029', '600.01', '600.01', '20', '1544077433', '0.00', '', '', '20', '1544166285', '20', '1544167455', '20', '0', '30', '10', '0', null, '变更状态支付', '547', '10001', '1543980537', '1544167455');
 INSERT INTO `pig_order` VALUES ('6', '2018122048525053', '324.36', '0.01', '20', '1545287685', '0.00', '', '', '20', '1545376761', '20', '1545376777', '20', '0', '30', '10', '0', null, '变更状态支付', '547', '10001', '1545287648', '1545376761');
-INSERT INTO `pig_order` VALUES ('7', '2018122854579910', '492.07', '10.00', '20', '1545990771', '0.00', '', '', '20', '1546077180', '10', '0', '20', '0', '10', '10', '0', null, '变更状态支付', '547', '10001', '1545990758', '1546077180');
+INSERT INTO `pig_order` VALUES ('7', '2018122854579910', '492.07', '10.00', '20', '1545990771', '0.00', '', '', '20', '1546077180', '20', '1546585492', '20', '0', '30', '10', '0', null, '变更状态支付', '547', '10001', '1545990758', '1546585492');
+INSERT INTO `pig_order` VALUES ('8', '2019010450101535', '600.01', '600.01', '10', '0', '0.00', '', '', '10', '0', '10', '0', '20', '0', '10', '10', '0', null, '', '547', '10001', '1546586322', '1546586322');
 
 -- ----------------------------
 -- Table structure for pig_order_address
@@ -657,7 +681,7 @@ CREATE TABLE `pig_order_address` (
   `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_address_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_order_address
@@ -669,6 +693,7 @@ INSERT INTO `pig_order_address` VALUES ('4', '1驱蚊器', '17608930399', '2291'
 INSERT INTO `pig_order_address` VALUES ('5', '蚊器神游八方带利息公司', '17608930399', '2291', '2292', '2293', '据说有要这么多字用来测试才行', '5', '547', '10001', '1543980537');
 INSERT INTO `pig_order_address` VALUES ('6', '科比', '17708933456', '2323', '2324', '2343', '钟楼南街666666', '6', '547', '10001', '1545287648');
 INSERT INTO `pig_order_address` VALUES ('7', '10101', '17608930399', '1', '2', '3', '2323123', '7', '547', '10001', '1545990758');
+INSERT INTO `pig_order_address` VALUES ('8', '蚊器', '17608930399', '2291', '2292', '2293', '12312', '8', '547', '10001', '1546586322');
 
 -- ----------------------------
 -- Table structure for pig_order_after
@@ -700,7 +725,7 @@ CREATE TABLE `pig_order_after` (
   `update_time` int(11) NOT NULL,
   `wxapp_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_order_after
@@ -713,8 +738,11 @@ INSERT INTO `pig_order_after` VALUES ('5', '5', '10', '2018122010250519', 'vbcvb
 INSERT INTO `pig_order_after` VALUES ('6', '2', '10', '2018122097545356', 'nnnnnnnnnnn', null, '', '1013', '1022', '', '消耗一次免修', '201,0,0', '0.00', '0.00', '0.00', '30', '1545732961', '40', '0', '2', '547', '1545285082', '1545285317', '10001');
 INSERT INTO `pig_order_after` VALUES ('7', '6', '10', '2018122155985350', '我急死了', '187,0,0', '1019', '', '', '', '消耗一次免修', '200,0,0', '0.00', '0.00', '0.00', '30', '1545732383', '40', '0', '2', '547', '1545387031', '1545614945', '10001');
 INSERT INTO `pig_order_after` VALUES ('8', '4', '10', '2018122454999798', 'zxczxc\ncbcvbcvb\n.........\n@#@$$', '188,189,190', '1017', '', '', '', '10', '0,0,0', '1.00', '1.00', '0.00', '20', null, '20', '0', '2', '547', '1545620358', '1545620389', '10001');
-INSERT INTO `pig_order_after` VALUES ('9', '6', null, '2018122657545057', '23\n123', null, null, null, null, null, null, null, null, null, null, '10', null, '10', null, null, '547', '1545818585', '1545818585', '10001');
+INSERT INTO `pig_order_after` VALUES ('9', '6', null, '2018122657545057', '23\n123', null, null, null, null, null, null, null, null, null, null, '10', null, '20', '2', '13,12', '547', '1545818585', '1546392795', '10001');
 INSERT INTO `pig_order_after` VALUES ('10', '1', null, '2018122755555056', '10101', '188,189,190', null, null, null, null, null, null, null, null, null, '10', null, '20', '2', '15,14', '547', '1545897383', '1546078935', '10001');
+INSERT INTO `pig_order_after` VALUES ('11', '2', '10', '2019010251981011', '测试维修发起', '216,0,0', '', '', '', '1022', '1010', '217,0,0', '0.00', '0.00', '0.00', '30', '1546422913', '40', '2', '2', '547', '1546393043', '1546393723', '10001');
+INSERT INTO `pig_order_after` VALUES ('12', '3', '10', '2019010210250995', '00000', '218,0,0', '', '', '', '1016', '00', '0,0,0', '0.00', '0.00', '0.00', '30', '1546424690', '40', '2', '2', '547', '1546424223', '1546424621', '10001');
+INSERT INTO `pig_order_after` VALUES ('13', '2', '10', '2019010254575048', '500', '0,0,0', '', '', '', '1022', '1022维修', '219,0,0', '0.00', '0.00', '0.00', '30', '1546425097', '40', '2', '2', '547', '1546424294', '1546424336', '10001');
 
 -- ----------------------------
 -- Table structure for pig_order_goods
@@ -752,7 +780,7 @@ CREATE TABLE `pig_order_goods` (
   `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_goods_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_order_goods
@@ -765,6 +793,7 @@ INSERT INTO `pig_order_goods` VALUES ('5', '3', 'ThinkPad T420笔记本电脑', 
 INSERT INTO `pig_order_goods` VALUES ('6', '1', '测试商品', '3', '20', '20', '3', '56', '', '', '', '0.01', '0.00', '0', '4', '200.00', '1543939200', '12', '600.00', '0', '0.00', '0', '0.00', '600.01', '1', '600.01', '5', '547', '10001', '1543980537');
 INSERT INTO `pig_order_goods` VALUES ('7', '2', '测试商品2测试商品2测试商品2测试商品2测试商品2测试商品2', '1', '20', '20', '9', '53', '', '', '', '0.01', '0.00', '0', '1', '18.00', '1543334400', '9', '162.00', '0', '0.00', '1,2', '0.15', '324.36', '2', '162.18', '6', '547', '10001', '1545287648');
 INSERT INTO `pig_order_goods` VALUES ('8', '1', '测试商品', '3', '20', '20', '3', '56', '', '', '', '0.01', '0.00', '0', '2', '164.00', '1543939200', '3', '492.00', '0', '0.00', '2,3', '0.06', '492.07', '1', '492.07', '7', '547', '10001', '1545990758');
+INSERT INTO `pig_order_goods` VALUES ('9', '1', '测试商品', '3', '20', '20', '3', '56', '', '', '', '0.01', '0.00', '0', '4', '200.00', '1546531200', '12', '600.00', '0', '0.00', '0', '0.00', '600.01', '1', '600.01', '8', '547', '10001', '1546586322');
 
 -- ----------------------------
 -- Table structure for pig_order_member
@@ -779,7 +808,7 @@ CREATE TABLE `pig_order_member` (
   `create_time` int(11) NOT NULL,
   `wxapp_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_order_member
@@ -814,6 +843,16 @@ INSERT INTO `pig_order_member` VALUES ('67', '17', '7', null, '10', '1546077180'
 INSERT INTO `pig_order_member` VALUES ('68', '16', '7', null, '10', '1546077180', '10001');
 INSERT INTO `pig_order_member` VALUES ('71', '15', null, '10', '10', '1546078935', '10001');
 INSERT INTO `pig_order_member` VALUES ('72', '14', null, '10', '10', '1546078935', '10001');
+INSERT INTO `pig_order_member` VALUES ('73', '13', null, '9', '10', '1546392795', '10001');
+INSERT INTO `pig_order_member` VALUES ('74', '12', null, '9', '10', '1546392795', '10001');
+INSERT INTO `pig_order_member` VALUES ('75', '2', null, '11', '10', '1546393723', '10001');
+INSERT INTO `pig_order_member` VALUES ('76', '2', null, '11', '20', '1546422913', '10001');
+INSERT INTO `pig_order_member` VALUES ('77', '2', null, '13', '10', '1546424336', '10001');
+INSERT INTO `pig_order_member` VALUES ('78', '2', null, '12', '10', '1546424621', '10001');
+INSERT INTO `pig_order_member` VALUES ('79', '2', null, '12', '20', '1546424690', '10001');
+INSERT INTO `pig_order_member` VALUES ('80', '2', null, '13', '20', '1546425097', '10001');
+INSERT INTO `pig_order_member` VALUES ('81', '17', '7', null, '20', '1546585492', '10001');
+INSERT INTO `pig_order_member` VALUES ('82', '16', '7', null, '20', '1546585492', '10001');
 
 -- ----------------------------
 -- Table structure for pig_quota_log
@@ -829,7 +868,7 @@ CREATE TABLE `pig_quota_log` (
   `wxapp_id` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_quota_log
@@ -839,6 +878,14 @@ INSERT INTO `pig_quota_log` VALUES ('16', '10', '100000', '9', '547', null, '100
 INSERT INTO `pig_quota_log` VALUES ('17', '10', '0', '10', '547', null, '10001', '1543824977');
 INSERT INTO `pig_quota_log` VALUES ('32', '10', '1', '10', '547', null, '10001', '1543827107');
 INSERT INTO `pig_quota_log` VALUES ('33', '10', '10000', '11', '547', null, '10001', '1543827427');
+INSERT INTO `pig_quota_log` VALUES ('34', '10', '0', '18', '547', null, '10001', '1546592801');
+INSERT INTO `pig_quota_log` VALUES ('35', '10', '100', '19', '547', null, '10001', '1546595979');
+INSERT INTO `pig_quota_log` VALUES ('36', '10', '0', '20', '547', null, '10001', '1546596025');
+INSERT INTO `pig_quota_log` VALUES ('37', '10', '0', '21', '547', null, '10001', '1546596030');
+INSERT INTO `pig_quota_log` VALUES ('38', '10', '0', '22', '547', null, '10001', '1546596107');
+INSERT INTO `pig_quota_log` VALUES ('39', '10', '0', '23', '547', null, '10001', '1546596252');
+INSERT INTO `pig_quota_log` VALUES ('40', '10', '100', '25', '547', null, '10001', '1546596425');
+INSERT INTO `pig_quota_log` VALUES ('41', '10', '1000', '26', '547', null, '10001', '1546596468');
 
 -- ----------------------------
 -- Table structure for pig_quota_option
@@ -4773,7 +4820,7 @@ CREATE TABLE `pig_store_member` (
 -- ----------------------------
 -- Records of pig_store_member
 -- ----------------------------
-INSERT INTO `pig_store_member` VALUES ('2', 'uercal', '17608930399', '9c4cb25665cf08667c815420ab383cb5', '木叶下忍', '1', '20', '10001', '1540362447', '1545376761');
+INSERT INTO `pig_store_member` VALUES ('2', 'uercal', '17608930399', 'ee46d7395e7a73937ed7ea3ca3c2bf5d', '木叶下忍', '1', '20', '10001', '1540362447', '1546488218');
 INSERT INTO `pig_store_member` VALUES ('3', 'yyy', '155018344511', '9c4cb25665cf08667c815420ab383cb5', null, '1', '20', '10001', '1540363024', '1545200264');
 INSERT INTO `pig_store_member` VALUES ('4', 'yyy', '15501834451', '9c4cb25665cf08667c815420ab383cb5', null, '1', '10', '10001', '1540365757', '1543462838');
 INSERT INTO `pig_store_member` VALUES ('5', 'zzz1', '13208943755', '2df028511163cb1ed379d6eaea61142a', '111', '1', '10', '10001', '1540365995', '1543462838');
@@ -4808,7 +4855,7 @@ CREATE TABLE `pig_store_member_role` (
 -- ----------------------------
 -- Records of pig_store_member_role
 -- ----------------------------
-INSERT INTO `pig_store_member_role` VALUES ('1', '管理员', '16,7,8,15,9,10,11,12,13,14', '100', '10001', '1540352428', '1544064350');
+INSERT INTO `pig_store_member_role` VALUES ('1', '管理员', '16,7,8,15,9,10,11,12,13,14,17', '100', '10001', '1540352428', '1546411012');
 INSERT INTO `pig_store_member_role` VALUES ('3', '产品', '7', '100', '10001', '1542275470', '1542332799');
 INSERT INTO `pig_store_member_role` VALUES ('4', '库管', '8,10', '100', '10001', '1542332813', '1542332813');
 
@@ -4826,7 +4873,7 @@ CREATE TABLE `pig_store_privilege` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pig_store_privilege
@@ -4841,6 +4888,7 @@ INSERT INTO `pig_store_privilege` VALUES ('11', '用户管理', null, '100', '[\
 INSERT INTO `pig_store_privilege` VALUES ('12', '员工管理', null, '100', '[\"member\\/index\",\"member\\/role\",\"member\\/privilege\"]', '10001', '1542332738', '1542332738');
 INSERT INTO `pig_store_privilege` VALUES ('13', '小程序', null, '100', '[\"wxapp\\/setting\",\"wxapp.page\\/home\",\"wxapp.page\\/links\",\"wxapp.help\\/index\",\"wxapp\\/tabbar\"]', '10001', '1542332747', '1542332747');
 INSERT INTO `pig_store_privilege` VALUES ('14', '设置', null, '100', '[\"setting\\/store\",\"setting\\/trade\",\"setting.cache\\/clear\",\"setting.science\\/index\"]', '10001', '1542332765', '1542332765');
+INSERT INTO `pig_store_privilege` VALUES ('17', '维修权限', null, '100', '[\"equip\\/checkLog\"]', '10001', '1546411004', '1546411004');
 
 -- ----------------------------
 -- Table structure for pig_store_user
@@ -4874,7 +4922,7 @@ CREATE TABLE `pig_upload_api_file` (
   `wxapp_id` int(11) unsigned NOT NULL DEFAULT '0',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`file_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=216 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=224 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of pig_upload_api_file
@@ -5010,6 +5058,14 @@ INSERT INTO `pig_upload_api_file` VALUES ('212', 'user/20181226120112506939407.j
 INSERT INTO `pig_upload_api_file` VALUES ('213', 'user/201812261519122d1a51264.jpg', 'jpg', '0', '10001', '1545808752');
 INSERT INTO `pig_upload_api_file` VALUES ('214', 'user/2018122615211531c613544.jpg', 'jpg', '0', '10001', '1545808875');
 INSERT INTO `pig_upload_api_file` VALUES ('215', 'user/20181226153252f4fb05663.jpg', 'jpg', '0', '10001', '1545809572');
+INSERT INTO `pig_upload_api_file` VALUES ('216', 'user/201901020937225ad482053.png', 'png', '0', '10001', '1546393042');
+INSERT INTO `pig_upload_api_file` VALUES ('217', 'user/201901021746480a5f79112.jpg', 'jpg', '0', '10001', '1546422408');
+INSERT INTO `pig_upload_api_file` VALUES ('218', 'user/20190102181702848774790.jpg', 'jpg', '0', '10001', '1546424222');
+INSERT INTO `pig_upload_api_file` VALUES ('219', 'user/201901021819360152f4696.jpg', 'jpg', '0', '10001', '1546424376');
+INSERT INTO `pig_upload_api_file` VALUES ('220', 'user/20190104175627abd7c1680.png', 'png', '0', '10001', '1546595787');
+INSERT INTO `pig_upload_api_file` VALUES ('221', 'user/20190104175717159cf1060.png', 'png', '0', '10001', '1546595837');
+INSERT INTO `pig_upload_api_file` VALUES ('222', 'user/201901041757382c3663810.png', 'png', '0', '10001', '1546595858');
+INSERT INTO `pig_upload_api_file` VALUES ('223', 'user/2019010418072115da34684.png', 'png', '0', '10001', '1546596441');
 
 -- ----------------------------
 -- Table structure for pig_upload_file
@@ -5121,7 +5177,7 @@ CREATE TABLE `pig_user` (
 -- ----------------------------
 -- Records of pig_user
 -- ----------------------------
-INSERT INTO `pig_user` VALUES ('547', '000', 'ojeDM4nTZvAFUWwT54aSO24UjvIk', 'Thorn', 'https://wx.qlogo.cn/mmopen/vi_32/1pdpY2sqsZYUh0EYkyCVRK49icw87Cv751NcG6axQiaSQR4LicmrrsF1JDoz62icZSIbNib4ibyW0NAXiaZiasKpXLhPZw/132', '1', '中国', '重庆', '', '4', '0000', '17608930399', '0,0', '168,169,170,0,0,0', null, '10001', '1542874377', '1545373090');
+INSERT INTO `pig_user` VALUES ('547', '00', 'ojeDM4nTZvAFUWwT54aSO24UjvIk', 'Thorn', 'https://wx.qlogo.cn/mmopen/vi_32/1pdpY2sqsZYUh0EYkyCVRK49icw87Cv751NcG6axQiaSQR4LicmrrsF1JDoz62icZSIb5ryK0XSMydZLXRMZl7AqTQ/132', '1', '中国', '重庆', '', '4', '0000', '17608930399', '0,0', '168,169,170,222,0,0', '223', '10001', '1542874377', '1546596468');
 
 -- ----------------------------
 -- Table structure for pig_user_address
@@ -5225,7 +5281,7 @@ CREATE TABLE `pig_wxapp` (
 -- ----------------------------
 -- Records of pig_wxapp
 -- ----------------------------
-INSERT INTO `pig_wxapp` VALUES ('10001', '小财猪租赁小程序商城', 'wxb9de7de8697ceb37', '2a564d1f2ce8b5856144851bf8652d6e', '0', '0', '0', '', '0', '', '', '1529926348', '1542700528');
+INSERT INTO `pig_wxapp` VALUES ('10001', '小财猪租赁小程序商城', 'wxb9de7de8697ceb37', '2a564d1f2ce8b5856144851bf8652d6e', '0', '0', '0', '', '0', '1509560951', 'Ha25Ha25Ha25Ha25Ha25Ha25Ha25Ha25', '1529926348', '1546586715');
 
 -- ----------------------------
 -- Table structure for pig_wxapp_help

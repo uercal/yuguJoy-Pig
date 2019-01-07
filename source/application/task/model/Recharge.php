@@ -12,6 +12,9 @@ use think\Db;
  */
 class Recharge extends RechargeModel
 {
+
+    public $error;
+
     /**
      * 待支付订单详情
      * @param $order_no
@@ -31,15 +34,21 @@ class Recharge extends RechargeModel
      */
     public function updatePayStatus($transaction_id)
     {
-        Db::startTrans();        
-        // 更新订单状态
-        $this->save([
-            'pay_status' => 20,
-            'pay_time' => time(),
-            'transaction_id' => $transaction_id,
-        ]);
-        Db::commit();
-        return true;
+        Db::startTrans();
+        try {
+           // 更新订单状态
+            $this->save([
+                'pay_status' => 20,
+                'pay_time' => time(),
+                'transaction_id' => $transaction_id,
+            ]);
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
     }
 
 }

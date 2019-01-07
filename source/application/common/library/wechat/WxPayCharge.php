@@ -133,7 +133,11 @@ class WxPayCharge
             && ($data['return_code'] == 'SUCCESS')
             && ($data['result_code'] == 'SUCCESS')) {
             // 更新订单状态            
-            $order->updatePayStatus($data['transaction_id']);
+            if ($order->updatePayStatus($data['transaction_id'])) {
+
+            } else {
+                $this->returnCode(false, $order->error);
+            }
             // 发送短信通知
             $this->sendSms($order['wxapp_id'], $order['order_no']);
             // 返回状态

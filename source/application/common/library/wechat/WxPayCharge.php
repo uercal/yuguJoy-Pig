@@ -58,7 +58,7 @@ class WxPayCharge
         $params['sign'] = $this->makeSign($params);
         // 请求API
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-        $result = $this->postXmlCurl($this->toXml($params), $url);        
+        $result = $this->postXmlCurl($this->toXml($params), $url);
         $prepay = $this->fromXml($result);        
         // 请求失败
         if ($prepay['return_code'] === 'FAIL') {
@@ -129,16 +129,16 @@ class WxPayCharge
         // 生成签名
         $sign = $this->makeSign($data);
         // 判断签名是否正确  判断支付状态
-        // if (($sign === $dataSign)
-        //     && ($data['return_code'] == 'SUCCESS')
-        //     && ($data['result_code'] == 'SUCCESS')) {
-        //     // 更新订单状态            
-        //     $order->updatePayStatus($data['transaction_id']);
-        //     // 发送短信通知
-        //     $this->sendSms($order['wxapp_id'], $order['order_no']);
-        //     // 返回状态
-        //     $this->returnCode(true, 'OK');
-        // }
+        if (($sign === $dataSign)
+            && ($data['return_code'] == 'SUCCESS')
+            && ($data['result_code'] == 'SUCCESS')) {
+            // 更新订单状态            
+            $order->updatePayStatus($data['transaction_id']);
+            // 发送短信通知
+            $this->sendSms($order['wxapp_id'], $order['order_no']);
+            // 返回状态
+            $this->returnCode(true, 'OK');
+        }
         // 返回状态
         $this->returnCode(false, '签名失败');
     }

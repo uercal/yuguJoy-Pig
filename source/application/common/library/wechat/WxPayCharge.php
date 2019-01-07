@@ -106,6 +106,7 @@ class WxPayCharge
 //<transaction_id><![CDATA[4200000146201806242438472701]]></transaction_id>
 //</xml>
 //EOF;        
+        halt($RechargeModel);
         if (!$xml = file_get_contents('php://input')) {
             $this->returnCode(false, 'Not found DATA');
         }

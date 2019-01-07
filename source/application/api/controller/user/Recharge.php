@@ -105,13 +105,13 @@ class Recharge extends Controller
 
 
     public function rechargePay($id)
-    {
+    {        
         // 订单详情
         $order = RechargeModel::getUserChargeDetail($id, $this->user['user_id']);        
         // 发起微信支付
         $wxConfig = WxappModel::getWxappCache();
         $WxPay = new WxPayChargeModel($wxConfig);
-        $wxParams = $WxPay->unifiedorder($order['order_no'], $this->user['open_id'], $order['pay_price']);
+        $wxParams = $WxPay->unifiedorder($order['order_no'], $this->user['open_id'], $order['pay_price']);                
         return $this->renderSuccess($wxParams);
     }
 

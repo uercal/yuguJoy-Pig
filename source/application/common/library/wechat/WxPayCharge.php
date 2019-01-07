@@ -53,8 +53,7 @@ class WxPayCharge
             'spbill_create_ip' => \request()->ip(),
             'total_fee' => $total_fee * 100, // 价格:单位分
             'trade_type' => 'JSAPI',
-        ];
-        halt($params);
+        ];        
         // 生成签名
         $params['sign'] = $this->makeSign($params);
         // 请求API

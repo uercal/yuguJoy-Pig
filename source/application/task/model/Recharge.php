@@ -3,6 +3,7 @@
 namespace app\task\model;
 
 use app\common\model\Recharge as RechargeModel;
+use app\common\model\AccountMoney;
 use think\Db;
 
 /**
@@ -43,6 +44,7 @@ class Recharge extends RechargeModel
                 'pay_time' => time(),
                 'transaction_id' => $transaction_id,
             ]);
+            AccountMoney::where('user_id', $this->user_id)->setInc('account_money', $this->pay_price * 100);
             Db::commit();
             return true;
         } catch (\Exception $e) {

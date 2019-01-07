@@ -118,6 +118,7 @@ class WxPayCharge
         $order = $RechargeModel->payDetail($data['out_trade_no']);
         empty($order) && $this->returnCode(true, '订单不存在');
         // 小程序配置信息
+        $this->returnCode(true, $order);
         $wxConfig = WxappModel::getWxappCache($order['wxapp_id']);
         // 设置支付秘钥
         $this->config['apikey'] = $wxConfig['apikey'];
@@ -131,8 +132,7 @@ class WxPayCharge
         if (($sign === $dataSign)
             && ($data['return_code'] == 'SUCCESS')
             && ($data['result_code'] == 'SUCCESS')) {
-            // 更新订单状态
-            halt($data);
+            // 更新订单状态            
             $order->updatePayStatus($data['transaction_id']);
             // 发送短信通知
             $this->sendSms($order['wxapp_id'], $order['order_no']);

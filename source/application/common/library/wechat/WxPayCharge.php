@@ -117,8 +117,7 @@ class WxPayCharge
         // 订单信息
         $order = $RechargeModel->payDetail($data['out_trade_no']);
         empty($order) && $this->returnCode(true, '订单不存在');
-        // 小程序配置信息
-        $this->returnCode(true, $order);
+        // 小程序配置信息        
         $wxConfig = WxappModel::getWxappCache($order['wxapp_id']);
         // 设置支付秘钥
         $this->config['apikey'] = $wxConfig['apikey'];

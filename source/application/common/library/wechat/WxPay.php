@@ -105,7 +105,7 @@ class WxPay
 //<trade_type><![CDATA[JSAPI]]></trade_type>
 //<transaction_id><![CDATA[4200000146201806242438472701]]></transaction_id>
 //</xml>
-//EOF;        
+//EOF;                
         if (!$xml = file_get_contents('php://input')) {
             $this->returnCode(false, 'Not found DATA');
         }

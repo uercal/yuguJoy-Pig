@@ -54,6 +54,7 @@ class WxPayCharge
             'total_fee' => $total_fee * 100, // 价格:单位分
             'trade_type' => 'JSAPI',
         ];
+        halt($params);
         // 生成签名
         $params['sign'] = $this->makeSign($params);
         // 请求API
@@ -105,8 +106,7 @@ class WxPayCharge
 //<trade_type><![CDATA[JSAPI]]></trade_type>
 //<transaction_id><![CDATA[4200000146201806242438472701]]></transaction_id>
 //</xml>
-//EOF;        
-        halt($RechargeModel);
+//EOF;                
         if (!$xml = file_get_contents('php://input')) {
             $this->returnCode(false, 'Not found DATA');
         }

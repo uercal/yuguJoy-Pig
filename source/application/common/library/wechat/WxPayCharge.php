@@ -47,7 +47,7 @@ class WxPayCharge
             'body' => $order_no,
             'mch_id' => $this->config['mchid'],
             'nonce_str' => $nonceStr,
-            'notify_url' => base_url() . 'notice.php',  // 异步通知地址
+            'notify_url' => base_url() . 'noticeRe.php',  // 异步通知地址
             'openid' => $openid,
             'out_trade_no' => $order_no,
             'spbill_create_ip' => \request()->ip(),

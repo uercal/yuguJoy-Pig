@@ -12,7 +12,7 @@ use app\common\exception\BaseException;
  * Class WxPay
  * @package app\common\library\wechat
  */
-class WxPay
+class WxPayCharge
 {
     private $config; // 微信支付配置
 
@@ -79,12 +79,12 @@ class WxPay
 
     /**
      * 支付成功异步通知
-     * @param \app\task\model\Order $OrderModel
+     * @param \app\task\model\Recharge $RechargeModel
      * @throws BaseException
      * @throws \Exception
      * @throws \think\exception\DbException
      */
-    public function notify($OrderModel)
+    public function notify($RechargeModel)
     {
 //        $xml = <<<EOF
 //<xml><appid><![CDATA[wx62f4cad175ad0f90]]></appid>
@@ -115,7 +115,7 @@ class WxPay
         $this->doLogs($xml);
         $this->doLogs($data);
         // 订单信息
-        $order = $OrderModel->payDetail($data['out_trade_no']);
+        $order = $RechargeModel->payDetail($data['out_trade_no']);
         empty($order) && $this->returnCode(true, '订单不存在');
         // 小程序配置信息
         $wxConfig = WxappModel::getWxappCache($order['wxapp_id']);
@@ -165,7 +165,7 @@ class WxPay
     private function returnCode($is_success = true, $msg = null)
     {
         $xml_post = $this->toXml([
-            'return_code' => $is_success ? $msg ?: 'SUCCESS' : 'FAIL',
+            'return_code' => $is_success ? $msg ? : 'SUCCESS' : 'FAIL',
             'return_msg' => $is_success ? 'OK' : $msg,
         ]);
         die($xml_post);
@@ -240,14 +240,14 @@ class WxPay
         // 设置超时
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);//严格校验
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);//严格校验
         // 设置header
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         // 要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         // post提交方式
-        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
         // 运行curl
         $data = curl_exec($ch);
@@ -298,8 +298,7 @@ class WxPay
     private function toXml($values)
     {
         if (!is_array($values)
-            || count($values) <= 0
-        ) {
+            || count($values) <= 0) {
             return false;
         }
 

@@ -443,6 +443,18 @@ class Order extends OrderModel
             throw new BaseException(['msg' => '订单不存在']);
         }
 
+        $rent_all_price = 0;
+        $goods_all_price = 0;
+        foreach ($order['goods'] as $key => $value) {
+            $rent_all_price += $value['rent_total_price'];
+            $goods_all_price += $value['goods_price'];
+            $goods_all_price += $value['secure_price'];
+            $goods_all_price += $value['service_price'];
+        }
+                               
+        // 
+        $order['pay'] = compact('rent_all_price', 'goods_all_price');
+
         return $order;
     }
 
@@ -582,7 +594,7 @@ class Order extends OrderModel
                 $this->save([
                     'delivery_status' => 20,
                     'delivery_time' => time()
-                ], ['order_id' => $order_id]);                
+                ], ['order_id' => $order_id]);
                 Db::commit();
                 return true;
             } catch (\Exception $e) {

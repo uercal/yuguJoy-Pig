@@ -54,8 +54,32 @@ class Order extends Controller
     public function detail($order_id)
     {
         $order = OrderModel::getUserOrderDetail($order_id, $this->user['user_id']);
-        return $this->renderSuccess(['order' => $order]);
+        $detail = $this->getUser();
+        $account = $detail['account_money'];
+        $payInfo = $this->payItem($order, $account);
+        return $this->renderSuccess(['order' => $order, 'account' => $account, 'payInfo' => $payInfo]);
     }
+
+
+    public function payItem($order, $account)
+    {
+        // 租金
+        $rent_price = $order['pay']['rent_all_price'];
+        // 押金
+        $goods_price = $order['pay']['goods_all_price'];
+        //可用额度
+        $quota_price = $account['actual_quota'];
+        //可用金额
+        $actual_money = $account['actual_money'];
+        //还需支付金额
+        $bonus_money = ($quota_price - $goods_price) > 0 ? 0 : ($goods_price - $quota_price);
+        //actual
+        $real_money = $bonus_money + $rent_price;
+        //state
+        $canPay = ($account['actual_money'] - $real_money) >= 0 ? 1 : 0;
+        return compact('bonus_money', 'real_money', 'canPay');
+    }
+
 
     /**
      * 取消订单

@@ -4,6 +4,8 @@ namespace app\api\controller\user;
 
 use app\api\controller\Controller;
 use app\api\model\Order as OrderModel;
+use app\api\model\PayLog;
+use app\api\model\Recharge;
 use app\api\model\Wxapp as WxappModel;
 use app\common\library\wechat\WxPay;
 use app\api\model\OrderAfter as OrderAfterModel;
@@ -66,7 +68,7 @@ class Order extends Controller
         // 租金
         $rent_price = $order['pay']['rent_all_price'];
         // 押金
-        $goods_price = $order['pay']['goods_all_price'];
+        $goods_price = bcadd($order['pay']['goods_all_price'], 0, 2);
         //可用额度
         $quota_price = $account['actual_quota'];
         //可用金额
@@ -77,7 +79,7 @@ class Order extends Controller
         $real_money = $bonus_money + $rent_price;
         //state
         $canPay = ($account['actual_money'] - $real_money) >= 0 ? 1 : 0;
-        return compact('bonus_money', 'real_money', 'canPay');
+        return compact('bonus_money', 'real_money', 'canPay', 'rent_price', 'goods_price');
     }
 
 
@@ -170,6 +172,102 @@ class Order extends Controller
     {
         $model = new OrderAfterModel;
         $detail = $model->getDetail($after_id);
-        return $this->renderSuccess(compact('detail'));
+        $user = $this->getUser();
+        $account = $user['account_money'];
+        return $this->renderSuccess(compact('detail', 'account'));
     }
+
+
+    /**
+     * pay after order
+     * 
+     */
+    public function doPay($id, $type)
+    {
+        $user = $this->getUser();
+        $user_id = $user['user_id'];
+        switch ($type) {
+            case 'order':
+                $order_id = $id;
+                $model = new OrderModel;
+                // 
+                $order = OrderModel::getUserOrderDetail($order_id, $user_id);
+                $account = $user['account_money'];
+                $payInfo = $this->payItem($order, $account);
+                // 
+                if ($model->doPay($order, $payInfo, $user_id)) {
+                    return $this->renderSuccess('支付成功');
+                }
+                $error = $model->getError() ? : '支付失败';
+                return $this->renderError($error);
+
+                break;
+            case 'after':
+            // 售后确认
+                $after_id = $id;
+                $model = new OrderAfterModel;
+                if ($model->doPay($after_id, $user_id)) {
+                    return $this->renderSuccess('支付成功');
+                }
+                $error = $model->getError() ? : '支付失败';
+                return $this->renderError($error);
+
+                break;
+
+        }
+    }
+
+
+
+
+    /**
+     * paylog
+     */
+    public function payLogList($page)
+    {
+        $user_id = $this->getUser()['user_id'];
+        // $payLog = new PayLog;
+        // $list = $payLog->getList($user_id, $page);
+        // return $this->renderSuccess(compact('list'));
+
+        $data = PayLog::with(['order', 'after'])->where('user_id', $user_id)->select()->toArray();
+
+        $recharge_log = Recharge::where(['pay_status' => 20, 'status' => 10])->select()->toArray();
+
+        $data = array_merge($data, $recharge_log);
+
+        usort($data, function ($a, $b) {
+            return $a['create_time'] < $b['create_time'];
+        });
+
+
+        $curpage = $page;//当前第x页，
+
+        $rows = 15;//每页显示几条记录
+
+        $dataTo = array();
+
+        $dataTo = array_chunk($data, $rows);
+        $showdata = array();
+
+        if ($dataTo) {
+            $showdata = $dataTo[$curpage - 1];
+        } else {
+            $showdata = null;
+        }
+
+        $list = [
+            'current_page' => $page,
+            'data' => $showdata,
+            'last_page' => count($dataTo),
+            'per_page' => 15,
+            'total' => count($data)
+        ];
+
+        return $this->renderSuccess(compact('list'));
+    }
+
+
+
+
 }

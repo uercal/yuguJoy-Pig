@@ -8,5 +8,5 @@ use think\Cache;
 
 class AccountMoney extends AccountMoneyModel
 {
-
+    
 }

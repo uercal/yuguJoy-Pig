@@ -4,6 +4,9 @@ namespace app\api\model;
 
 use think\Db;
 use app\common\model\Order as OrderModel;
+use app\api\model\AccountMoney;
+use app\api\model\PayLog;
+use app\api\model\Deduct;
 use app\api\model\EquipUsingLog;
 use app\api\model\Equip;
 use app\api\model\OrderMember;
@@ -610,9 +613,127 @@ class Order extends OrderModel
 
 
 
+    /**
+     * 支付订单
+     * 更新订单状态 + 扣款 + payLog + 增加deduct记录
+     */
+    public function doPay($order, $payInfo, $user_id)
+    {
+        if ($payInfo['canPay'] == 0) return false;
+        // 押金 扣额度
+        $goods_price = $payInfo['goods_price'];
+        // 租金  第一期 直接扣余额
+        $rent_price = $payInfo['rent_price'];
+        // bonus_money 还需支付押金  属于冻结金额
+        $bonus_money = $payInfo['bonus_money'];
+
+
+        // 扣余额 部分
+        $dec_account_money = bcadd($rent_price, $bonus_money, 2) * 100;
+        //冻结余额
+        $inc_freezing_account = $bonus_money * 100;
+        // 冻结额度
+        $inc_freezing_quota = $goods_price * 100;
+
+
+        Db::startTrans();
+        // account_money
+        $account = new AccountMoney;
+        $account->where('user_id', $user_id)->setDec('account_money', $dec_account_money);
+        $account->where('user_id', $user_id)->setInc('freezing_account', $inc_freezing_account);
+        $account->where('user_id', $user_id)->setInc('freezing_quota', $inc_freezing_quota);     
+
+        //payLog
+        $payLog = new PayLog;
+        $payLog->save([
+            'pay_type' => 10,//订单
+            'order_id' => $order['order_id'],
+            'pay_price' => bcadd($rent_price, $bonus_money, 2),
+            'user_id' => $user_id
+        ]);
+
+        //deduct
+        $deductModel = new Deduct;
+        $deduct = [];
+        $order_goods = $order['goods'];
+        foreach ($order_goods as $key => $value) {
+            $_deduct = [];
+            $_init_rent = $this->initRentEnd($value['rent_mode'], $value['rent_num'], $value['rent_date']);
+            $_deduct['order_id'] = $order['order_id'];
+            $_deduct['order_goods_id'] = $value['order_goods_id'];
+            $_deduct['rent_mode_id'] = $value['rent_mode']['id'];
+            $_deduct['rent_start'] = $value['rent_date'];
+            $_deduct['rent_end'] = $_init_rent['end'];
+            $_deduct['deduct_price'] = $_init_rent['price'];
+            $_deduct['deduct_status'] = 20;//扣款成功
+            $_deduct['deduct_time'] = $_init_rent['deduct'];
+            $_deduct['user_id'] = $user_id;
+            $deduct[] = $_deduct;
+        }
+        $deductModel->saveAll($deduct);
+          
+        // 更新订单状态
+        $this->save([
+            'pay_status' => 20,
+            'pay_time' => time(),
+            'transaction_id' => '余额付款',
+            'freezing_account' => $inc_freezing_account,
+            'freezing_quota' => $inc_freezing_quota
+        ], [
+            'order_id' => $order['order_id']
+        ]);
+        Db::commit();
+        return true;
+    }
 
 
 
+
+
+    public function initRentEnd($rent_mode, $rent_num, $rent_start)
+    {
+        $rent_show_unit = $rent_mode['rent_show_unit'];
+        switch ($rent_show_unit) {
+            case '年':
+                // 大于3月  按3月算                
+                $deduct = strtotime('+3 month', $rent_start);
+                $end = strtotime("+$rent_num month", $rent_start);
+                break;
+            case '月':
+                if ($rent_num > 3) {
+                    $deduct = strtotime('+3 month', $rent_start);
+                } else {
+                    $deduct = strtotime('+1 month', $rent_start);
+                }
+                $end = strtotime("+$rent_num month", $rent_start);
+                break;
+            case '日':
+                $deduct = strtotime("+$rent_num days", $rent_start);
+                $end = strtotime("+$rent_num days", $rent_start);
+                break;
+        }
+
+
+        if ($rent_mode['is_static'] == 0) {
+            $price = $rent_mode['price'];
+        } else {
+            $map = json_decode($rent_mode['map'], true);
+            if (count($map) == 1) {
+                $price = $map[0]['price'];
+            } else {
+                if ($rent_num >= $map[0]['min'] && $rent_num <= $map[0]['max']) {
+                    $price = $map[0]['price'];
+                }
+                if ($rent_num >= $map[1]['min'] && $rent_num <= $map[1]['max']) {
+                    $price = $map[1]['price'];
+                }
+            }
+        }
+
+        $price = $price * 100;//分
+
+        return compact('deduct', 'end', 'price');
+    }
 
 
 

@@ -3,6 +3,8 @@
 namespace app\api\model;
 
 use app\common\model\OrderAfter as OrderAfterModel;
+use app\api\model\PayLog;
+use app\api\model\AccountMoney;
 use app\common\model\Equip;
 use app\api\model\EquipUsingLog;
 use app\api\model\EquipCheckLog;
@@ -215,7 +217,6 @@ class OrderAfter extends OrderAfterModel
             return true;
         } catch (\Exception $e) {
             Db::rollback();
-            halt($e->getMessage());
             $this->error = $e->getMessage();
             return false;
         }
@@ -365,5 +366,48 @@ class OrderAfter extends OrderAfterModel
             'pay_status' => 10,
             'status' => 10
         ])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);;
+    }
+
+
+
+    /**
+     * doPay
+     * 更改售后单状态 + 扣款 + payLog
+     */
+    public function doPay($after_id, $user_id)
+    {
+        $pay_price = $this->where('id', $after_id)->value('pay_price');
+        $price = $pay_price * 100;
+        //DO
+        Db::startTrans();
+        try {
+            // 扣款  分
+            $account = new AccountMoney;
+            $account->where('user_id', $user_id)->setDec('account_money', $price);
+
+            // payLog
+            $payLog = new PayLog;
+            $payLog->save([
+                'pay_type' => 20,//售后
+                'after_id' => $after_id,
+                'pay_price' => $pay_price,
+                'user_id' => $user_id
+            ]);
+
+
+            // 售后订单
+            $this->where('id', $after_id)->update([
+                'status' => 40,
+                'pay_status' => 30,
+                'pay_time' => time()
+            ]);
+
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
     }
 }

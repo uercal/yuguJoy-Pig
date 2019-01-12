@@ -13,8 +13,18 @@ class Recharge extends BaseModel
 {
     protected $name = 'recharge';
     protected $insert = ['wxapp_id' => 10001];
-    protected $append = ['pay_status_text', 'status_text'];
+    protected $append = ['pay_status_text', 'status_text', 'create_time_d'];
     protected $updateTime = false;
+
+
+
+
+    public function getCreateTimeDAttr($value, $data)
+    {
+        return date('Y-m-d', $data['create_time']);
+    }
+
+
 
     public function getSourceTextAttr($value, $data)
     {

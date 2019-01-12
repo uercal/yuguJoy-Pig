@@ -12,7 +12,7 @@ use think\Request;
 class Deduct extends BaseModel
 {
     protected $name = 'deduct';
-
+    protected $insert = ['wxapp_id' => 10001];
 
     public function getDeductStatusTextAttr($value, $data)
     {

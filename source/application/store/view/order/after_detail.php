@@ -87,7 +87,7 @@
                                     <?= $after['pay_price'] ?>
                                 </td>
                                 <td>
-                                    <?= $after['pay_status'] == 10 ? '未支付' : '已支付' ?>
+                                    <?= $after['pay_status'] == 10 ? '未发起' : ($after['pay_status'] == 20 ? '未支付' : '已支付') ?>
                                 </td>
                                 <td>
                                     <?= $after['status_text'] ?>

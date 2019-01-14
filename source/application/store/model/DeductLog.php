@@ -2,11 +2,11 @@
 
 namespace app\store\model;
 
-use app\common\model\Deduct as DeductModel;
+use app\common\model\DeductLog as DeductLogModel;
 use think\Cache;
 use think\Request;
 
-class Deduct extends DeductModel
+class DeductLog extends DeductLogModel
 {
     public function getList()
     {
@@ -18,9 +18,10 @@ class Deduct extends DeductModel
         if (!empty($map['order_id'])) $_map['order_id'] = ['=', $map['order_id']];
 
 
-        $data = $this->with(['user', 'orderGoods'])->where($_map)
-            ->group('order_goods_id')
-            ->order(['create_time' => 'desc'])
+        $data = $this->with(['Deduct' => ['user', 'order_goods']])
+            ->whereIn('order_goods_id', function ($query) use ($_map) {
+                $query->name('deduct')->where($_map)->field('order_goods_id');
+            })->order(['create_time' => 'desc'])
             ->paginate(15, false, ['query' => $request->request()]);
 
         return ['data' => $data, 'map' => $map];

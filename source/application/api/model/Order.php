@@ -7,6 +7,7 @@ use app\common\model\Order as OrderModel;
 use app\api\model\AccountMoney;
 use app\api\model\PayLog;
 use app\api\model\Deduct;
+use app\api\model\DeductLog;
 use app\api\model\EquipUsingLog;
 use app\api\model\Equip;
 use app\api\model\OrderMember;
@@ -290,13 +291,13 @@ class Order extends OrderModel
      */
     public function cancel()
     {
-        if ($this['pay_status']['value'] === 20) {
+        if ($this['pay_status'] === 20) {
             $this->error = '已付款订单不可取消';
             return false;
-        }
+        }        
         // 回退商品库存
-        $this->backGoodsStock($this['goods']);
-        return $this->save(['order_status' => 20]);
+        // $this->backGoodsStock($this['goods']);        
+        return $this->allowField(true)->save(['order_status' => 20], ['order_id' => $this['order_id']]);
     }
 
     /**
@@ -454,7 +455,7 @@ class Order extends OrderModel
             $goods_all_price += $value['secure_price'];
             $goods_all_price += $value['service_price'];
         }
-                               
+                            
         // 
         $order['pay'] = compact('rent_all_price', 'goods_all_price');
 
@@ -654,7 +655,9 @@ class Order extends OrderModel
 
         //deduct
         $deductModel = new Deduct;
+        $deductLogModel = new DeductLog;
         $deduct = [];
+        $deduct_log = [];
         $order_goods = $order['goods'];
         foreach ($order_goods as $key => $value) {
             $_deduct = [];
@@ -665,13 +668,22 @@ class Order extends OrderModel
             $_deduct['rent_start'] = $value['rent_date'];
             $_deduct['rent_end'] = $_init_rent['end'];
             $_deduct['deduct_price'] = $_init_rent['price'];
-            $_deduct['deduct_status'] = 20;//扣款成功
+            $_deduct['status'] = $_init_rent['end'] == $_init_rent['deduct'] ? 20 : 10;
             $_deduct['deduct_time'] = $_init_rent['deduct'];
             $_deduct['user_id'] = $user_id;
             $deduct[] = $_deduct;
+            $_deduct_log = [];
+            $_deduct_log['order_goods_id'] = $value['order_goods_id'];
+            $_deduct_log['start_time'] = $value['rent_date'];
+            $_deduct_log['end_time'] = $_init_rent['deduct'];
+            $deduct_log[] = $_deduct_log;
         }
+
         $deductModel->saveAll($deduct);
-          
+        $deductLogModel->saveAll($deduct_log);
+        
+        
+
         // 更新订单状态
         $this->save([
             'pay_status' => 20,

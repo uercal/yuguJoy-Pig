@@ -52,12 +52,15 @@ class Order extends Controller
         // 创建订单
         if ($model->add($this->user['user_id'], $order)) {
             // 发起微信支付
+            // return $this->renderSuccess([
+            //     'payment' => $this->wxPay(
+            //         $model['order_no'],
+            //         $this->user['open_id'],
+            //         $order['order_pay_price']
+            //     ),
+            //     'order_id' => $model['order_id']
+            // ]);
             return $this->renderSuccess([
-                'payment' => $this->wxPay(
-                    $model['order_no'],
-                    $this->user['open_id'],
-                    $order['order_pay_price']
-                ),
                 'order_id' => $model['order_id']
             ]);
         }
@@ -81,9 +84,9 @@ class Order extends Controller
         $model = new OrderModel;
         // 
         if (input('choose_key_list')) {
-            $choose_key_list = input('choose_key_list');            
-            $choose_key_list = explode('#', $choose_key_list);            
-            $order = $model->getCartByKey($this->user, $choose_key_list);                
+            $choose_key_list = input('choose_key_list');
+            $choose_key_list = explode('#', $choose_key_list);
+            $order = $model->getCartByKey($this->user, $choose_key_list);
         } else {
             $order = $model->getCart($this->user);
         }
@@ -94,18 +97,21 @@ class Order extends Controller
         if ($model->add($this->user['user_id'], $order)) {            
             // 清空购物车
             $Card = new CartModel($this->user['user_id']);
-            if(input('choose_key_list')){
+            if (input('choose_key_list')) {
                 $Card->clearByKey($choose_key_list);
-            }else{
+            } else {
                 $Card->clearAll();
             }                        
             // 发起微信支付
+            // return $this->renderSuccess([
+            //     'payment' => $this->wxPay(
+            //         $model['order_no'],
+            //         $this->user['open_id'],
+            //         $order['order_pay_price']
+            //     ),
+            //     'order_id' => $model['order_id']
+            // ]);
             return $this->renderSuccess([
-                'payment' => $this->wxPay(
-                    $model['order_no'],
-                    $this->user['open_id'],
-                    $order['order_pay_price']
-                ),
                 'order_id' => $model['order_id']
             ]);
         }

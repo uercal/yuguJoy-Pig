@@ -7,7 +7,7 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf" style="display:flex;position:relative;">
-                    <div class="widget-title am-cf">审核列表</div>     
+                    <div class="widget-title am-cf">订单扣款状态</div>     
                     <!-- 搜索栏 -->
                     <form method="GET" action="" id="form">
                         <div class="am-form-group" style="position:absolute;right:20px;">
@@ -18,6 +18,13 @@
                                         <span class="am-icon-home"></span> 用户id                                        
                                     </a>
                                     <input type="text" class="am-form-field" name="user_id" style="padding: 3px 5px;" placeholder="用户id" value="<?= isset($map['user_id']) ? $map['user_id'] : "" ?>">
+                                </div>
+                                <div class="am-btn-group am-btn-group-xs" style="display:flex;">
+                                    <a class="am-btn am-btn-default am-radius"
+                                    href="javascript:;">
+                                        <span class="am-icon-home"></span> 订单id                                        
+                                    </a>
+                                    <input type="text" class="am-form-field" name="order_id" style="padding: 3px 5px;" placeholder="订单id" value="<?= isset($map['order_id']) ? $map['order_id'] : "" ?>">
                                 </div>
                                 
                                 <div class="am-btn-group am-btn-group-xs">
@@ -39,39 +46,29 @@
                          tpl-table-black am-text-nowrap">
                             <thead>
                             <tr>
-                                <th>记录ID</th>
-                                <th>额度发放类型</th>
+                                <th>订单ID</th>
                                 <th>用户ID</th>
                                 <th>用户头像</th>
-                                <th>发放金额</th>
-                                <th>创建时间</th>
-                                <th>操作</th>                                
+                                <th style="width:10%;">订单商品</th>
+                                <th>对应时间</th> 
+                                <th>租赁模式</th>
+                                <th>扣款租金</th>                                                                                                                    
                             </tr>
                             </thead>
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $item) : ?>                                
                                 <tr>
-                                    <td class="am-text-middle"><?= $item['id'] ?></td>
-                                    <td class="am-text-middle"><?= $item['quota_type_text'] ? : '--' ?></td>
-                                    <td class="am-text-middle"> <?= $item['user']['user_id'] ?> </td>
+                                    <td class="am-text-middle"><?= $item['deduct']['order_id'] ?></td>
+                                    <td class="am-text-middle"><?= $item['deduct']['user']['user_id'] ?></td>
                                     <td class="am-text-middle">
-                                        <a href="<?= $item['user']['avatarUrl'] ?>" title="点击查看大图" target="_blank">
-                                            <img src="<?= $item['user']['avatarUrl'] ?>" width="40" height="40" alt="">
+                                        <a href="<?= $item['deduct']['user']['avatarUrl'] ?>" title="点击查看大图" target="_blank">
+                                            <img src="<?= $item['deduct']['user']['avatarUrl'] ?>" width="40" height="40" alt="">
                                         </a>                                        
                                     </td>
-                                    <td class="am-text-middle"><?= $item['quota_money'] ?></td>                                    
-                                    <td class="am-text-middle"><?= $item['create_time'] ?></td>                                                                    
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?= url(
-                                                        'exam/detail',
-                                                        ['id' => $item['exam_id']]
-                                                    ) ?>">
-                                                <i class="am-icon-pencil"></i> 查看对应审核记录
-                                            </a>                                                                                        
-                                        </div>
-                                    </td>
-                                    
+                                    <td class="am-text-middle"><?= $item['deduct']['order_goods']['goods_name'] ? : '--' ?></td>
+                                    <td class="am-text-middle"><?= date('Y-m-d', $item['start_time']) . ' 至 ' . date('Y-m-d', $item['end_time']) ?></td>
+                                    <td class="am-text-middle"> <?= $item['deduct']['rent_mode']['name'] ?> </td>                                    
+                                    <td class="am-text-middle"> <?= $item['deduct']['deduct_price'] ?> </td>                                                                        
                                 </tr>                                
                             <?php endforeach;
                             else : ?>
@@ -98,7 +95,7 @@
     $(function () {
         var $modal = $('#your-modal');                
         $('#search').on('click', function(e) {
-            var url = "<?php echo url('finance/quota') ?>";
+            var url = "<?php echo url('finance/deduct') ?>";
             var param = $('#form').serialize();
             var html = url + '&' + param;
             window.location.href = html;            

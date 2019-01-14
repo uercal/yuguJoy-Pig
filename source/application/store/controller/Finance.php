@@ -4,6 +4,7 @@ namespace app\store\controller;
 
 use app\store\model\AccountMoney as AccountMoneyModel;
 use app\store\model\Deduct as DeductModel;
+use app\store\model\DeductLog as DeductLogModel;
 use app\store\model\Recharge as RechargeModel;
 use app\store\model\Quota as QuotaModel;
 
@@ -40,9 +41,41 @@ class Finance extends Controller
      */
     public function deduct()
     {
+        $deduct_log = new DeductLogModel;
+        $res = $deduct_log->getList();
+        $map = $res['map'];
+        $list = $res['data'];
+        return $this->fetch('deduct_index', compact('map', 'list'));
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 充值记录
+     */
+    public function recharge()
+    {
+        $recharge = new RechargeModel;
+        $res = $recharge->getList();
+        $map = $res['map'];
+        $list = $res['data'];
+        return $this->fetch('recharge_index', compact('map', 'list'));
+    }
 
 
     /**

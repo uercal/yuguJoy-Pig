@@ -27,7 +27,7 @@ return [
     'app_end'      => [],
 
     // 订单处理
-    'order' => [
-        'app\\task\\behavior\\Order'
-    ],
+    // 'order' => [
+    //     'app\\task\\behavior\\Order'
+    // ],
 ];

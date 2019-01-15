@@ -15,11 +15,14 @@
         "pages/user/info",
         "pages/user/apply",
         "pages/user/help",
+        "pages/user/recharge",
         "pages/order/index",
         "pages/order/after",
         "pages/order/detail",
         "pages/order/afterDetail",
         "pages/order/afterSend",
+        "pages/recharge/index",
+        "pages/recharge/detail",
         "pages/address/index",
         "pages/address/create",
         "pages/address/detail",
@@ -44,6 +47,8 @@
         "pages/member/setting/index",
         "pages/member/setting/password",
         "pages/member/statics/index",
+        "pages/pay/index",
+        "pages/pay/log",
         "pages/login/login"
     ],
     "window": {

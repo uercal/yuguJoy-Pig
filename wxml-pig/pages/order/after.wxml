@@ -108,7 +108,7 @@
                                 <view class="order-right">
                                     <view class="dis-flex" style="justify-content:flex-end;">
                                         <view class="" wx:if="{{dataType=='unPay'}}">
-                                            <view bindtap="payOrder" class="btn-main" data-id="{{item.order_id}}">确认</view>
+                                            <view bindtap="payAfter" class="btn-main" data-id="{{item.id}}">确认</view>
                                         </view>
                                     </view>
                                 </view>

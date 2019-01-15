@@ -23,8 +23,7 @@ class Deduct extends BaseModel
     {
         $status = ['10' => '进行中', '20' => '已完成'];
         return $status[$data['status']];
-    }
-
+    }    
 
     public function getDeductPriceAttr($value, $data)
     {

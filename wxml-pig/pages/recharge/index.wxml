@@ -1,0 +1,64 @@
+<view class="container m-b5">
+    <view class="goods-detail-box">
+        <view class="header f-28 col-3">
+            <view catchtap="bindHeaderTap" class="{{dataType==='all'?'active':''}}" data-type="all">全部</view>
+            <view bindtap="bindHeaderTap" class="{{dataType==='undo'?'active':''}}" data-type="undo">待付款</view>
+            <view bindtap="bindHeaderTap" class="{{dataType==='done'?'active':''}}" data-type="done">已付款</view>
+        </view>
+        <scroll-view scroll-y="{{true}}">
+            <view class="wrapper">
+                <view wx:if="{{list.length}}">
+                    <view class="m-top20 " wx:for="{{list}}" wx:key="this">
+                        <view class="order-box b-f">
+                            <view class="order-header dis-flex">
+                                <view class="flex-box t-l">
+                                    <text class="title">充值订单</text>
+                                </view>
+                                <view class="flex-box t-r">
+                                    <text class="cont" wx:if="{{item.status==10}}">{{item.pay_status_text}}</text>
+                                    <text class="cont" style='color:#ccc;' wx:if="{{item.status==20}}">{{item.status_text}}</text>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box b-f">
+                            <view class="order-cont dis-flex">
+                                <view class="order-num">
+                                    <text>订单号：{{item.order_no}}</text>
+                                </view>
+                                <view class="order-time">
+                                    <text>{{item.create_time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="order-box b-f">
+                            <view class="order-btn dis-flex">
+                                <view class="order-left">
+                                    <view class="text">
+                                        <text>充值金额：</text>
+                                        <text class="col-m">￥{{item.pay_price}}</text>
+                                    </view>
+                                </view>
+                                <view class="order-right">
+                                    <view class="dis-flex">
+                                        <view class="flex-box" wx:if="{{item.pay_status===10&&item.status==10}}">
+                                            <view bindtap="cancelOrder" class="btn-default" data-id="{{item.id}}">取消</view>
+                                        </view>
+                                        <view class="" wx:if="{{item.pay_status===10&&item.status==10}}">
+                                            <view bindtap="payOrder" class="btn-main" data-id="{{item.id}}">付款</view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view wx:else>
+                    <view class="yoshop-notcont">
+                        <text class="iconfont icon-meiyougengduo"></text>
+                        <text class="cont">暂时没有充值订单信息</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+</view>

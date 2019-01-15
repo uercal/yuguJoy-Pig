@@ -14,7 +14,7 @@
 
     <view class="user-order-title dis-flex b-f" style="height:80rpx;border-top:1px solid #eee;border-bottom:1px solid #eee;" bindtap='info'>
         <view class="flex-box">
-            <text class="user-orderName h4" style="left:60rpx;font-size:14px;color: #9c9c9c;letter-spacing: 0;text-align: center;">免押账户认证</text>
+            <text class="user-orderName h4" style="left:40rpx;font-size:14px;color: #9c9c9c;letter-spacing: 0;text-align: center;">免押账户认证</text>
         </view>
         <view class="flex-box">
             <view class="user-orderContBox" style="height:60rpx;width:360rpx;display:flex;align-items:center;justify-content:flex-end;">

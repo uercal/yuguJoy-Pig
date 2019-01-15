@@ -27,7 +27,7 @@ Page({
     },
     checkStatus: function(e) {
         wx.navigateTo({
-            url: '/pages/user/apply'            
+            url: '/pages/user/apply'
         })
     },
     /**
@@ -41,7 +41,11 @@ Page({
             console.log(result.data.userInfo);
         });
     },
-
+    recharge: function() {
+        wx.navigateTo({
+            url: '/pages/user/recharge'
+        })
+    },
     getPhoneNumber: function(e) {
         let _this = this;
         wx.showLoading({

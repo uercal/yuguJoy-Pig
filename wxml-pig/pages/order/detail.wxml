@@ -1,22 +1,22 @@
 <view class="container p-bottom" wx:if="{{order.order_id}}">
-        <scroll-view scroll-y="true">
+    <scroll-view scroll-y="true">
 
-                <!-- 收货地址 -->
-                <view class="b-f">
-                        <view class="flow-checkout-header b-f dis-flex">
-                                <view class="flow-header-left padding-box">
-                                        <view class="flow-checkout-admin f-26 col-3">{{order.address.name}}
-                                                <text class="f-26 col-m">{{order.address.phone}}</text>
-                                        </view>
-                                        <view class="flow-checkout-address">
-                                                {{order.address.region.province}} {{order.address.region.city}} {{order.address.region.region}} {{order.address.detail}}
-                                        </view>
-                                </view>
-                        </view>
+        <!-- 收货地址 -->
+        <view class="b-f">
+            <view class="flow-checkout-header b-f dis-flex">
+                <view class="flow-header-left padding-box">
+                    <view class="flow-checkout-admin f-26 col-3">{{order.address.name}}
+                        <text class="f-26 col-m">{{order.address.phone}}</text>
+                    </view>
+                    <view class="flow-checkout-address">
+                        {{order.address.region.province}} {{order.address.region.city}} {{order.address.region.region}} {{order.address.detail}}
+                    </view>
                 </view>
+            </view>
+        </view>
 
-                <!-- 物流信息 -->
-                <!-- <view class="flow-all-money b-f padding-box m-top20" wx:if="{{order.delivery_status.value === 20}}">
+        <!-- 物流信息 -->
+        <!-- <view class="flow-all-money b-f padding-box m-top20" wx:if="{{order.delivery_status.value === 20}}">
                         <view class="dis-flex flow-all-list-cont">
                                 <text class="col-7">快递公司: {{order.express_company}}</text>
                         </view>
@@ -25,133 +25,157 @@
                         </view>
                 </view>  -->
 
-                <!-- 商品列表 -->
-                <view class="order-cont b-f m-top20">
-                        <view class="padding-box b-f">
-                                <view class="order-header dis-flex">
-                                        <view class="flex-box t-l">
-                                                <text class="title">商品列表</text>
-                                        </view>
-                                        <view class="flex-box t-r">
-                                                <text class="col-m" wx:if="{{order.pay_status.value===10}}">{{order.pay_status.text}}</text>
-                                                <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===10}}">{{order.delivery_status.text}}</text>
-                                                <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===20 && order.receipt_status.value===10}}">{{order.receipt_status.text}}</text>
-                                                <text class="col-m" wx:if="{{order.order_status.value===30}}">{{order.order_status.text}}</text>
-                                        </view>
-                                </view>
-                        </view>
-                        <view class="padding-box b-f">
-                                <view class="order-cont dis-flex">
-                                        <view class="order-num">
-                                                <text selectable="{{true}}">订单号：{{order.order_no}}</text>
-                                        </view>
-                                        <view class="order-time">
-                                                <text>{{order.create_time}}</text>
-                                        </view>
-                                </view>
-                        </view>
+        <!-- 商品列表 -->
+        <view class="order-cont b-f m-top20">
+            <view class="padding-box b-f">
+                <view class="order-header dis-flex">
+                    <view class="flex-box t-l">
+                        <text class="title">商品列表</text>
+                    </view>
+                    <view class="flex-box t-r">
+                        <text class="col-m" wx:if="{{order.pay_status.value===10}}">{{order.pay_status.text}}</text>
+                        <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===10}}">{{order.delivery_status.text}}</text>
+                        <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===20 && order.receipt_status.value===10}}">{{order.receipt_status.text}}</text>
+                        <text class="col-m" wx:if="{{order.order_status.value===30}}">{{order.order_status.text}}</text>
+                    </view>
                 </view>
-
-                <view class="padding-box b-f">
-                        <!--  -->
-                        <view class="checkout_list " wx:for="{{order.goods}}" wx:key="this">
-
-                                <view class="dis-flex flow-shopList" data-index="{{index}}">
-                                        <view class="flow-list-left">
-                                                <image mode="scaleToFill" src="{{item.image.file_path}}"></image>
-                                        </view>
-                                        <view class="flow-list-right rent-info">
-                                                <navigator url="../goods/index?goods_id={{item.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
-                                                        <text class="f-30 col-3 twolist-hidden">{{item.goods_name}}</text>
-                                                        <text class="flow-cont">￥{{item.total_price}}</text>
-                                                </navigator>
-
-                                                <view style="display:flex;align-items:center;justify-content:space-between;">
-                                                        <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.spec_value}}/{{item.rent_mode.name}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}</text>
-                                                        <view style="display:flex;flex-direction:column;align-items:flex-end;">
-                                                                <text class="right-attr-text">{{item.rent_num}}{{item.rent_info.is_static==1?"月":"日" }}</text>
-                                                                <text class="small1">×{{item.total_num}}</text>
-                                                        </view>
-                                                </view>
-
-                                                <view class="flow-list-cont" style="height:60rpx;">
-                                                        <view class='down-p {{item.detailed?"active":""}}' bindtap='chgDetail' data-index="{{index}}" style="height:100%;padding-right:10rpx;">
-                                                                <text style="margin-right:10rpx;">详情</text>
-                                                        </view>
-                                                </view>
-                                        </view>
-                                        <!-- 详情 -->
-                                        <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
-                                                <view class='attr-line'>
-                                                        <text class='attr-font pad-l'>应付租金</text>
-                                                        <text class='attr-font'>￥{{item.rent_total_price}}</text>
-                                                </view>
-                                                <view class='attr-line'>
-                                                        <text class='attr-font pad-l'>应付押金</text>
-                                                        <text class='attr-font'>￥{{item.goods_price}}</text>
-                                                </view>
-                                                <view class='attr-line'>
-                                                        <text class='attr-font pad-l'>保修金额</text>
-                                                        <text class='attr-font'>￥{{item.secure==0?'0':item.secure_price}}</text>
-                                                </view>
-                                                <view class='attr-line'>
-                                                        <text class='attr-font pad-l'>增值金额</text>
-                                                        <text class='attr-font'>￥{{item.service_price}}</text>
-                                                </view>
-                                                <view class='attr-line'>
-                                                        <text class='attr-font pad-l'>应付金额</text>
-                                                        <text class='attr-font'>￥{{item.all_total_price}}</text>
-                                                </view>
-
-                                        </view>
-                                </view>
-                        </view>
-
+            </view>
+            <view class="padding-box b-f">
+                <view class="order-cont dis-flex">
+                    <view class="order-num">
+                        <text selectable="{{true}}">订单号：{{order.order_no}}</text>
+                    </view>
+                    <view class="order-time">
+                        <text>{{order.create_time}}</text>
+                    </view>
                 </view>
-
-                <view class="select b-f">
-                        <view class="flow-num-box b-f">共{{order.goods.length}}件商品，合计：
-                                <text class="flow-money">{{order.total_price}}</text>
-                        </view>
-                </view>
-
-                <!-- 订单金额 -->
-                <view class="flow-all-money b-f padding-box m-top20">
-                        <view class="dis-flex flow-all-list">
-                                <text class="flex-five">订单金额</text>
-                        </view>
-                        <view class="dis-flex flow-all-list-cont">
-                                <text class="flex-five col-7">商品金额:</text>
-                                <text class="flex-five col-m t-r">￥{{order.total_price}}</text>
-                        </view>
-                        <view class="dis-flex flow-all-list-cont">
-                                <text class="flex-five col-7">配送费用:</text>
-                                <text class="flex-five col-m t-r">+￥{{order.express_price}}</text>
-                        </view>
-                        <view class="dis-flex flow-all-list-cont">
-                                <text class="flex-five col-7">应付金额:</text>
-                                <text class="flex-five col-m t-r">￥{{order.pay_price}}</text>
-                        </view>
-                </view>
-
-        </scroll-view>
-
-        <view class="flow-fixed-footer b-f">
-                <view class="dis-flex chackout-box" wx:if="{{order.pay_status.value===10}}">
-                        <view bindtap="cancelOrder" class="flex-box chackout-left-detail t-c">
-                                取消订单
-                        </view>
-                        <view class="flex-box chackout-right-detail">
-                                <text bindtap="payOrder" class="flow-btn" wx:if="{{order.pay_status.value===10}}">去付款</text>
-                        </view>
-                </view>
-                <view class="flow-btn h3" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===10}}">
-                        <view bindtap="receipt">确认收货</view>
-                </view>
-
-                <view class="flow-btn h3" style="background-color:#00B26A;" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===20 && order.order_status.value===30}}">
-                        <view>租赁中</view>
-                </view>
+            </view>
         </view>
 
+        <view class="padding-box b-f">
+            <!--  -->
+            <view class="checkout_list " wx:for="{{order.deduct}}" wx:key="this">
+
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left">
+                        <image mode="scaleToFill" src="{{item.order_goods.image.file_path}}"></image>
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <navigator url="../goods/index?goods_id={{item.order_goods.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-30 col-3 twolist-hidden">{{item.order_goods.goods_name}}</text>
+                            <text class="flow-cont">￥{{item.order_goods.total_price}}</text>
+                        </navigator>
+
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.order_goods.spec_value}}/{{item.order_goods.rent_mode.name}}/保修:{{item.order_goods.secure==0?'标准保(免费)':'意外保(￥'+item.order_goods.secure_price}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="right-attr-text">{{item.order_goods.rent_num}}{{item.order_goods.rent_info.is_static==1?"月":"日" }}</text>
+                                <text class="small1">×{{item.order_goods.total_num}}</text>
+                            </view>
+                        </view>
+
+                        <view class="flow-list-cont" style="height:60rpx;">
+                            <view class='down-p {{item.detailed?"active":""}}' bindtap='chgDetail' data-index="{{index}}" style="height:100%;padding-right:10rpx;">
+                                <text style="margin-right:10rpx;">详情</text>
+                            </view>
+                        </view>
+                    </view>
+                    <!-- 详情 -->
+                    <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>起租区间</text>
+                            <text class='attr-font'>￥{{item.all_total_price}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>下次扣款时间</text>
+                            <text class='attr-font'>￥{{item.all_total_price}}</text>
+                        </view>                       
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付租金</text>
+                            <text class='attr-font'>￥{{item.order_goods.rent_total_price}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付押金</text>
+                            <text class='attr-font'>￥{{item.order_goods.goods_price}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>保修金额</text>
+                            <text class='attr-font'>￥{{item.order_goods.secure==0?'0':item.order_goods.secure_price}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>增值金额</text>
+                            <text class='attr-font'>￥{{item.order_goods.service_price}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付金额</text>
+                            <text class='attr-font'>￥{{item.order_goods.all_total_price}}</text>
+                        </view>
+
+                    </view>
+                </view>
+            </view>
+
+        </view>
+
+        <view class="select b-f">
+            <view class="flow-num-box b-f">共{{order.deduct.length}}件商品，合计：
+                <text class="flow-money">{{order.total_price}}</text>
+            </view>
+        </view>
+
+        <!-- 订单金额 -->
+        <view class="flow-all-money b-f padding-box m-top20">
+            <view class="dis-flex flow-all-list">
+                <text class="flex-five">订单金额</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">商品金额:</text>
+                <text class="flex-five col-m t-r">￥{{order.total_price}}</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">配送费用:</text>
+                <text class="flex-five col-m t-r">+￥{{order.express_price}}</text>
+            </view>
+            <view class="dis-flex flow-all-list-cont">
+                <text class="flex-five col-7">应付金额:</text>
+                <text class="flex-five col-m t-r">￥{{order.pay_price}}</text>
+            </view>
+        </view>
+
+    </scroll-view>
+
+    <view class="flow-fixed-footer b-f">
+        <view class="dis-flex chackout-box" wx:if="{{order.pay_status.value===10}}">
+            <view bindtap="cancelOrder" class="flex-box chackout-left-detail t-c">
+                取消订单
+            </view>
+            <view class="flex-box chackout-right-detail">
+                <text bindtap="payOrder" class="flow-btn" wx:if="{{order.pay_status.value===10}}">去付款</text>
+            </view>
+        </view>
+        <view class="flow-btn h3" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===10}}">
+            <view bindtap="receipt">确认收货</view>
+        </view>
+
+        <view class="flow-btn h3" style="background-color:#00B26A;" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===20 && order.order_status.value===30}}">
+            <view>租赁中</view>
+        </view>
+    </view>
+
+</view>
+
+<!--屏幕背景变暗的背景  -->
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<!--弹出框  -->
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}" catchtouchmove="ture">
+    <block>
+        <view class='choosePay'>
+            <view class='pay-item'>
+                <image></image>
+                <view class='pay-text'>
+                    <text></text>
+                </view>
+            </view>
+        </view>
+    </block>
 </view>

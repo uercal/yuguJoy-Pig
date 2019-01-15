@@ -56,19 +56,22 @@ Page({
         if (info.idcard.length > 0) {
             if (info.idcard[0]) {
                 this.setData({
-                    idcard_p_path: info.info.idcard[0].file_path,
+                    idcard_p_path: info.idcard[0].file_path,
+                    idcard_p: info.idcard[0].file_id
                 })
             }
             if (info.idcard[1]) {
                 this.setData({
-                    idcard_n_path: info.info.idcard[1].file_path,
+                    idcard_n_path: info.idcard[1].file_path,
+                    idcard_n: info.idcard[1].file_id
                 })
             }
         }
 
         if (info.license.length > 0) {
             this.setData({
-                license_path: info.license[0].file_path
+                license_path: info.license[0].file_path,
+                license: info.license[0].file_id
             })
         }
 

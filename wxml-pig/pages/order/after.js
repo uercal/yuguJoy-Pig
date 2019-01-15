@@ -97,38 +97,10 @@ Page({
     /**
      * 发起付款
      */
-    payOrder: function(e) {
-        let _this = this;
-        let order_id = e.currentTarget.dataset.id;
-
-        // 显示loading
-        wx.showLoading({
-            title: '正在处理...',
-        });
-        App._post_form('user.order/pay', {
-            order_id
-        }, function(result) {
-            if (result.code === -10) {
-                App.showError(result.msg);
-                return false;
-            }
-            // 发起微信支付
-            wx.requestPayment({
-                timeStamp: result.data.timeStamp,
-                nonceStr: result.data.nonceStr,
-                package: 'prepay_id=' + result.data.prepay_id,
-                signType: 'MD5',
-                paySign: result.data.paySign,
-                success: function(res) {
-                    // 跳转到已付款订单
-                    wx.navigateTo({
-                        url: '../order/detail?order_id=' + order_id
-                    });
-                },
-                fail: function() {
-                    App.showError('订单未支付');
-                },
-            });
+    payAfter: function(e) {
+        let after_id = e.currentTarget.dataset.id;
+        wx.redirectTo({
+            url: '/pages/pay/index?from=after&id=' + after_id
         });
     },
 
@@ -136,7 +108,7 @@ Page({
         let order_id = e.currentTarget.dataset.id;
         let after_status = e.currentTarget.dataset.afterStatus;
         if (after_status == 0) {
-            wx.navigateTo({
+            wx.redirectTo({
                 url: '../order/afterSend?order_id=' + order_id
             });
         } else {

@@ -13,7 +13,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wx6682137370263e1b",
+	"appid": "wxb9de7de8697ceb37",
 	"projectname": "demo",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 23,
+			"current": 27,
 			"list": [
 				{
 					"id": -1,
@@ -180,7 +180,32 @@
 				{
 					"id": -1,
 					"name": "apply",
-					"pathName": "pages/user/apply"
+					"pathName": "pages/user/apply",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "recharge",
+					"pathName": "pages/user/recharge",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "recharge-index",
+					"pathName": "pages/recharge/index",
+					"query": ""
+				},
+				{
+					"id": 26,
+					"name": "pay",
+					"pathName": "pages/pay/index",
+					"query": "from=order&id=3"
+				},
+				{
+					"id": -1,
+					"name": "pay",
+					"pathName": "pages/pay/log",
+					"query": ""
 				}
 			]
 		}

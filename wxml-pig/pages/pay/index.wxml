@@ -1,0 +1,95 @@
+<view class='total_price'>
+    <text class='total-item'>消费总额：</text>
+    <text class='total-value'>{{dataType=='order'?order.total_price:detail.pay_price}}元</text>
+</view>
+
+<!-- order -->
+<view class='pay-info' wx:if="{{dataType=='order'}}">
+    <view class='pay-item'>
+        <text class='pay-title'>支付明细</text>
+    </view>
+
+    <view class='pay-item'>
+        <text class='pay-title'>租金</text>
+        <text class='pay-value'>{{order.pay.rent_all_price}}元</text>
+    </view>
+
+
+    <view class='pay-item'>
+        <text class='pay-title'>押金(包含服务费用)</text>
+        <text class='pay-value'>{{order.pay.goods_all_price}}元</text>
+    </view>
+
+    <view class='pay-item'>
+        <text class='pay-title'>可用免押额度</text>
+        <text class='pay-value'>{{account.actual_quota}}元</text>
+    </view>
+
+    <view class='pay-item'>
+        <text class='pay-title'>还需支付押金</text>
+        <text class='pay-value'>{{payInfo.bonus_money}}元</text>
+    </view>
+
+    <view class='pay-item-2'>
+        <view class='pay-title-2'>
+            <text>实付金额</text>
+            <text style="font-size: 14px;color: #F3981A;">扣除免押额度后</text>
+        </view>
+        <text class='pay-value-red'>{{payInfo.real_money}}元</text>
+    </view>
+
+</view>
+
+
+<!-- after -->
+<view class='pay-info' wx:if="{{dataType=='after'}}">
+    <view class='pay-item'>
+        <text class='pay-title'>支付明细</text>
+    </view>
+
+    <view class='pay-item'>
+        <text class='pay-title'>服务费用</text>
+        <text class='pay-value'>{{detail.server_price}}元</text>
+    </view>
+
+
+    <view class='pay-item'>
+        <text class='pay-title'>材料费用(包含服务费用)</text>
+        <text class='pay-value'>{{detail.source_price}}元</text>
+    </view>
+
+    <view class='pay-item-2'>
+        <view class='pay-title-2'>
+            <text>实付金额</text>
+        </view>
+        <text class='pay-value-red'>{{detail.pay_price}}元</text>
+    </view>
+
+</view>
+
+
+<view class='my'>
+    <text class='my-title'>我的可用余额：</text>
+    <text class='my-value'>{{account.actual_money}}元</text>
+</view>
+
+
+<!-- order -->
+<view class='bonus' wx:if="{{payInfo.canPay==0 && dataType=='order'}}">
+    <text>提示：您的可用余额不足以支付本次订单金额</text>
+</view>
+
+<!-- after -->
+<view class='bonus' wx:if="{{dataType=='after' && account.actual_money<detail.pay_price}}">
+    <text>提示：您的可用余额不足以支付本次订单金额</text>
+</view>
+
+
+
+
+<view class="footer" bindtap="recharge" wx:if="{{(payInfo.canPay==0 && dataType=='order')||(dataType=='after'&&account.actual_money<detail.pay_price)}}">
+    <text>立即充值</text>
+</view>
+<view class="footer" bindtap="sub" wx:else>
+    <text>立即支付</text>
+</view>

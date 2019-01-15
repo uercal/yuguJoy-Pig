@@ -340,7 +340,7 @@ App({
                 wx.setStorageSync("currentPage", currentPage);
         }
         // 跳转授权页面
-        wx.navigateTo({
+        wx.redirectTo({
             url: "/pages/member/login"
         });
     },

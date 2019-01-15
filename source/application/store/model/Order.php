@@ -20,6 +20,11 @@ use app\api\model\Order as OrderApi;
 use app\common\model\Wxapp;
 use think\Session;
 // 
+use app\store\model\Deduct;
+
+
+
+// 
 /**
  * 订单管理
  * Class Order
@@ -27,6 +32,10 @@ use think\Session;
  */
 class Order extends OrderModel
 {
+
+    public $error;
+
+
     /**
      * 订单列表
      * @param $filter
@@ -662,5 +671,81 @@ class Order extends OrderModel
     }
 
 
+
+
+    /**
+     * 订单完结
+     */
+    public function endOrder($order_id)
+    {
+        $deductModel = new Deduct;
+        $deduct_list = $deductModel->where('order_id', $order_id)->select()->toArray();
+        $is_done = true;
+        if (empty($deduct_list)) {
+            $this->error = '该订单没有扣款信息';
+            return false;
+        } else {
+            foreach ($deduct_list as $key => $value) {
+                if ($value['rent_end'] > time()) {
+                    $this->error = '订单租期未满';
+                    $is_done = false;
+                    break;
+                }
+            }
+        }
+
+
+        if (!$is_done) return false;        
+        // 开启事务
+        Db::startTrans();
+        try {
+            //完结订单  
+            
+
+            //更新订单状态
+            $this->save([
+                'done_status' => 20,
+                'done_time' => time()
+            ], [
+                'order_id' => $order_id
+            ]);
+
+
+            // log
+            $data = Equip::where('order_id', $order_id)->select()->toArray();
+            $_data = [];
+            foreach ($data as $key => $value) {
+                $param = [];
+                $param['order_id'] = null;
+                $param['equip_id'] = $value['equip_id'];
+                $param['member_id'] = 0;
+                $param['equip_status'] = 10;                
+                $_data[] = $param;
+            }
+            $log = new EquipUsingLog;
+            $log->saveAll($_data);      
+
+
+            // 更新订单设备记录
+            Equip::where('order_id', $order_id)->update([
+                'status' => 10,
+                'order_id' => null,
+                'secure' => null,
+                'service_ids' => null,
+                'service_time' => null
+            ]);
+
+
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+
+
+
+    }
 
 }

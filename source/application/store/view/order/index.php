@@ -170,6 +170,11 @@
                                                      data-after="<?= $order['after_status'] ?>" onclick="after(<?= $order['order_id'] ?>,this)">
                                                     发起售后</a>
                                                 </div>                                              
+                                                <div class="tpl-table-black-operation">                                                                                                       
+                                                    <a class="tpl-table-black-operation"
+                                                     onclick="endOrder(<?= $order['order_id'] ?>,this)">
+                                                    完结订单</a>
+                                                </div> 
                                             </td>
                                         <?php endif; ?>
                                     </tr>
@@ -280,6 +285,18 @@
                 layer.msg('当前订单有正在处理的售后单!');
             }                        
         }
+    }
+
+    function endOrder(order_id){               
+        
+        $.post("<?= url('order/order_end') ?>",{
+            order_id:order_id
+        },function(res){
+            layer.msg(res.msg);
+            if(res.code==1){
+                window.location.href = "<?= url('order/complete_list') ?>";
+            }
+        })                
     }
 
 </script>

@@ -31,8 +31,10 @@ class PayLog extends BaseModel
     }
 
 
-
-
+    public function orderGoods()
+    {
+        return $this->hasOne('Deduct', 'order_goods_id', 'order_goods_id');
+    }
 
 
     public function getCreateTimeDAttr($value, $data)
@@ -43,7 +45,7 @@ class PayLog extends BaseModel
 
     public function getPayTypeAttr($value, $data)
     {
-        $type = [10 => '订单支付', 20 => '售后支付'];
+        $type = [10 => '订单支付', 20 => '售后支付', 30 => '订单租金扣款'];
         return $type[$data['pay_type']];
     }
 

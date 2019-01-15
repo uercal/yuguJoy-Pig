@@ -230,7 +230,7 @@ class Order extends Controller
         // $list = $payLog->getList($user_id, $page);
         // return $this->renderSuccess(compact('list'));
 
-        $data = PayLog::with(['order', 'after'])->where('user_id', $user_id)->select()->toArray();
+        $data = PayLog::with(['order', 'after', 'order_goods' => ['order', 'order_goods']])->where('user_id', $user_id)->select()->toArray();
 
         $recharge_log = Recharge::where(['pay_status' => 20, 'status' => 10])->select()->toArray();
 

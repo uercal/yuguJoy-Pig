@@ -146,8 +146,12 @@ return [
                 'index' => 'finance/account'
             ],
             [
-                'name' => '扣款记录',
+                'name' => '扣款订单',
                 'index' => 'finance/deduct',
+            ],
+            [
+                'name' => '扣款记录',
+                'index' => 'finance/deduct_log',
             ],
             [
                 'name' => '充值记录',

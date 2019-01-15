@@ -39,19 +39,26 @@ class Finance extends Controller
     /**
      * 订单租赁扣款列表
      */
-    public function deduct()
+    public function deduct_log()
     {
         $deduct_log = new DeductLogModel;
         $res = $deduct_log->getList();
         $map = $res['map'];
         $list = $res['data'];
-        return $this->fetch('deduct_index', compact('map', 'list'));
+        return $this->fetch('deduct_log_index', compact('map', 'list'));
 
     }
 
 
 
-
+    public function deduct()
+    {
+        $deduct = new DeductModel;
+        $res = $deduct->getList();
+        $map = $res['map'];
+        $list = $res['data'];
+        return $this->fetch('deduct_index', compact('map', 'list'));
+    }
 
 
 

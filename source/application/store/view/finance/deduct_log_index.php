@@ -7,7 +7,7 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf" style="display:flex;position:relative;">
-                    <div class="widget-title am-cf">订单扣款状态</div>     
+                    <div class="widget-title am-cf">扣款记录</div>     
                     <!-- 搜索栏 -->
                     <form method="GET" action="" id="form">
                         <div class="am-form-group" style="position:absolute;right:20px;">
@@ -50,29 +50,25 @@
                                 <th>用户ID</th>
                                 <th>用户头像</th>
                                 <th style="width:10%;">订单商品</th>
-                                <th>租赁开始</th> 
-                                <th>租赁结束</th>
-                                <th>租金金额</th>
-                                <th>扣款时间</th>
-                                <th>当前状态</th>                                                                                                                   
+                                <th>对应时间段</th> 
+                                <th>租赁模式</th>
+                                <th>扣款单价（月&日）</th>                                                                                                                    
                             </tr>
                             </thead>
                             <tbody>
                             <?php if (!$list->isEmpty()) : foreach ($list as $item) : ?>                                
                                 <tr>
-                                    <td class="am-text-middle"><?= $item['order_id'] ?></td>
-                                    <td class="am-text-middle"><?= $item['user']['user_id'] ?></td>
+                                    <td class="am-text-middle"><?= $item['deduct']['order_id'] ?></td>
+                                    <td class="am-text-middle"><?= $item['deduct']['user']['user_id'] ?></td>
                                     <td class="am-text-middle">
-                                        <a href="<?= $item['user']['avatarUrl'] ?>" title="点击查看大图" target="_blank">
-                                            <img src="<?= $item['user']['avatarUrl'] ?>" width="40" height="40" alt="">
+                                        <a href="<?= $item['deduct']['user']['avatarUrl'] ?>" title="点击查看大图" target="_blank">
+                                            <img src="<?= $item['deduct']['user']['avatarUrl'] ?>" width="40" height="40" alt="">
                                         </a>                                        
                                     </td>
-                                    <td class="am-text-middle"><?= $item['order_goods']['goods_name'] ? : '--' ?></td>
-                                    <td class="am-text-middle"><?= date('Y-m-d', $item['rent_start']) ?></td>
-                                    <td class="am-text-middle"> <?= date('Y-m-d', $item['rent_end']) ?> </td>                                    
-                                    <td class="am-text-middle"> <?= $item['deduct_price'] ?> </td>    
-                                    <td class="am-text-middle"> <?= date('Y-m-d', $item['deduct_time']) ?> </td>                                    
-                                    <td class="am-text-middle"> <?= $item['status_text'] ?> </td>                                    
+                                    <td class="am-text-middle"><?= $item['deduct']['order_goods']['goods_name'] ? : '--' ?></td>
+                                    <td class="am-text-middle"><?= date('Y-m-d', $item['start_time']) . ' 至 ' . date('Y-m-d', $item['end_time']) ?></td>
+                                    <td class="am-text-middle"> <?= $item['deduct']['rent_mode']['name'] ?> </td>                                    
+                                    <td class="am-text-middle"> <?= $item['deduct']['deduct_price'] ?> </td>                                                                        
                                 </tr>                                
                             <?php endforeach;
                             else : ?>

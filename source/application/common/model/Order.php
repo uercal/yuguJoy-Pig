@@ -86,6 +86,13 @@ class Order extends BaseModel
 
 
 
+    public function deduct()
+    {
+        return $this->hasMany('Deduct', 'order_id', 'order_id');
+    }
+
+
+
 
 
     /**

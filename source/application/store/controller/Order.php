@@ -113,7 +113,7 @@ class Order extends Controller
     {
         $model = new OrderModel;
         $res = $model->getList($filter);
-        $list = $res['data'];        
+        $list = $res['data'];
         $map = $res['map'];
         return $this->fetch('index', compact('title', 'list', 'map'));
     }
@@ -391,13 +391,13 @@ class Order extends Controller
     {
         if ($this->request->isAjax()) {
             $post = input();
-            if(empty($post['after']['member_ids'])){
+            if (empty($post['after']['member_ids'])) {
                 $error = '派遣人员不能为空';
                 return $this->renderError($error);
             }
             $post['after']['id'] = $post['id'];
             // 
-            $model = new OrderAfterModel;                
+            $model = new OrderAfterModel;
             if ($model->sendAfter($post['after'])) {
                 return $this->renderSuccess('派发成功', url('order/order_after'));
             }
@@ -405,14 +405,26 @@ class Order extends Controller
             return $this->renderError($error);
 
         } else {
-            $after_id = input()['id'];            
-            $after = OrderAfterModel::getDetail($after_id);                       
+            $after_id = input()['id'];
+            $after = OrderAfterModel::getDetail($after_id);
             $detail = OrderModel::detail($after['order_id']);
-            return $this->fetch('after_detail', compact('detail','after'));
+            return $this->fetch('after_detail', compact('detail', 'after'));
         }
     }
 
 
+
+
+
+    public function order_end($order_id)
+    {
+        $model = OrderModel::get($order_id);
+        if ($model->endOrder($order_id)) {
+            return $this->renderSuccess('完结成功');
+        }
+        $error = $model->error;
+        return $this->renderError($error);
+    }
 
 
 

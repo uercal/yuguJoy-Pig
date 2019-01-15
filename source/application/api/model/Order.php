@@ -270,6 +270,7 @@ class Order extends OrderModel
                 $filter['receipt_status'] = 10;
                 break;
             case 'doing':
+                $filter['done_status'] = 10;
                 $filter['pay_status'] = 20;
                 $filter['delivery_status'] = 20;
                 $filter['receipt_status'] = 20;
@@ -443,7 +444,11 @@ class Order extends OrderModel
             'order_id' => $order_id,
             'user_id' => $user_id,
             'order_status' => ['<>', 20]
-        ], ['goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode'], 'address'])) {
+        ], [
+            // 'goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode','deduct'],
+            'deduct' => ['order_goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode']],
+            'address'
+        ])) {
             throw new BaseException(['msg' => '订单不存在']);
         }
 

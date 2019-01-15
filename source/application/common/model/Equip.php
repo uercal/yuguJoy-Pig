@@ -14,6 +14,7 @@ class Equip extends BaseModel
 {
     protected $name = 'equip';
     protected $append = ['services', 'status_text'];
+    protected $insert = ['wxapp_id' => 10001];
 
     public function getStatusTextAttr($value, $data)
     {

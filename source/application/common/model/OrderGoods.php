@@ -24,9 +24,9 @@ class OrderGoods extends BaseModel
      */
     public function getServiceInfoAttr($value, $data)
     {
-        return Db::name('goods_service')->whereIn('service_id',$data['service_ids'])->select()->toArray();
+        return Db::name('goods_service')->whereIn('service_id', $data['service_ids'])->select()->toArray();
     }
-    
+
 
     /**
      * 订单商品列表
@@ -64,13 +64,13 @@ class OrderGoods extends BaseModel
     }
 
 
-      /**
+    /**
      * 关联类型名称
      */
-    public function specValueName(){
-        return $this->hasOne('SpecValue','spec_value_id','spec_sku_id')->bind('spec_value');
+    public function specValueName()
+    {
+        return $this->hasOne('SpecValue', 'spec_value_id', 'spec_sku_id')->bind('spec_value');
     }
-
 
 
     /**

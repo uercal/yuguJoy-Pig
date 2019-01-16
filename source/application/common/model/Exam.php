@@ -53,7 +53,7 @@ class Exam extends BaseModel
 
     public function getTypeTextAttr($value, $data)
     {
-        $type = [10 => '用户认证', 20 => '员工送达审批'];
+        $type = [10 => '用户认证', 20 => '员工送达审批', 30 => '线下提现'];
         return $type[$data['type']];
     }
 

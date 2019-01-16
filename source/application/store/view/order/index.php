@@ -169,12 +169,14 @@
                                                      data-id="<?= $order['order_id'] ?>" data-dis="<?= ($order['order_status']['value'] === 30 && $order['done_status']['value'] === 10) ? '0' : '1' ?>" 
                                                      data-after="<?= $order['after_status'] ?>" onclick="after(<?= $order['order_id'] ?>,this)">
                                                     发起售后</a>
-                                                </div>                                              
+                                                </div>     
+                                                <?php if ($order['order_status']['value'] == 30) : ?>                                         
                                                 <div class="tpl-table-black-operation">                                                                                                       
                                                     <a class="tpl-table-black-operation"
                                                      onclick="endOrder(<?= $order['order_id'] ?>,this)">
                                                     完结订单</a>
                                                 </div> 
+                                                <?php endif; ?>
                                             </td>
                                         <?php endif; ?>
                                     </tr>

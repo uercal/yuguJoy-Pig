@@ -21,6 +21,7 @@
                                             >                                                                    
                                         <option value="10" <?php if (isset($map['type']) && $map['type'] == 10) : ?> selected <?php endif; ?>>用户认证</option>                                        
                                         <option value="20" <?php if (isset($map['type']) && $map['type'] == 20) : ?> selected <?php endif; ?>>员工派送</option>                                        
+                                        <option value="30" <?php if (isset($map['type']) && $map['type'] == 30) : ?> selected <?php endif; ?>>线下提现</option>                                        
                                     </select>
                                 </div>
                                 <div class="am-btn-group am-btn-group-xs" style="display:flex;">

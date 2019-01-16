@@ -3,7 +3,8 @@
 namespace app\api\model;
 
 use app\common\model\Exam as ExamModel;
-
+use app\api\model\User;
+use app\api\model\AccountMoney;
 use think\Db;
 
 /**
@@ -62,6 +63,39 @@ class Exam extends ExamModel
             return ['code' => 0];
         }
 
+    }
+
+
+
+
+
+    //线下提现 审批申请
+    public function examCash($user_id, $price)
+    {
+        $account = new AccountMoney;
+        $data = $account->where('user_id', $user_id)->find();
+        $actual_money = $data['actual_money'];
+        if ($price <= $actual_money) {
+            $content = json_encode(
+                [
+                    'cash_price' => $price,
+                ]
+            );
+            Db::startTrans();
+            try {
+                $res = $this->save([
+                    'user_id' => $user_id,
+                    'content' => $content,
+                    'type' => 30, //线下提现
+                    'status' => 10
+                ]);
+                Db::commit();
+                return true;
+            } catch (\Throwable $th) {
+                return false;
+            }
+
+        }
     }
 
 }

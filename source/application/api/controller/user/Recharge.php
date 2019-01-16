@@ -5,6 +5,7 @@ namespace app\api\controller\user;
 use app\api\controller\Controller;
 use app\api\model\Order as OrderModel;
 use app\api\model\Wxapp as WxappModel;
+use app\api\model\Exam;
 use app\common\library\wechat\WxPayCharge as WxPayChargeModel;
 use app\api\model\OrderAfter as OrderAfterModel;
 use app\api\model\Recharge as RechargeModel;
@@ -111,8 +112,29 @@ class Recharge extends Controller
         // 发起微信支付
         $wxConfig = WxappModel::getWxappCache();
         $WxPay = new WxPayChargeModel($wxConfig);
-        $wxParams = $WxPay->unifiedorder($order['order_no'], $this->user['open_id'], $order['pay_price']);                   
+        $wxParams = $WxPay->unifiedorder($order['order_no'], $this->user['open_id'], $order['pay_price']);
         return $this->renderSuccess($wxParams);
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * 申请线下提现
+     */
+    public function examCash($price)
+    {
+        $model = new Exam;
+        if ($model->examCash($this->user['user_id'], $price)) {
+            return $this->renderSuccess();
+        }
+        return $this->renderError('error!');
+    }
+
 
 }

@@ -55,12 +55,21 @@
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-                            <?php if ($type != 20) : ?>
+                            <?php if ($type == 10) : ?>
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-u-lg-2 am-form-label">发放额度</label>
                                     <div class="am-u-sm-9 am-u-end">
                                         <input type="number" class="tpl-form-input" style="background-color:#fff;"
                                             value="<?= $status == 10 ? '' : $info['quota']['quota_money'] ?>" <?= $status == 10 ? '' : 'disabled="disabled"' ?>  id="quota_money">
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($type == 30 && $status == 10) : ?>
+                                <div class="am-form-group">
+                                    <label class="am-u-sm-3 am-u-lg-2 am-form-label">该用户可用余额</label>
+                                    <div class="am-u-sm-9 am-u-end">
+                                        <input type="number" class="tpl-form-input" style="background-color:#fff;"
+                                            value="<?= $info['user']['account_money']['actual_money'] ?>" disabled="disabled" ?>
                                     </div>
                                 </div>
                             <?php endif; ?>

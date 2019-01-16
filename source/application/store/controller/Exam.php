@@ -26,7 +26,7 @@ class Exam extends Controller
     // 审核
     public function detail($id)
     {
-        $info = ExamModel::with('quota')->find($id);
+        $info = ExamModel::with(['quota', 'user' => ['accountMoney']])->find($id);        
         $map = ExamModel::attrTextMap();
         $type = $info['type'];
         $status = $info['status'];

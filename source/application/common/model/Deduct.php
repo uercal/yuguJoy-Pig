@@ -50,13 +50,13 @@ class Deduct extends BaseModel
     }
 
 
-    // /**
-    //  * 关联订单商品表
-    //  */
-    // public function orderGoods()
-    // {
-    //     return $this->hasOne('OrderGoods', 'order_goods_id', 'order_goods_id');
-    // }
+    /**
+     * 关联订单商品表
+     */
+    public function orderGoods()
+    {
+        return $this->hasOne('OrderGoods', 'order_goods_id', 'order_goods_id');
+    }
 
     /**
      * 关联租赁模式

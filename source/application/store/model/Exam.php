@@ -31,14 +31,16 @@ class Exam extends ExamModel
             // 送达审批
             'order_id' => '查看订单',
             'send_content' => '送达说明',
-            'send_pic_ids' => '送达图片说明'
+            'send_pic_ids' => '送达图片说明',
+            //线下提现
+            'cash_price' => '提现金额',
         ];
         return $data;
     }
 
 
     public function updateStatus($data)
-    {                        
+    {                                
         // 
         $obj = $this->where('id', $data['id'])->find();
 
@@ -52,7 +54,7 @@ class Exam extends ExamModel
             if ($key == 'other_ids') {
                 if ($value == "0,0,0,0,0,0") unset($content[$key]);
             }
-        }
+        }                
         
         // halt($data);
         // 开启事务
@@ -85,6 +87,22 @@ class Exam extends ExamModel
                 // 用户认证 更新用户资料
                 $user = new User;
                 $user->save($content, ['user_id' => $obj['user_id']]);
+            }
+            // $type==30 线下提现 确认
+            if ($obj['type'] == 30) {
+
+                if ($data['status'] == 20) {
+                    // 扣掉余额。
+                    $price = $content['cash_price'];                    
+                    $account = new AccountMoney;
+                    $account_obj = $account::get($obj['user_id']);
+                    $account_obj->setDec('account_money', $price * 100);
+                }
+
+                $this->where('id', $data['id'])->update([
+                    'status' => $data['status']
+                ]);
+
             }
             Db::commit();
             return true;

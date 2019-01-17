@@ -137,4 +137,18 @@ class Recharge extends Controller
     }
 
 
+
+    /**
+     * 判断线下提现 进程
+     */
+    public function applyCash()
+    {
+        $model = new Exam;
+        if ($model->applyCashState($this->user['user_id'])) {
+            return $this->renderSuccess();
+        }
+        return $this->renderError('有正在审核的线下提现');
+    }
+
+
 }

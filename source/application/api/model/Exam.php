@@ -98,4 +98,21 @@ class Exam extends ExamModel
         }
     }
 
+
+
+    // 判断线下提现 进程
+    public function applyCashState($user_id)
+    {
+        $obj = $this->where([
+            'user_id' => $user_id,
+            'type' => 30,
+            'status' => 10
+        ])->find();        
+        if ($obj) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

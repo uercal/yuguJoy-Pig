@@ -92,8 +92,7 @@
                             </div>                            
                             <?php endif; ?>
                         </fieldset>
-                    </div>
-                
+                    </div>                
             </div>
         </div>
     </div>
@@ -151,7 +150,7 @@
             },function(res){
                 console.log(res);
                 layer.msg(res.msg, {time: 1500, anim: 1}, function () {
-                    var url = "<?= url('exam/list') ?>";
+                    var url = "<?= url('exam/list') ?>&type=<?= $type ?>";
                     window.location.href = url;
                 });
             })

@@ -45,7 +45,7 @@ class PayLog extends BaseModel
 
     public function getPayTypeAttr($value, $data)
     {
-        $type = [10 => '订单支付', 20 => '售后支付', 30 => '订单租金扣款'];
+        $type = [10 => '订单支付', 20 => '售后支付', 30 => '订单租金扣款', 40 => '提现'];
         return $type[$data['pay_type']];
     }
 

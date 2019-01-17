@@ -6,6 +6,7 @@ use app\common\model\Exam as ExamModel;
 use app\store\model\Quota;
 use app\common\model\AccountMoney;
 use app\common\model\User;
+use app\common\model\PayLog;
 
 use think\Db;
 
@@ -93,10 +94,18 @@ class Exam extends ExamModel
 
                 if ($data['status'] == 20) {
                     // 扣掉余额。
-                    $price = $content['cash_price'];                    
+                    $price = $content['cash_price'];
                     $account = new AccountMoney;
                     $account_obj = $account::get($obj['user_id']);
                     $account_obj->setDec('account_money', $price * 100);
+                    // payLog 添加                    
+                    $payLog = new PayLog;
+                    $payLog->save([
+                        'pay_type' => 40,//提现                        
+                        'pay_price' => $price,
+                        'user_id' => $obj['user_id']
+                    ]);
+
                 }
 
                 $this->where('id', $data['id'])->update([

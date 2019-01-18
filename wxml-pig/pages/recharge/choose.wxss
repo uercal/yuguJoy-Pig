@@ -1,0 +1,49 @@
+@import "../user/index.wxss";
+
+page {
+    background-color: #fff;
+}
+
+.choose {
+    margin-top: 30rpx;
+    display: flex;
+    height: 200rpx;
+    padding: 40rpx;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.choose-item {
+    width: 100%;
+    height: 70rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #f76148;
+}
+
+.choose-item text {
+    font-family: PingFangSC-Medium;
+    font-size: 18px;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.txt {
+    position: fixed;
+    bottom: 30rpx;
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.txt text {
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    color: #f76148;
+    letter-spacing: 0;
+    text-align: center;
+}

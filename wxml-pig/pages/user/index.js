@@ -24,11 +24,12 @@ Page({
     onShow: function() {
         // 获取当前用户信息
         this.getUserDetail();
+    
     },
     checkStatus: function(e) {
         wx.navigateTo({
             url: '/pages/user/apply'
-        })
+        })        
     },
     /**
      * 获取当前用户信息
@@ -44,6 +45,11 @@ Page({
     recharge: function() {
         wx.navigateTo({
             url: '/pages/user/recharge'
+        })
+    },
+    cash: function() {
+        wx.navigateTo({
+            url: '/pages/recharge/choose'
         })
     },
     getPhoneNumber: function(e) {

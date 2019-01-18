@@ -4,7 +4,9 @@
         <image class='card' src='/images/card-user.png' mode="aspectFill">
         </image>
         <view class='user-head'>
-            <image src="{{userInfo.avatarUrl}}"></image>
+            <view class='head-img'>
+                <image src="{{userInfo.avatarUrl}}"></image>
+            </view>
             <view class='user-attr'>
                 <text class='user-attr-name'>{{userInfo.nickName}}</text>
                 <!-- <view class='user-attr-vip'>
@@ -13,12 +15,13 @@
                 </view> -->
             </view>
         </view>
-        <view class='user-money' bindtap='recharge'>
-            <view style="display:flex;align-item:center;margin-left:25rpx;padding-bottom:5rpx;">
+        <!-- <view class='user-money' bindtap='recharge'> -->
+        <image class='user-money' src='/images/recharge-now.png' mode="aspectFill" bindtap='recharge'></image>
+        <!-- <view style="display:flex;align-item:center;margin-left:25rpx;padding-bottom:5rpx;">
                 <text>立即充值</text>
             </view>
-            <image src="/images/icon_recharge.png"></image>
-        </view>
+            <image src="/images/icon_recharge.png"></image> -->
+        <!-- </view> -->
 
         <!--  -->
         <view class='account'>
@@ -30,15 +33,15 @@
         <view class='account-info'>
             <view class='account-item'>
                 <text>总金额</text>
-                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.account_money}}</text>
+                <text style="opacity:unset !important;font-size: 18px;color:#fff;margin-bottom:15rpx;">{{userInfo.account_money.account_money}}</text>
             </view>
             <view class='account-item'>
                 <text>可用免押额度</text>
-                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.actual_quota}}</text>
+                <text style="opacity:unset !important;font-size: 18px;color:#fff;margin-bottom:15rpx;">{{userInfo.account_money.actual_quota}}</text>
             </view>
             <view class='account-item'>
                 <text>冻结金额</text>
-                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.freezing_account}}</text>
+                <text style="opacity:unset !important;font-size: 18px;color:#fff;margin-bottom:15rpx;">{{userInfo.account_money.freezing_account}}</text>
             </view>
         </view>
 
@@ -140,6 +143,20 @@
                 <view class="flex-box">
                     <image src='/images/icon_wdzl.png'></image>
                     <text class="user-orderName h4">收货地址管理</text>
+                </view>
+                <view class="flex-box">
+                    <view class="user-orderContBox">
+                        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+                    </view>
+                </view>
+            </view>
+        </navigator>
+
+        <navigator url="../recharge/choose">
+            <view class="user-order-title dis-flex b-f">
+                <view class="flex-box">
+                    <image src='/images/cash.png'></image>
+                    <text class="user-orderName h4">充值提现</text>
                 </view>
                 <view class="flex-box">
                     <view class="user-orderContBox">

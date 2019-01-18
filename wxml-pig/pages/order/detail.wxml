@@ -84,12 +84,12 @@
                     <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>起租区间</text>
-                            <text class='attr-font'>￥{{item.all_total_price}}</text>
+                            <text class='attr-font'>{{item.rent_start}}至{{item.rent_end}}</text>
                         </view>
-                        <view class='attr-line'>
-                            <text class='attr-font pad-l'>下次扣款时间</text>
-                            <text class='attr-font'>￥{{item.all_total_price}}</text>
-                        </view>                       
+                        <view class='attr-line' wx:if="{{item.status==10}}">
+                            <text class='attr-font pad-l'>扣款时间</text>
+                            <text class='attr-font'>{{item.deduct_time}}</text>
+                        </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>应付租金</text>
                             <text class='attr-font'>￥{{item.order_goods.rent_total_price}}</text>

@@ -1,0 +1,13 @@
+<view class='value'>
+    <text>提现金额</text>
+    <input class='value-input' placeholder='请输入提现金额' type='digit' bindinput='value' placeholder-class='value-input-check'></input>
+</view>
+
+<view class='account'>
+    <text>账户可用金额：{{userInfo.account_money.actual_money}}元</text>
+</view>
+
+
+<view class="footer" bindtap='submitOrder'>
+    <text>申请提现</text>
+</view>

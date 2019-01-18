@@ -1,0 +1,56 @@
+<view class="container m-b5">
+
+    <view class='user-info'>
+        <image class='card' src='/images/card-user.png' mode="aspectFill">
+        </image>
+        <view class='user-head'>
+            <view class='head-img'>
+                <image src="{{userInfo.avatarUrl}}"></image>
+            </view>
+            <view class='user-attr'>
+                <text class='user-attr-name'>{{userInfo.nickName}}</text>
+                <!-- <view class='user-attr-vip'>
+                    <text wx:if="{{infoStatus.status==20}}" style="font-weight:bold;">认证用户</text>
+                    <text wx:else>非认证用户</text>
+                </view> -->
+            </view>
+        </view>
+
+        <!--  -->
+        <view class='account'>
+            <text>账户可用余额：</text>
+            <text class='num'>{{userInfo.account_money.actual_money}}</text>
+        </view>
+
+        <!--  -->
+        <view class='account-info'>
+            <view class='account-item'>
+                <text>总金额</text>
+                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.account_money}}</text>
+            </view>
+            <view class='account-item'>
+                <text>可用免押额度</text>
+                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.actual_quota}}</text>
+            </view>
+            <view class='account-item'>
+                <text>冻结金额</text>
+                <text style="opacity:unset !important;font-size: 16px;color:#fff;margin-bottom:10rpx;">{{userInfo.account_money.freezing_account}}</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- choose -->
+    <view class='choose'>
+        <view class='choose-item' style="background-color: #F76148;" bindtap='recharge'>
+            <text style="color:#fff;">充值</text>
+        </view>
+        <view class='choose-item' style="background-color:#fff;" bindtap='cash'>
+            <text style="color: #F76148;">申请线下提现</text>
+        </view>
+    </view>
+
+</view>
+
+<view class='txt'>
+    <text>温馨提示：冻结金额不支持提现</text>
+</view>

@@ -26,7 +26,7 @@
                 <view class='item-c' bindtap='detail' data-index='{{index}}'>
                     <text wx:if="{{item.pay_type}}">-{{item.pay_price}}</text>
                     <text wx:else>+{{item.pay_price}}</text>
-                    <view wx:if="{{item.pay_type}}" class='arrow{{item.detailed==false?"1":"2"}}'></view>
+                    <view wx:if="{{item.pay_type&&(item.order_id||item.after_id||item.order_goods_id)}}" class='arrow{{item.detailed==false?"1":"2"}}'></view>
                 </view>
             </view>
             <!-- order -->

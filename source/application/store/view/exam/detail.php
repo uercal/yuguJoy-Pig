@@ -133,7 +133,7 @@
                     status = 30;
                     break;
             }            
-
+ 
             var quota_money = $('#quota_money').val();
             if(status==20&&quota_money==''){
                 layer.msg('额度不能为空');

@@ -96,7 +96,7 @@ class Controller extends \think\Controller
      * @return array
      */
     public function menus()
-    {
+    {        
         foreach ($data = Config::get('menus') as $group => $first) {
             $data[$group]['active'] = $group === $this->group;
             // 遍历：二级菜单
@@ -129,17 +129,19 @@ class Controller extends \think\Controller
                 }
             }
         }
-
+        
         $session = Session::get('yoshop_store');
         $type = $session['user']['type'];
-        if ($type == 1) {
+        
+        if ($type == 1) {            
             $role = $session['user']['role']->toArray();
-            $api_menu = $role[0]['api_menu'];
+            // halt($role);
+            $api_menu = $role['api_menu'];
             foreach ($api_menu as $key => $value) {
                 $api_menu[$key] = json_decode($value, true);
             }
             $data = $this->filterMenu($data, $api_menu);
-        }
+        }        
         return $data;
     }
 

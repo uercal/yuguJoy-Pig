@@ -21,6 +21,7 @@ use app\common\model\Wxapp;
 use think\Session;
 // 
 use app\store\model\Deduct;
+use app\store\model\AccountMoney;
 
 
 
@@ -710,6 +711,18 @@ class Order extends OrderModel
                 'order_id' => $order_id
             ]);
 
+            // 订单有押金额度  进行用户返还
+            $obj = $this->where('order_id', $order_id)->find();
+            $user_id = $obj['user_id'];
+            $freezing_account = $obj['freezing_account'];
+            $freezing_quota = $obj['freezing_quota'];
+
+            $account = new AccountMoney;
+            $account->where('user_id', $user_id)->setDec('freezing_account', $freezing_account);
+            $account->where('user_id', $user_id)->setDec('freezing_quota', $freezing_quota);
+            $account->where('user_id', $user_id)->setInc('account_money', $freezing_account);
+            $account->where('user_id', $user_id)->setInc('quota_money', $freezing_quota);
+        
 
             // log
             $data = Equip::where('order_id', $order_id)->select()->toArray();
@@ -719,7 +732,7 @@ class Order extends OrderModel
                 $param['order_id'] = null;
                 $param['equip_id'] = $value['equip_id'];
                 $param['member_id'] = 0;
-                $param['equip_status'] = 10;                
+                $param['equip_status'] = 10;
                 $_data[] = $param;
             }
             $log = new EquipUsingLog;

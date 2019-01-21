@@ -12,6 +12,7 @@ use app\api\model\EquipUsingLog;
 use app\api\model\Equip;
 use app\api\model\OrderMember;
 use app\api\model\Member;
+use app\api\model\Recharge;
 use app\common\exception\BaseException;
 
 /**
@@ -276,13 +277,36 @@ class Order extends OrderModel
                 $filter['receipt_status'] = 20;
                 break;
         }
-        return $this->with(['goods.image'])
+
+        $list = $this->with(['goods.image'])
             ->where('user_id', '=', $user_id)
             ->where('order_status', '<>', 20)
             ->where($filter)
             ->order(['create_time' => 'desc'])
             ->select()
-            ->append(['after_status']);
+            ->append(['after_status'])
+            ->toArray();
+
+        if ($type == 'payment') {
+            $recharge = new Recharge;
+            $recharge_list = $recharge->where('user_id', '=', $user_id)
+                ->order(['create_time' => 'desc'])
+                ->where([
+                    'status' => 10,
+                    'pay_status' => 10
+                ])
+                ->select()
+                ->append(['pay_status_text', 'status_text'])
+                ->toArray();
+
+            $list = array_merge($recharge_list, $list);
+
+            usort($list, function ($a, $b) {
+                return $a['create_time'] < $b['create_time'];
+            });
+        }
+
+        return $list;
     }
 
     /**

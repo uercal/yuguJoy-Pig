@@ -37,7 +37,7 @@
             <!--  -->
             <view class="list-title">
                 <text class='list-name'>{{item.name}}</text>
-                <navigator class='list-nav'>查看全部</navigator>
+                <navigator class='list-nav' url="/pages/category/index" bindtap='cateAll' data-category-id='{{item.category_id}}'>查看全部</navigator>
             </view>
             <!-- 产品 -->
             <view class='list-goods'>

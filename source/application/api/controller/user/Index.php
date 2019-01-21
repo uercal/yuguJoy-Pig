@@ -67,7 +67,7 @@ class Index extends Controller
         $userInfo = $this->getUser();
         // 
         $model = new Exam;
-        $list = $model->with('quota')->where(['user_id' => $userInfo['user_id']])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
+        $list = $model->with('quota')->where(['user_id' => $userInfo['user_id'], 'type' => 10])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
         return $this->renderSuccess(compact('list'));
     }
 

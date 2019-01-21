@@ -7,6 +7,7 @@ use app\api\model\Goods as GoodsModel;
 //use app\api\model\Wxapp;
 use app\common\library\wechat\WxUser;
 use app\common\exception\BaseException;
+use app\api\model\AccountMoney;
 use think\Cache;
 use think\Request;
 use think\Db;
@@ -119,6 +120,13 @@ class User extends UserModel
         $userInfo['nickName'] = preg_replace('/[\xf0-\xf7].{3}/', '', $userInfo['nickName']);
         if (!$user->allowField(true)->save($userInfo)) {
             throw new BaseException(['msg' => '用户注册失败']);
+        } else {
+            $account = new AccountMoney;
+            if (!$account::get($user['user_id'])) {
+                $account->save([
+                    'user_id' => $user['user_id']
+                ]);
+            }
         }
         return $user['user_id'];
     }

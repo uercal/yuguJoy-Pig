@@ -61,6 +61,11 @@ Page({
             return false;
         }
 
+        if (Number(_this.data.pay_price) <= 0) {
+            App.showError('请填写有效数字');
+            return false;
+        }
+
         if (Number(_this.data.pay_price) >= Number(actual_money)) {
             App.showError('提现金额不能大于账户余额');
             return false;

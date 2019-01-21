@@ -98,7 +98,7 @@ Page({
                     App.showError('充值订单未支付', function() {
                         // 跳转到未付款订单
                         wx.redirectTo({
-                            url: '../recharge/index',
+                            url: '../order/index?type=payment',
                         });
                     });
                 },

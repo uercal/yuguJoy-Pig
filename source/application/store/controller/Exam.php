@@ -12,13 +12,12 @@ use app\common\model\UploadApiFile;
  */
 class Exam extends Controller
 {
-    public function list()
+    public function index()
     {
         $model = new ExamModel;
         $res = $model->getList();
         $list = $res['data'];
-        $map = $res['map'];
-        // halt($list->toArray()['data'][0]);
+        $map = $res['map'];        
         return $this->fetch('list', compact('list', 'map'));
     }
 

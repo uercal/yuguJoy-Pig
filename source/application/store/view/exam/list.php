@@ -29,9 +29,10 @@
                                     href="javascript:;">
                                         <span class="am-icon-pencil"></span> 状态                                        
                                     </a>                                    
-                                    <select name="status"  id="status" style="font-size:12px;" class="am-field-valid" data-am-selected="{searchBox: 1,  btnSize: 'sm', placeholder:'请选择状态'}"
+                                    <select name="status"  id="status" style="font-size:12px;" class="am-field-valid" data-am-selected="{btnSize: 'sm', placeholder:'请选择状态'}"
                                             >
-                                        <option value=""></option>                                       
+                                        <!-- <option value=""></option>                                                               -->
+                                        <option value="0" <?php if (!isset($map['status'])) : ?> selected <?php endif; ?>>所有</option>
                                         <option value="10" <?php if (isset($map['status']) && $map['status'] == 10) : ?> selected <?php endif; ?>>审核中</option>
                                         <option value="20" <?php if (isset($map['status']) && $map['status'] == 20) : ?> selected <?php endif; ?>>已通过</option>
                                         <option value="30" <?php if (isset($map['status']) && $map['status'] == 30) : ?> selected <?php endif; ?>>已驳回</option>                                        
@@ -124,43 +125,49 @@
 <script>
     $(function () {
         var $modal = $('#your-modal');                
-        $('#search').on('click', function(e) {
-            var url = "<?php echo url('exam/list') ?>";
+        $('#status').on('change', function() {
+            var url = "<?php echo url('exam/index') ?>";
             var param = $('#form').serialize();
             var html = url + '&' + param;
             window.location.href = html;            
-        });    
+        });  
+        $('#type').on('change',function(){
+            var url = "<?php echo url('exam/index') ?>";
+            var param = $('#form').serialize();
+            var html = url + '&' + param;
+            window.location.href = html;    
+        });
     });
 </script>
 <script>
-    $(function(){
-        var b = "<?= isset($map['startDate']) ? $map['startDate'] : "" ?>";
-        var e = "<?= isset($map['endDate']) ? $map['endDate'] : "" ?>";
-        var startDate = new Date(b);
-        var endDate = new Date(e);                             
-        // 
-        $('#my-start').datepicker().on('changeDate.datepicker.amui', function(event) {
-            if (event.date.valueOf() > endDate.valueOf()) {
-                alert('开始日期应小于结束日期！');
-            } else {            
-                startDate = new Date(event.date);                
-                $('#my-startDate').val($('#my-start').data('date'));
-            }
-            $(this).datepicker('close');
-        });
+    // $(function(){
+    //     var b = "<?= isset($map['startDate']) ? $map['startDate'] : "" ?>";
+    //     var e = "<?= isset($map['endDate']) ? $map['endDate'] : "" ?>";
+    //     var startDate = new Date(b);
+    //     var endDate = new Date(e);                             
+    //     // 
+    //     $('#my-start').datepicker().on('changeDate.datepicker.amui', function(event) {
+    //         if (event.date.valueOf() > endDate.valueOf()) {
+    //             alert('开始日期应小于结束日期！');
+    //         } else {            
+    //             startDate = new Date(event.date);                
+    //             $('#my-startDate').val($('#my-start').data('date'));
+    //         }
+    //         $(this).datepicker('close');
+    //     });
 
-        $('#my-end').datepicker().
-        on('changeDate.datepicker.amui', function(event) {
-            if (event.date.valueOf() < startDate.valueOf()) {
-                alert('结束日期应大于开始日期！');
-            } else {            
-                endDate = new Date(event.date);
-                $('#my-endDate').val($('#my-end').data('date'));
-            }
-            $(this).datepicker('close');
-        });    
+    //     $('#my-end').datepicker().
+    //     on('changeDate.datepicker.amui', function(event) {
+    //         if (event.date.valueOf() < startDate.valueOf()) {
+    //             alert('结束日期应大于开始日期！');
+    //         } else {            
+    //             endDate = new Date(event.date);
+    //             $('#my-endDate').val($('#my-end').data('date'));
+    //         }
+    //         $(this).datepicker('close');
+    //     });    
         
-    })
+    // })
 
     function detail(id){
         window.location.href = "<?= url('exam/detail') ?>&id="+id;

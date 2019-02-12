@@ -70,11 +70,11 @@ return [
     'exam' => [
         'name' => '审批管理',
         'icon' => 'icon-order',
-        'index' => 'exam/list',
+        'index' => 'exam/index',
         'submenu' => [
             [
                 'name' => '审核列表',
-                'index' => 'exam/list',
+                'index' => 'exam/index',
             ],
         ]
     ],

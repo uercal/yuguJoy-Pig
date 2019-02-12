@@ -150,7 +150,7 @@
             },function(res){
                 console.log(res);
                 layer.msg(res.msg, {time: 1500, anim: 1}, function () {
-                    var url = "<?= url('exam/list') ?>&type=<?= $type ?>";
+                    var url = "<?= url('exam/index') ?>&type=<?= $type ?>";
                     window.location.href = url;
                 });
             })

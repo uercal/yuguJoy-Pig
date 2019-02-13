@@ -256,12 +256,12 @@ return [
 
         ],
     ],
-    'plugins' => [
-        'name' => '应用中心',
-        'icon' => 'icon-application',
-        'is_svg' => true,   // 多色图标
-        'index' => 'plugins/index',
-    ],
+    // 'plugins' => [
+    //     'name' => '应用中心',
+    //     'icon' => 'icon-application',
+    //     'is_svg' => true,   // 多色图标
+    //     'index' => 'plugins/index',
+    // ],
     'setting' => [
         'name' => '设置',
         'icon' => 'icon-setting',

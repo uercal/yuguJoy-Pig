@@ -49,7 +49,7 @@
         legend: {
             orient: 'vertical',
             left: 'left',
-            data: JSON.parse('<?= json_encode($pies['legend_data']) ?>')
+            data: JSON.parse("<?= isset($pies['legend_data'])?json_encode($pies['legend_data']):json_encode([]) ?>")
         },
         series : [
             {

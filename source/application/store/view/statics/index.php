@@ -57,7 +57,7 @@
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],
-                data:JSON.parse('<?= json_encode($pies['data']) ?>'),
+                data:JSON.parse('<?= isset($pies['data'])?json_encode($pies['data']):json_encode([]) ?>'),
                 itemStyle: {                          
                     emphasis: {
                         shadowBlur: 10,

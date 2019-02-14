@@ -271,23 +271,23 @@ return [
                 'name' => '商城设置',
                 'index' => 'setting/store',
             ],
-            [
-                'name' => '交易设置',
-                'index' => 'setting/trade',
-            ],
-            [
-                'name' => '配送设置',
-                'index' => 'setting.delivery/index',
-                'uris' => [
-                    'setting.delivery/index',
-                    'setting.delivery/add',
-                    'setting.delivery/edit',
-                ],
-            ],
-            [
-                'name' => '短信通知',
-                'index' => 'setting/sms'
-            ],
+            // [
+            //     'name' => '交易设置',
+            //     'index' => 'setting/trade',
+            // ],
+            // [
+            //     'name' => '配送设置',
+            //     'index' => 'setting.delivery/index',
+            //     'uris' => [
+            //         'setting.delivery/index',
+            //         'setting.delivery/add',
+            //         'setting.delivery/edit',
+            //     ],
+            // ],
+            // [
+            //     'name' => '短信通知',
+            //     'index' => 'setting/sms'
+            // ],
             [
                 'name' => '上传设置',
                 'index' => 'setting/storage',

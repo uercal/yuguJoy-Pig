@@ -84,7 +84,7 @@ class Order extends Controller
         if ($model->delivery(input(), $memberInfo['id'])) {
             return $this->renderSuccess('success');
         } else {
-            return $this->renderError($order->error);
+            return $this->renderError($model->error);
         }
     }
 
@@ -101,7 +101,7 @@ class Order extends Controller
         if ($model->sendAfter(input(), $memberInfo['id'])) {
             return $this->renderSuccess('success');
         } else {
-            return $this->renderError($order->error);
+            return $this->renderError($model->error);
         }
     }
 

@@ -650,20 +650,21 @@ class Order extends OrderModel
     public function doPay($order, $payInfo, $user_id)
     {
         if ($payInfo['canPay'] == 0) return false;
-        // 押金 扣额度
+
+        // 押金 扣额度  2000
         $goods_price = $payInfo['goods_price'];
-        // 租金  第一期 直接扣余额
+        // 租金  第一期 直接扣余额  600
         $rent_price = $payInfo['rent_price'];
-        // bonus_money 还需支付押金  属于冻结金额
+        // bonus_money 还需支付押金  属于冻结金额  1000
         $bonus_money = $payInfo['bonus_money'];
 
 
-        // 扣余额 部分
+        // 扣余额 部分  1600
         $dec_account_money = bcadd($rent_price, $bonus_money, 2) * 100;
-        //冻结余额
+        //冻结余额 1000
         $inc_freezing_account = $bonus_money * 100;
         // 冻结额度
-        $inc_freezing_quota = $goods_price * 100;
+        $inc_freezing_quota = $bonus_money > $rent_price ? ($bonus_money - $rent_price) * 100 : $goods_price * 100;
 
 
         Db::startTrans();

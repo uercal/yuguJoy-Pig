@@ -81,10 +81,10 @@ class Order extends Controller
     {
         $model = OrderModel::detail(input()['order_id']);
         $memberInfo = $this->getMember();
+        halt('1');
         if ($model->delivery(input(), $memberInfo['id'])) {
             return $this->renderSuccess('success');
-        } else {
-            halt([$model,$model->error]);
+        } else {            
             return $this->renderError($model->error);
         }
     }

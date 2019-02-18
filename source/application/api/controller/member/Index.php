@@ -25,7 +25,7 @@ class Index extends Controller
     {
         // 当前员工信息
         $memberInfo = $this->getMember();
-        // 权限接口json
+        // 权限接口json 12
         $role = $memberInfo['role'];
         $menu = [];
         foreach ($role['api_menu'] as $key => $value) {

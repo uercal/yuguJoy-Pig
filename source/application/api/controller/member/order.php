@@ -84,6 +84,7 @@ class Order extends Controller
         if ($model->delivery(input(), $memberInfo['id'])) {
             return $this->renderSuccess('success');
         } else {
+            halt([$model,$model->error]);
             return $this->renderError($model->error);
         }
     }

@@ -232,7 +232,7 @@ class Order extends Controller
 
         $data = PayLog::with(['order', 'after', 'order_goods' => ['order', 'order_goods']])->where('user_id', $user_id)->select()->toArray();
 
-        $recharge_log = Recharge::where(['pay_status' => 20, 'status' => 10])->select()->toArray();
+        $recharge_log = Recharge::where(['pay_status' => 20, 'status' => 10, 'user_id' => $user_id])->select()->toArray();
 
         $data = array_merge($data, $recharge_log);
 

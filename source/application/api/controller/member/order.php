@@ -79,6 +79,7 @@ class Order extends Controller
      */
     public function delivery()
     {
+        halt('1');
         $input = input();
         $model = OrderModel::detail($input['order_id']);
         $memberInfo = $this->getMember();        

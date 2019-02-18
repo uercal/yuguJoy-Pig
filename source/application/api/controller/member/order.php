@@ -79,9 +79,9 @@ class Order extends Controller
      */
     public function delivery()
     {
-        $model = OrderModel::detail(input()['order_id']);
-        $memberInfo = $this->getMember();
         halt('1');
+        $model = OrderModel::detail(input()['order_id']);
+        $memberInfo = $this->getMember();        
         if ($model->delivery(input(), $memberInfo['id'])) {
             return $this->renderSuccess('success');
         } else {            

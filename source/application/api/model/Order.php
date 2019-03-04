@@ -44,14 +44,14 @@ class Order extends OrderModel
      * @throws \think\exception\DbException
      */
     public function getBuyNow($user, $goods_id, $goods_num, $goods_sku_id, $rent_id, $rent_num, $rent_date, $secure, $service_ids)
-    {        
+    {
         // 商品信息
         /* @var Goods $goods */
         $goods = Goods::detail($goods_id);
         $goods_spec_id = Db::name('goods_spec')->where('spec_sku_id', $goods_sku_id)->value('goods_spec_id');
         // 规格信息
         $goods['goods_spec_id'] = $goods_spec_id;
-        $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$goods_spec_id];
+        $goods_sku = array_column($goods['spec']->toArray(), null, 'spec_sku_id')[$goods_sku_id];
         // 多规格文字内容
         $goods_sku['goods_attr'] = '';
         if ($goods['spec_type'] === 20) {
@@ -67,7 +67,7 @@ class Order extends OrderModel
         $goods['goods_price'] = $goods['goods_sku']['goods_price'];
         // 商品总价
         $goods['total_num'] = $goods_num;
-         // 商品租赁信息
+        // 商品租赁信息
         $rent_info = Db::name('rent_mode')->where('id', $rent_id)->find();
         $goods['rent_date'] = $rent_date;
         $goods['rent_num'] = $rent_num;
@@ -191,9 +191,9 @@ class Order extends OrderModel
         // 更新商品库存 (下单减库存)
         $deductStockData = [];
         foreach ($order['goods_list'] as $goods) {
-            /* @var Goods $goods */            
+            /* @var Goods $goods */
             // 取消购物车 单一物品购买
-            $goods_sku = $goods['spec'][0];                   
+            $goods_sku = $goods['spec'][0];
             // 
             $goodsList[] = [
                 'user_id' => $user_id,
@@ -222,7 +222,7 @@ class Order extends OrderModel
                 'total_num' => $goods['total_num'],
                 'total_price' => $goods['total_price'],
             ];
-        }        
+        }
         // 保存订单商品信息
         $this->goods()->saveAll($goodsList);
         // 保存订单地址                
@@ -319,7 +319,7 @@ class Order extends OrderModel
         if ($this['pay_status'] === 20) {
             $this->error = '已付款订单不可取消';
             return false;
-        }        
+        }
         // 回退商品库存
         // $this->backGoodsStock($this['goods']);        
         return $this->allowField(true)->save(['order_status' => 20], ['order_id' => $this['order_id']]);
@@ -334,15 +334,15 @@ class Order extends OrderModel
     private function backGoodsStock(&$goodsList)
     {
         $goodsSpecSave = [];
-    // foreach ($goodsList as $goods) {
-    //         // 下单减库存
-    //     if ($goods['deduct_stock_type'] === 10) {
-    //         $goodsSpecSave[] = [
-    //             'goods_spec_id' => $goods['goods_spec_id'],
-    //             'stock_num' => ['inc', $goods['total_num']]
-    //         ];
-    //     }
-    // }
+        // foreach ($goodsList as $goods) {
+        //         // 下单减库存
+        //     if ($goods['deduct_stock_type'] === 10) {
+        //         $goodsSpecSave[] = [
+        //             'goods_spec_id' => $goods['goods_spec_id'],
+        //             'stock_num' => ['inc', $goods['total_num']]
+        //         ];
+        //     }
+        // }
         // 更新商品规格库存
         return !empty($goodsSpecSave) && (new GoodsSpec)->isUpdate()->saveAll($goodsSpecSave);
     }
@@ -381,24 +381,24 @@ class Order extends OrderModel
                 $param = [];
                 $param['order_id'] = $this['order_id'];
                 $param['equip_id'] = $value['equip_id'];
-                $param['member_id'] = -1;//用户确认 非员工操作
+                $param['member_id'] = -1; //用户确认 非员工操作
                 $param['equip_status'] = 30;
                 $param['wxapp_id'] = self::$wxapp_id;
                 $_data[] = $param;
             }
 
             $log = new EquipUsingLog;
-            $log->saveAll($_data);      
+            $log->saveAll($_data);
 
             // 获取配送/维修员工
-            $member_ids = OrderMember::where('order_id', $this['order_id'])->column('member_id');                                
+            $member_ids = OrderMember::where('order_id', $this['order_id'])->column('member_id');
             // 新增配送员工记录
             $_member = [];
             foreach ($member_ids as $key => $value) {
                 $param = [];
                 $param['member_id'] = $value;
                 $param['order_id'] = $this['order_id'];
-                $param['status'] = 20;//已完成
+                $param['status'] = 20; //已完成
                 $_member[] = $param;
             }
             $orderMember = new OrderMember;
@@ -411,8 +411,6 @@ class Order extends OrderModel
             $this->error = $e->getMessage();
             return false;
         }
-
-
     }
 
     /**
@@ -484,7 +482,7 @@ class Order extends OrderModel
             $goods_all_price += $value['secure_price'];
             $goods_all_price += $value['service_price'];
         }
-                            
+
         // 
         $order['pay'] = compact('rent_all_price', 'goods_all_price');
 
@@ -505,10 +503,10 @@ class Order extends OrderModel
                 return false;
             }
             // 付款减库存
-        // if ($goods['deduct_stock_type'] === 20 && $goods['spec']['stock_num'] < 1) {
-        //     $this->setError('很抱歉，商品 [' . $goods['goods_name'] . '] 库存不足');
-        //     return false;
-        // }
+            // if ($goods['deduct_stock_type'] === 20 && $goods['spec']['stock_num'] < 1) {
+            //     $this->setError('很抱歉，商品 [' . $goods['goods_name'] . '] 库存不足');
+            //     return false;
+            // }
         }
         return true;
     }
@@ -583,7 +581,7 @@ class Order extends OrderModel
                 $_data['order_id'] = $order_id;
                 $data[] = $_data;
             }
-            
+
             // 
             $usingLog = [];
             foreach ($data as $key => $value) {
@@ -595,7 +593,7 @@ class Order extends OrderModel
                 $_usingLog['wxapp_id'] = 10001;
                 $usingLog[] = $_usingLog;
             }
-            
+
 
 
             // 员工配送记录
@@ -610,8 +608,8 @@ class Order extends OrderModel
                 $_order_member['wxapp_id'] = 10001;
                 $order_member[] = $_order_member;
             }
-            
-            
+
+
 
             // 开启事务
             Db::startTrans();
@@ -620,9 +618,9 @@ class Order extends OrderModel
                 $equip = new Equip;
                 $equip->saveAll($data);
                 // 设备使用记录                                
-                $this->usingLog()->saveAll($usingLog);                
+                $this->usingLog()->saveAll($usingLog);
                 // 员工配送记录
-                $this->orderMember()->saveAll($order_member);                                
+                $this->orderMember()->saveAll($order_member);
                 // 订单
                 $this->save([
                     'delivery_status' => 20,
@@ -672,12 +670,12 @@ class Order extends OrderModel
         $account = new AccountMoney;
         $account->where('user_id', $user_id)->setDec('account_money', $dec_account_money);
         $account->where('user_id', $user_id)->setInc('freezing_account', $inc_freezing_account);
-        $account->where('user_id', $user_id)->setInc('freezing_quota', $inc_freezing_quota);     
+        $account->where('user_id', $user_id)->setInc('freezing_quota', $inc_freezing_quota);
 
         //payLog
         $payLog = new PayLog;
         $payLog->save([
-            'pay_type' => 10,//订单
+            'pay_type' => 10, //订单
             'order_id' => $order['order_id'],
             'pay_price' => bcadd($rent_price, $bonus_money, 2),
             'user_id' => $user_id
@@ -711,8 +709,8 @@ class Order extends OrderModel
 
         $deductModel->saveAll($deduct);
         $deductLogModel->saveAll($deduct_log);
-        
-        
+
+
 
         // 更新订单状态
         $this->save([
@@ -772,18 +770,8 @@ class Order extends OrderModel
             }
         }
 
-        $price = $price * 100;//分
+        $price = $price * 100; //分
 
         return compact('deduct', 'end', 'price');
     }
-
-
-
-
-
-
-
-
-
-
 }

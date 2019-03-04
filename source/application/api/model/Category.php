@@ -18,14 +18,14 @@ class Category extends CategoryModel
      */
     protected $hidden = [
         'wxapp_id',
-//        'create_time',
+        //        'create_time',
         'update_time'
     ];
 
     public function getIndexList()
     {
         $list = $this->with(['image', 'goods' => function ($query) {
-            $query->with(['image.file', 'spec'])->order('goods_sort', 'asc');
+            $query->with(['image.file', 'spec'])->where(['goods_status' => 10])->order('goods_sort', 'asc');
         }])->select()->toArray();
         foreach ($list as $k => $cate) {
             foreach ($cate['goods'] as $key => $value) {
@@ -79,10 +79,4 @@ class Category extends CategoryModel
         $equip_count = count($equip_list);
         return compact('all_list', 'detail_list', 'equip_count');
     }
-
-
-
-
-
-
 }

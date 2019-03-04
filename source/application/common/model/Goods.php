@@ -177,7 +177,7 @@ class Goods extends BaseModel
             "$minPriceSql AS goods_min_price",
             "$maxPriceSql AS goods_max_price"
         ])->with(['category', 'image.file', 'spec', 'service.service'])
-            ->where('is_delete', '=', 0)
+            ->where('is_delete', '=', 0)            
             ->where($filter)
             ->order($sort)
             ->paginate(15, false, [
@@ -194,7 +194,7 @@ class Goods extends BaseModel
      */
     public static function detail($goods_id)
     {
-        return self::get($goods_id, ['category', 'image.file', 'spec', 'spec_rel.spec','service.service']);
+        return self::get($goods_id, ['category', 'image.file', 'spec', 'spec_rel.spec', 'service.service']);
     }
 
     public static function getChooseList()

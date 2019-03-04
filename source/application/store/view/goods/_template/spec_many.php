@@ -42,15 +42,15 @@
         </td>
         {{ /each }}        
         <td>
-            <input type="number" name="goods_price" value="{{ item.form.goods_price }}" class="am-field-valid ipt-w80"
+            <input type="number" name="goods_price" min="0.1" value="{{ item.form.goods_price }}" class="am-field-valid ipt-w80"
                    required>
         </td>
         <td>
-            <input type="number" name="secure_price" value="{{ item.form.secure_price }}" class="am-field-valid ipt-w80"
+            <input type="number" name="secure_price" min="0.1" value="{{ item.form.secure_price }}" class="am-field-valid ipt-w80"
                    required>
         </td>        
         <td>
-            <input type="number" name="stock_num" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
+            <input type="number" name="stock_num" min="0.1" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
                    required>
         </td>        
     </tr>

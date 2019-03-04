@@ -49,6 +49,10 @@ class Order extends Controller
         if ($model->hasError()) {
             return $this->renderError($model->getError());
         }
+        if (!$order['address']) {
+            $error = '请选择配送地址';
+            return $this->renderError($error);
+        }
         // 创建订单
         if ($model->add($this->user['user_id'], $order)) {
             // 发起微信支付
@@ -64,7 +68,7 @@ class Order extends Controller
                 'order_id' => $model['order_id']
             ]);
         }
-        $error = $model->getError() ? : '订单创建失败';
+        $error = $model->getError() ?: '订单创建失败';
         return $this->renderError($error);
     }
 
@@ -92,16 +96,16 @@ class Order extends Controller
         }
         if (!$this->request->isPost()) {
             return $this->renderSuccess($order);
-        }        
+        }
         // 创建订单
-        if ($model->add($this->user['user_id'], $order)) {            
+        if ($model->add($this->user['user_id'], $order)) {
             // 清空购物车
             $Card = new CartModel($this->user['user_id']);
             if (input('choose_key_list')) {
                 $Card->clearByKey($choose_key_list);
             } else {
                 $Card->clearAll();
-            }                        
+            }
             // 发起微信支付
             // return $this->renderSuccess([
             //     'payment' => $this->wxPay(
@@ -115,7 +119,7 @@ class Order extends Controller
                 'order_id' => $model['order_id']
             ]);
         }
-        $error = $model->getError() ? : '订单创建失败';
+        $error = $model->getError() ?: '订单创建失败';
         return $this->renderError($error);
     }
 
@@ -134,5 +138,4 @@ class Order extends Controller
         $WxPay = new WxPay($wxConfig);
         return $WxPay->unifiedorder($order_no, $open_id, $pay_price);
     }
-
 }

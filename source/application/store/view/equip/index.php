@@ -27,7 +27,7 @@
                                     href="javascript:;">
                                         <span class="am-icon-home"></span> 所属产品                                        
                                     </a>
-                                    <select name="goods_id"  id="goods_id" style="font-size:12px;">
+                                    <select name="goods_id"  id="goods_id" style="font-size:12px;width:80px;">
                                         <option value=""></option>
                                         <?php if (isset($goods)) : foreach ($goods as $first) : ?>
                                             <option value="<?= $first['goods_id'] ?>"

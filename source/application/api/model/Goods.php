@@ -60,7 +60,7 @@ class Goods extends GoodsModel
     public function getAllGoods()
     {
         return $this->with(['category', 'image.file', 'spec', 'service.service', 'spec_rel.spec', 'delivery.rule'])
-            ->select();
+            ->where(['goods_status' => 10])->select();
     }
 
 
@@ -143,7 +143,7 @@ class Goods extends GoodsModel
         foreach ($specAttrData[1]['spec_items'] as $key => $value) {
             $spec_sku_info[$value['spec_value_id']] = $value;
         }
-        
+
 
         // spec_list
         $specListData = [];
@@ -173,7 +173,6 @@ class Goods extends GoodsModel
                     $specAttrData[0]['spec_items'][$key]['child'][] = $specListData;
                 }
             }
-
         }
         // 
 

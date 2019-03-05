@@ -68,7 +68,7 @@ class Order extends Controller
      */
     public function rent_list()
     {
-        return $this->getList('租赁中订单列表', ['order_status' => 30]);
+        return $this->getList('租赁中订单列表', ['order_status' => 30, 'done_status' => 10]);
     }
 
 

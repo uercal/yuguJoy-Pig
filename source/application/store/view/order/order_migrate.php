@@ -1,11 +1,11 @@
 <?php 
-$order = array_column($menus, null, 'index')['order/delivery_list'];
-print_r('1');
-$a = array_column($order, null, 'index')[0];
-print_r('2');
-$a = array_column($a,null,'index');
-print_r('3');
-if (isset($a['order/order_migrate'])) :
+$permission = false;
+foreach ($menus['order']['submenu'] as $key => $value) {
+    if($value['index']=='order/order_migrate'){
+        $permission = true;
+    }
+}
+if ($permission) :
     
     ?>
 

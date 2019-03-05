@@ -1,6 +1,7 @@
 <?php 
 $a = array_column(array_column($menus['order'], null, 'index')[0], null, 'index');
 if (isset($a['order/order_migrate'])) :
+    print_r($a);
     ?>
 
 <style>

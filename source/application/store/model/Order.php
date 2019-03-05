@@ -26,6 +26,7 @@ use app\store\model\AccountMoney;
 
 
 // 
+
 /**
  * 订单管理
  * Class Order
@@ -56,6 +57,31 @@ class Order extends OrderModel
 
         $data = $this->with(['goods.image', 'address', 'user'])
             ->where($filter)
+            ->where($_map)
+            ->order(['create_time' => 'desc'])
+            ->paginate(10, false, [
+                'query' => Request::instance()->request()
+            ])->append(['after_status']);
+
+        return ['data' => $data, 'map' => $map];
+    }
+
+
+    /**
+     * getOne
+     */
+    public function getOne()
+    {
+        $request = Request::instance();
+        $map = $request->request();
+        $_map = [];
+        if (!empty($map['order_no'])) {
+            $_map['order_no'] = ['=', $map['order_no']];
+        } else {
+            return ['data' => [], 'map' => $map];
+        }
+
+        $data = $this->with(['goods.image', 'address', 'user'])
             ->where($_map)
             ->order(['create_time' => 'desc'])
             ->paginate(10, false, [
@@ -113,7 +139,7 @@ class Order extends OrderModel
                 $_usingLog['wxapp_id'] = $wxapp_id;
                 $usingLog[] = $_usingLog;
             }
-            
+
 
 
             // 员工配送记录
@@ -133,7 +159,7 @@ class Order extends OrderModel
                 $_member['status'] = 20; //配送中
                 $member[] = $_member;
             }
-            
+
 
 
             // 开启事务
@@ -209,7 +235,7 @@ class Order extends OrderModel
                         . $spec_rel[$specValueId]['spec_value'] . '; ';
                 }
             }
-            $goods['goods_sku'] = $goods_sku;            
+            $goods['goods_sku'] = $goods_sku;
             // 商品单价
             $goods['goods_price'] = $goods_sku['goods_price'];
             // 商品租赁信息
@@ -243,18 +269,18 @@ class Order extends OrderModel
                     }
                 }
             }
-            
+
             // 保险金额与否
             $goods['secure'] = $cart['secure'];
-            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];       
-            
+            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];
+
             // 增值服务
             sort($cart['service']);
             $goods['service_ids'] = $service_ids = implode(',', $cart['service']);
             $goods['service_price'] = $service_ids == 0 ? 0 : Db::name('goods_service')->whereIn('service_id', $service_ids)->sum('service_price');
             $goods['service_info'] = $service_ids == 0 ? [] : Db::name('goods_service')->whereIn('service_id', $service_ids)->select();
 
-            
+
             // 商品总价
             $goods['total_num'] = $cart['total_num'];
             $goods['total_price'] = $total_price = bcadd(bcadd(bcadd($goods['goods_price'], $goods['rent_total_price'], 2), $goods['secure_price'], 2), $goods['service_price'], 2);
@@ -263,7 +289,7 @@ class Order extends OrderModel
             $goods['goods_total_weight'] = bcmul($goods['goods_sku']['goods_weight'], $cart['total_num'], 2);
             $cartList[] = $goods->toArray();
         }
-        
+
         // 商品总金额
         $orderTotalPrice = array_sum(array_column($cartList, 'all_total_price'));
         // 所有商品的运费金额
@@ -312,9 +338,9 @@ class Order extends OrderModel
         // 更新商品库存 (下单减库存)
         $deductStockData = [];
         foreach ($order['goods_list'] as $goods) {
-            /* @var Goods $goods */            
+            /* @var Goods $goods */
             // 取消购物车 单一物品购买
-            $goods_sku = $goods['spec'][0];                   
+            $goods_sku = $goods['spec'][0];
             // 
             $goodsList[] = [
                 'user_id' => $user_id,
@@ -343,7 +369,7 @@ class Order extends OrderModel
                 'total_num' => $goods['total_num'],
                 'total_price' => $goods['total_price'],
             ];
-        }        
+        }
         // 保存订单商品信息
         $this->goods()->saveAll($goodsList);
         // 保存订单地址                
@@ -402,13 +428,13 @@ class Order extends OrderModel
             $order_goods[] = $value;
         }
 
-        if (isset($input['equip'])) {           
+        if (isset($input['equip'])) {
             // 
             $session = Session::get('yoshop_store');
             $wxapp_id = $session['wxapp']['wxapp_id'];
             $user = $session['user'];
             $type = $user['type'];
-            $member_id = $type == 0 ? 0 : $user['member_id']; 
+            $member_id = $type == 0 ? 0 : $user['member_id'];
             // 更换了设备
             $equip = $input['equip'];
             $data = [];
@@ -429,7 +455,7 @@ class Order extends OrderModel
                 $_data_log['equip_status'] = 20;
                 $_data_log['wxapp_id'] = $wxapp_id;
                 $_data_log['create_time'] = time();
-                $log_data[] = $_data_log;                
+                $log_data[] = $_data_log;
                 // 
                 $_p_data = [];
                 $_p_data['equip_id'] = $value['p_equip_id'];
@@ -451,10 +477,10 @@ class Order extends OrderModel
         }
 
 
-    
+
         // 开启事务
         Db::startTrans();
-        try {            
+        try {
             // 保存订单信息
             isset($input['order']) ? $this->save($input['order'], ['order_id' => $input['order_id']]) : '';
             // 保存订单商品信息
@@ -474,7 +500,6 @@ class Order extends OrderModel
             $this->error = $e->getMessage();
             return false;
         }
-
     }
 
 
@@ -500,7 +525,6 @@ class Order extends OrderModel
                 }
             }
         }
-
     }
 
 
@@ -523,7 +547,7 @@ class Order extends OrderModel
             $_state['pay_time'] = time();
             $_state['transaction_id'] = '变更状态支付';
         }
-        
+
         // 
         switch ($state['chg_data']) {
             case 'pay':
@@ -577,10 +601,10 @@ class Order extends OrderModel
                 $_data[] = $param;
             }
             $log = new EquipUsingLog;
-            $log->saveAll($_data);      
+            $log->saveAll($_data);
 
             // 获取配送/维修员工
-            $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');            
+            $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');
             // 是否清空设备
             if ($type == 1 || $type == 2) {
                 Equip::where('order_id', $state['order_id'])->update([
@@ -592,7 +616,7 @@ class Order extends OrderModel
                 ]);
                 OrderMember::where('order_id', $state['order_id'])->delete();
             }
-            
+
             // 是否送达设备
             if ($type == 3) {
                 Equip::where('order_id', $state['order_id'])->update([
@@ -621,7 +645,7 @@ class Order extends OrderModel
                     $param = [];
                     $param['member_id'] = $value;
                     $param['order_id'] = $state['order_id'];
-                    $param['status'] = 20;//已完成
+                    $param['status'] = 20; //已完成
                     $_member[] = $param;
                 }
                 $orderMember = new OrderMember;
@@ -640,7 +664,6 @@ class Order extends OrderModel
             $this->error = $e->getMessage();
             return false;
         }
-
     }
 
 
@@ -696,12 +719,12 @@ class Order extends OrderModel
         }
 
 
-        if (!$is_done) return false;        
+        if (!$is_done) return false;
         // 开启事务
         Db::startTrans();
         try {
             //完结订单  
-            
+
 
             //更新订单状态
             $this->save([
@@ -722,7 +745,7 @@ class Order extends OrderModel
             $account->where('user_id', $user_id)->setDec('freezing_quota', $freezing_quota);
             $account->where('user_id', $user_id)->setInc('account_money', $freezing_account);
             $account->where('user_id', $user_id)->setInc('quota_money', $freezing_quota);
-        
+
 
             // log
             $data = Equip::where('order_id', $order_id)->select()->toArray();
@@ -736,7 +759,7 @@ class Order extends OrderModel
                 $_data[] = $param;
             }
             $log = new EquipUsingLog;
-            $log->saveAll($_data);      
+            $log->saveAll($_data);
 
 
             // 更新订单设备记录
@@ -756,9 +779,40 @@ class Order extends OrderModel
             $this->error = $e->getMessage();
             return false;
         }
-
-
-
     }
 
+
+
+    /**
+     * 订单迁移
+     */
+    public function migrateOrder($post)
+    {
+        $user_id = $post['user_id'];
+        if ($this->user_id == $user_id) {
+            $this->error = '不能迁移原本用户';
+            return false;
+        }
+        // 
+        // 开启事务
+        Db::startTrans();
+        try {
+            // 订单本身
+            $this->save([
+                'user_id' => $user_id
+            ]);
+            // 扣款订单
+            $deduct = new Deduct;
+            $deduct->where(['order_id' => $this->order_id])->update([
+                'user_id' => $user_id
+            ]);
+
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
 }

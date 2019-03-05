@@ -429,6 +429,51 @@ class Order extends Controller
      */
     public function order_migrate()
     {
-        return $this->fetch();
-     }
+        $model = new OrderModel;
+        $res = $model->getOne();
+        $list = $res['data'];
+        $map = $res['map'];
+        return $this->fetch('order_migrate', compact('list', 'map'));
+    }
+
+
+    public function migrate($order_id)
+    {
+        // 
+        $detail = OrderModel::detail($order_id);
+
+        if ($this->request->isAjax()) {
+            $post = input();
+            if (empty($post['order_id'])) {
+                $error = '订单不存在';
+                return $this->renderError($error);
+            }
+            if (empty($post['user_id'])) {
+                $error = '用户选择不能为空';
+                return $this->renderError($error);
+            }
+            //             
+            if ($detail->migrateOrder($post)) {
+                return $this->renderSuccess('迁移成功', url('order/all_list'));
+            }
+            $error = $detail->getError() ?: '迁移失败';
+            return $this->renderError($error);
+        } else {
+            return $this->fetch('migrate', compact('detail'));
+        }
+    }
+
+    // 获取员工列表
+    public function getUserAjax()
+    {
+        $model = new UserModel;
+        $list = $model->getListAjax();
+        $list = $list->toArray();
+        return [
+            'code' => 0,
+            'msg' => '',
+            'count' => $list['total'],
+            'data' => $list['data']
+        ];
+    }
 }

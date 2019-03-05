@@ -48,13 +48,12 @@ class Notice extends Controller
     {
         $model = new MemberModel;
         $list = $model->getListAjax();
-        $list = $list->toArray();   
-        // halt($list)     ;
+        $list = $list->toArray();           
         return [
             'code' => 0,
             'msg' => '',
-            'count' => count($list),
-            'data' => $list
+            'count' => $list['total'],
+            'data' => $list['data']
         ];
 
     }

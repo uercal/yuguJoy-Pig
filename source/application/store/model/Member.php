@@ -126,11 +126,15 @@ class Member extends MemberModel
     {
         $request = Request::instance();
         $get = $request->request();
-        
-        // return $this->with(['roleNameAttr'])->order(['id' => 'asc'])
-        //     ->paginate($get['limit']);
 
         return $this->with(['roleNameAttr'])->order(['id' => 'asc'])
-            ->select();
+            ->paginate($get['limit'], false, [
+                'query' => $get
+            ]);
+
+
+
+        // return $this->with(['roleNameAttr'])->order(['id' => 'asc'])
+        //     ->select();
     }
 }

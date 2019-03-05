@@ -53,7 +53,7 @@
                         <div class="widget-title am-fl">人员选择</div>
                     </div>                                                                                                                
                     <div class="am-form-group">                            
-                        <table class="layui-table" lay-data="{width: 540, height:'full', url:'<?= url('notice/getMemberAjax') ?>', page:false, id:'idTest'}" lay-filter="demo">
+                        <table class="layui-table" lay-data="{width: 540, height:'full', url:'<?= url('notice/getMemberAjax') ?>', page:true, id:'idTest'}" lay-filter="demo">
                             <thead>
                                 <tr>
                                 <th lay-data="{type:'checkbox', width:60 }"></th>

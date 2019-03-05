@@ -1,7 +1,12 @@
 <?php 
-$a = array_column(array_column($menus['order'], null, 'index')[0], null, 'index');
+$order = array_column($menus, null, 'index')['order/delivery_list'];
+print_r('1');
+$a = array_column($order, null, 'index')[0];
+print_r('2');
+$a = array_column($a,null,'index');
+print_r('3');
 if (isset($a['order/order_migrate'])) :
-    print_r($a);
+    
     ?>
 
 <style>
@@ -173,16 +178,14 @@ if (isset($a['order/order_migrate'])) :
 </script>
 <script>
     $(function() {
-        
+
     })
 
     function migrate(order_id) {
         var order_id = order_id;
-        var url = '<?= url('migrate') ?>&order_id='+order_id;
+        var url = '<?= url('migrate') ?>&order_id=' + order_id;
         window.location.href = url;
     }
-
-
 </script>
 
 

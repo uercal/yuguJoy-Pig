@@ -90,7 +90,7 @@ function curl($url, $data = [])
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//这个是重点。
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //这个是重点。
     $result = curl_exec($curl);
     curl_close($curl);
     return $result;
@@ -136,10 +136,12 @@ function array_merge_multiple($array1, $array2)
     $merge = $array1 + $array2;
     $data = [];
     foreach ($merge as $key => $val) {
-        if (isset($array1[$key])
+        if (
+            isset($array1[$key])
             && is_array($array1[$key])
             && isset($array2[$key])
-            && is_array($array2[$key])) {
+            && is_array($array2[$key])
+        ) {
             $data[$key] = array_merge_multiple($array1[$key], $array2[$key]);
         } else {
             $data[$key] = isset($array2[$key]) ? $array2[$key] : $array1[$key];
@@ -191,7 +193,7 @@ function getMemeberStatus($arr)
             if (!empty($value['after_id'])) {
                 $data['after'][$value['after_id']][] = $value;
             }
-        }        
+        }
         // 筛掉已完成        
         foreach ($data['order'] as $key => $value) {
             foreach ($value as $k => $v) {
@@ -222,7 +224,7 @@ function getMemeberStatus($arr)
             }
         }
         // 
-        if (!empty($res)) {            
+        if (!empty($res)) {
             // 
             usort($res, function ($a, $b) {
                 return $a['create_time'] > $b['create_time'];
@@ -250,3 +252,4 @@ function getMemeberStatus($arr)
     }
     return compact('msg', 'code', 'api');
 }
+

@@ -6,6 +6,9 @@
     font-size : 1.4rem;    
 }
 
+.am-dropdown-content{
+    max-width:300px;
+}
 
 
 </style>

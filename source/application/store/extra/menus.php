@@ -106,7 +106,7 @@ return [
                     [
                         'name' => '已完成',
                         'index' => 'order/complete_list',
-        
+
                     ],
                     [
                         'name' => '已取消',
@@ -121,8 +121,12 @@ return [
             [
                 'name' => '售后订单',
                 'index' => 'order/order_after',
+            ],
+            [
+                'name' => '订单迁移',
+                'index' => 'order/order_migrate'
             ]
-                     
+
         ]
     ],
     'notice' => [
@@ -206,15 +210,15 @@ return [
                 'name' => '日期统计',
                 'icon' => 'icon-user',
                 'index' => 'statics/time'
-            ]        
+            ]
         ]
     ],
-//    'marketing' => [
-//        'name' => '营销管理',
-//        'icon' => 'icon-marketing',
-//        'index' => 'marketing/index',
-//        'submenu' => [],
-//    ],
+    //    'marketing' => [
+    //        'name' => '营销管理',
+    //        'icon' => 'icon-marketing',
+    //        'index' => 'marketing/index',
+    //        'submenu' => [],
+    //    ],
     'wxapp' => [
         'name' => '小程序',
         'icon' => 'icon-wxapp',

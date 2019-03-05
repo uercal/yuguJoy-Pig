@@ -31,7 +31,7 @@ class User extends Controller
     }
 
     public function phone()
-    {        
+    {
         // 登陆
         $input = input();
         $model = new UserModel;
@@ -47,9 +47,9 @@ class User extends Controller
         // 解密
         $pc = new WXBizDataCrypt($app_id, $session_key);
         $errCode = $pc->decryptData($encryptedData, $iv, $data);
-        $data = json_decode($data, true);        
+        $data = json_decode($data, true);
         // 绑定手机号        
-        if ($data['phoneNumber'] != '') {
+        if (empty($data['phoneNumber'])) {
             $bind_phone = $model->updatePhoneNumber($session['openid'], $data['phoneNumber']);
         } else {
             $bind_phone = 0;
@@ -85,6 +85,4 @@ class User extends Controller
         $list = $goods->getListCollect($ids, $search, $sortType, $sortPrice);
         return $this->renderSuccess(compact('list'));
     }
-
-
 }

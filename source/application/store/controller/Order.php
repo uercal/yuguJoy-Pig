@@ -147,7 +147,7 @@ class Order extends Controller
             $post = input();
             $model = new OrderModel;
             $order = $model->addSelf($post);
-            if ($model->add($order['address']['user_id'], $order)) {                            
+            if ($model->add($order['address']['user_id'], $order)) {
                 // 发起微信支付
                 return $this->renderSuccess('新增成功', url('order/detail', ['order_id' => $model['order_id']]), [
                     'code' => 1,
@@ -155,7 +155,7 @@ class Order extends Controller
                     'order_id' => $model['order_id']
                 ]);
             }
-            $error = $model->getError() ? : '订单创建失败';
+            $error = $model->getError() ?: '订单创建失败';
             return $this->renderError($error, '', ['code' => 0, 'msg' => $error]);
         }
         return $this->fetch('add');
@@ -166,7 +166,7 @@ class Order extends Controller
     public function addAjax()
     {
         // 产品列表                
-        $goods_list = Category::with(['goods' => ['specRel', 'spec', 'service.service']])->select();        
+        $goods_list = Category::with(['goods' => ['specRel', 'spec', 'service.service']])->select();
         // 租赁模式    
         $rent_list = RentModeModel::field(['id', 'name', 'is_static', 'map'])->select();
 
@@ -217,18 +217,18 @@ class Order extends Controller
     {
         if ($this->request->isAjax()) {
             $model = new OrderModel;
-            $input = input();                  
+            $input = input();
             // 更新记录
             if ($model->edit($input)) {
                 return $this->renderSuccess('更新成功', url("order/edit", ['order_id' => $order_id]));
             }
-            $error = $model->getError() ? : '更新失败';
+            $error = $model->getError() ?: '更新失败';
             return $this->renderError($error);
         }
-        $detail = OrderModel::detail($order_id);          
+        $detail = OrderModel::detail($order_id);
         // 租赁模式 list
         $rent_model = new RentModeModel;
-        $rent_list = $rent_model->getList();           
+        $rent_list = $rent_model->getList();
         // 订单配送人员列表
         $member_ids = OrderMember::where('order_id', $detail['order_id'])->column('member_id');
         $member = new MemberModel;
@@ -261,7 +261,7 @@ class Order extends Controller
         if ($model->chgStatus($this->postData('state'))) {
             return $this->renderSuccess('变更成功', url('order/edit', ['order_id' => $state['order_id']]));
         }
-        $error = $model->getError() ? : '变更失败';
+        $error = $model->getError() ?: '变更失败';
         return $this->renderError($error);
     }
 
@@ -276,7 +276,7 @@ class Order extends Controller
         if ($model->chgStatus($equip_id, $state)) {
             return $this->renderSuccess('变更成功', url('order/edit', ['order_id' => $state['order_id']]));
         }
-        $error = $model->getError() ? : '变更失败';
+        $error = $model->getError() ?: '变更失败';
         return $this->renderError($error);
     }
 
@@ -325,7 +325,7 @@ class Order extends Controller
         if ($model->delivery(input())) {
             return $this->renderSuccess('发货成功', url('order/edit', ['order_id' => $order_id]));
         }
-        $error = $model->getError() ? : '发货失败';
+        $error = $model->getError() ?: '发货失败';
         return $this->renderError($error);
     }
 
@@ -376,15 +376,13 @@ class Order extends Controller
             if ($model->addAfter($after)) {
                 return $this->renderSuccess('发起成功', url('order/order_after'));
             }
-            $error = $model->getError() ? : '发起失败';
+            $error = $model->getError() ?: '发起失败';
             return $this->renderError($error);
-
         } else {
             $order_id = input()['order_id'];
             $detail = OrderModel::detail($order_id);
             return $this->fetch('order_after_add', compact('detail'));
         }
-
     }
 
     public function after_detail()
@@ -401,9 +399,8 @@ class Order extends Controller
             if ($model->sendAfter($post['after'])) {
                 return $this->renderSuccess('派发成功', url('order/order_after'));
             }
-            $error = $model->getError() ? : '派发失败';
+            $error = $model->getError() ?: '派发失败';
             return $this->renderError($error);
-
         } else {
             $after_id = input()['id'];
             $after = OrderAfterModel::getDetail($after_id);
@@ -427,5 +424,11 @@ class Order extends Controller
     }
 
 
-
+    /**
+     * 订单迁移
+     */
+    public function order_migrate()
+    {
+        return $this->fetch();
+     }
 }

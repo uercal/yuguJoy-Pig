@@ -72,10 +72,6 @@
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">产品规格 </label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <label class="am-radio-inline">
-                                        <input type="radio" name="goods[spec_type]" value="10" data-am-ucheck <?= $model['spec_type'] === 10 ? 'checked' : '' ?>>
-                                        单规格
-                                    </label>
-                                    <label class="am-radio-inline">
                                         <input type="radio" name="goods[spec_type]" value="20" data-am-ucheck <?= $model['spec_type'] === 20 ? 'checked' : '' ?>>
                                         <span class="am-link-muted">多规格</span>
                                     </label>
@@ -281,15 +277,11 @@
         }, <?= $specData ?>);
 
         // 切换单/多规格
-        $('input:radio[name="goods[spec_type]"]').change(function(e) {
-            var $goodsSpecMany = $('.goods-spec-many'),
-                $goodsSpecSingle = $('.goods-spec-single');
-            if (e.currentTarget.value === '10') {
-                $goodsSpecMany.hide() && $goodsSpecSingle.show();
-            } else {
-                $goodsSpecMany.show() && $goodsSpecSingle.hide();
-            }
-        });
+        var $goodsSpecMany = $('.goods-spec-many'),
+            $goodsSpecSingle = $('.goods-spec-single');
+
+        $goodsSpecMany.show() && $goodsSpecSingle.hide();
+
 
         /**
          * 表单验证提交

@@ -4,6 +4,7 @@ namespace app\api\model;
 
 use think\Cache;
 use think\Db;
+use app\common\model\RentMode;
 
 /**
  * 购物车管理
@@ -29,7 +30,7 @@ class Cart
     public function __construct($user_id)
     {
         $this->user_id = $user_id;
-        $this->cart = Cache::get('cart_' . $this->user_id) ? : [];
+        $this->cart = Cache::get('cart_' . $this->user_id) ?: [];
     }
 
     /**
@@ -49,11 +50,6 @@ class Cart
         foreach ((new Goods)->getListByIds($goodsIds) as $goods) {
             $goodsList[$goods['goods_id']] = $goods;
         }
-        // 当前用户收货城市id
-        $cityId = $user['address_default'] ? $user['address_default']['city_id'] : null;
-        // 商品是否在配送范围
-        $intraRegion = true;
-        $intraRegionError = '';
         // 购物车商品列表
         $cartList = [];
         foreach ($this->cart as $key => $cart) {
@@ -79,10 +75,12 @@ class Cart
             $goods['goods_price'] = $goods_sku['goods_price'];
 
             // 商品租赁信息
-            $rent_info = Db::name('rent_mode')->where('id', $cart['rent_id'])->find();
+            $rent_model = new Rentmode;
+            $rent_info = $rent_model->getInfo($cart['rent_id'], $cart['goods_spec_id']);
             $goods['rent_date'] = $cart['rent_date'];
             $goods['rent_num'] = $cart['rent_num'];
             $goods['rent_info'] = $rent_info;
+
 
             if ($rent_info['is_static'] == 0) {
                 $goods['rent_total_price'] = bcmul($rent_info['price'], $cart['rent_num'], 2);
@@ -109,24 +107,24 @@ class Cart
                     }
                 }
             }
-            
+
             // 保险金额与否
             $goods['secure'] = $cart['secure'];
-            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];       
-            
+            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];
+
             // 增值服务
             $goods['service_ids'] = $service_ids = $cart['service_ids'];
             $goods['service_price'] = $service_ids == 0 ? 0 : Db::name('goods_service')->whereIn('service_id', $service_ids)->sum('service_price');
             $goods['service_info'] = $service_ids == 0 ? [] : Db::name('goods_service')->whereIn('service_id', $service_ids)->select();
 
-            
+
             // 商品总价
             $goods['total_num'] = $cart['goods_num'];
             // $goods['total_price'] = $total_price = bcmul($goods['goods_price'], $cart['goods_num'], 2);
             $goods['total_price'] = $total_price = bcadd(bcadd(bcadd($goods['goods_price'], $goods['rent_total_price'], 2), $goods['secure_price'], 2), $goods['service_price'], 2);
             $goods['all_total_price'] = bcmul($total_price, $cart['goods_num'], 2);
             // 商品总重量
-            $goods['goods_total_weight'] = bcmul($goods['goods_sku']['goods_weight'], $cart['goods_num'], 2);            
+            $goods['goods_total_weight'] = bcmul($goods['goods_sku']['goods_weight'], $cart['goods_num'], 2);
             // 验证用户收货地址是否存在运费规则中
             // if ($goods['delivery']->checkAddress($cityId)) {            
             //     $goods['express_price'] = $goods['delivery']->calcTotalFee(
@@ -140,7 +138,7 @@ class Cart
             // }
             $cartList[] = $goods->toArray();
         }
-        
+
         // 商品总金额
         // $orderTotalPrice = array_sum(array_column($cartList, 'all_total_price'));
         $orderTotalPrice = 0;
@@ -183,7 +181,7 @@ class Cart
             if (!in_array($key, $keys)) continue;
             //             
             /* @var Goods $goods */
-            $goods = $goodsList[$cart['goods_id']];            
+            $goods = $goodsList[$cart['goods_id']];
             // 规格信息
             $goods['goods_spec_id'] = $cart['goods_spec_id'];
             $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']];
@@ -232,17 +230,17 @@ class Cart
                     }
                 }
             }
-            
+
             // 保险金额与否
             $goods['secure'] = $cart['secure'];
-            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];       
-            
+            $goods['secure_price'] = $cart['secure'] == 0 ? 0 : $goods_sku['secure_price'];
+
             // 增值服务
             $goods['service_ids'] = $service_ids = $cart['service_ids'];
             $goods['service_price'] = $service_ids == 0 ? 0 : Db::name('goods_service')->whereIn('service_id', $service_ids)->sum('service_price');
             $goods['service_info'] = $service_ids == 0 ? [] : Db::name('goods_service')->whereIn('service_id', $service_ids)->select();
 
-            
+
             // 商品总价
             $goods['total_num'] = $cart['goods_num'];
             // $goods['total_price'] = $total_price = bcmul($goods['goods_price'], $cart['goods_num'], 2);
@@ -253,7 +251,7 @@ class Cart
 
             $cartList[] = $goods->toArray();
         }
-        
+
         // 商品总金额
         $orderTotalPrice = array_sum(array_column($cartList, 'all_total_price'));
         // $orderTotalPrice = 0;

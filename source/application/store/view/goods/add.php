@@ -117,9 +117,9 @@
                                             <div class="am-form-group">
                                                 <input type="number" data-type="goods_price" placeholder="销售价">
                                             </div>
-                                            <div class="am-form-group">
+                                            <!-- <div class="am-form-group">
                                                 <input type="number" data-type="stock_num" placeholder="库存数量">
-                                            </div>
+                                            </div> -->
                                             <div class="am-form-group">
                                                 <button type="button" class="btn-specBatchBtn am-btn am-btn-sm am-btn-secondary
                                                  am-radius">确定
@@ -140,12 +140,12 @@
                                         <input type="number" class="tpl-form-input" name="goods[spec][goods_price]" required>
                                     </div>
                                 </div>
-                                <div class="am-form-group">
+                                <!-- <div class="am-form-group">
                                     <label class="am-u-sm-3 am-u-lg-2 am-form-label form-require">当前库存数量 </label>
                                     <div class="am-u-sm-9 am-u-end">
                                         <input type="number" class="tpl-form-input" name="goods[spec][stock_num]" required>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="am-form-group" style="display:none;">
@@ -268,7 +268,7 @@
          */
         $('#my-form').superForm({
             // form data
-            buildData: function() {
+            buildData: function() {                
                 return {
                     goods: {
                         spec_many: specMany.getData()

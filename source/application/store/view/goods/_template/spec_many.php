@@ -1,4 +1,3 @@
-
 <!-- 商品规格属性模板 -->
 <script id="tpl_spec_attr" type="text/template">
     {{ each spec_attr }}
@@ -31,8 +30,9 @@
         <th>{{ $value.group_name }}</th>
         {{ /each }}
         <th>押金</th>
-        <th>保修金</th>      
-        <th>库存</th>        
+        <th>保修金</th>    
+        <th>租赁价格</th>    
+        <!-- <th>库存</th>         -->
     </tr>
     {{ each spec_list item }}
     <tr data-index="{{ $index }}" data-sku-id="{{ item.spec_sku_id }}">
@@ -50,10 +50,30 @@
                    required>
         </td>        
         <td>
-            <input type="number" name="stock_num" min="0.1" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
+            <label for="">日租</label>
+            <input type="number" name="rent_mode][day][price]" min="0.1" value="{{ item.form.rent_mode.day.price }}" class="am-field-valid ipt-w80"
+                   required>
+            <label for="">1~2月</label>
+            <input type="number" name="rent_mode][month][ot]" min="0.1" value="{{ item.form.rent_mode.month.ot }}" class="am-field-valid ipt-w80"
+                   required>                   
+            <label for="">3~5月</label>
+            <input type="number" name="rent_mode][month][tf]" min="0.1" value="{{ item.form.rent_mode.month.tf }}" class="am-field-valid ipt-w80"
+                   required>
+            <label for="">6月+</label>
+            <input type="number" name="rent_mode][month][s]" min="0.1" value="{{ item.form.rent_mode.month.s }}" class="am-field-valid ipt-w80"
+                   required>                   
+            <label for="">1年</label>
+            <input type="number" name="rent_mode][year][o]" min="0.1" value="{{ item.form.rent_mode.year.o }}" class="am-field-valid ipt-w80"
+                   required>
+            <label for="">2年</label>
+            <input type="number" name="rent_mode][year][t]" min="0.1" value="{{ item.form.rent_mode.year.t }}" class="am-field-valid ipt-w80"
                    required>
         </td>        
+        <!-- <td>
+            <input type="number" name="stock_num" min="0.1" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
+                   required>
+        </td>        -->
     </tr>
     {{ /each }}
     </tbody>
-</script>
+</script> 

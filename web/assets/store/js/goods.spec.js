@@ -7,7 +7,8 @@
         }
 
         // 配置信息
-        , setting = {
+        ,
+        setting = {
             container: '.goods-spec-many'
         };
 
@@ -15,7 +16,7 @@
         // 配置信息
         setting = $.extend(true, {}, setting, options);
         // 已存在的规格数据
-        typeof baseData !== 'undefined' && baseData !== null && (data = baseData);
+        typeof baseData !== 'undefined' && baseData !== null && (data = baseData);        
         // 初始化
         this.initialize();
     }
@@ -54,8 +55,8 @@
         showAddSpecGroupEvent: function () {
             // 显示添加规则组表单
             this.$container.on('click', '.btn-addSpecGroup', function () {
-                var $specGroupButton = $(this).parent()
-                    , $specGroupAdd = $specGroupButton.next();
+                var $specGroupButton = $(this).parent(),
+                    $specGroupAdd = $specGroupButton.next();
                 $specGroupButton.hide();
                 $specGroupAdd.show();
             });
@@ -68,12 +69,12 @@
             var _this = this;
             // 确认添加
             _this.$container.on('click', '.btn-addSpecName', function () {
-                var $specGroupAdd = $(this).parent().parent()
-                    , $specGroupButton = $specGroupAdd.prev()
-                    , $specNameInput = _this.$container.find('.input-specName')
-                    , $specValueInput = _this.$container.find('.input-specValue')
-                    , specValueInputValue = $specValueInput.val()
-                    , specNameInputValue = $specNameInput.val();
+                var $specGroupAdd = $(this).parent().parent(),
+                    $specGroupButton = $specGroupAdd.prev(),
+                    $specNameInput = _this.$container.find('.input-specName'),
+                    $specValueInput = _this.$container.find('.input-specValue'),
+                    specValueInputValue = $specValueInput.val(),
+                    specNameInputValue = $specNameInput.val();
                 if (specNameInputValue === '' || specValueInputValue === '') {
                     layer.msg('请填写规则名或规则值');
                     return false;
@@ -114,8 +115,8 @@
          */
         cancelAddSpecGroupEvent: function () {
             this.$container.on('click', '.btn-cancleAddSpecName', function () {
-                var $specGroupAdd = $(this).parent().parent()
-                    , $specGroupButton = $specGroupAdd.prev();
+                var $specGroupAdd = $(this).parent().parent(),
+                    $specGroupButton = $specGroupAdd.prev();
                 // 隐藏添加规格组表单
                 $specGroupAdd.hide() && $specGroupButton.show()
             });
@@ -127,11 +128,11 @@
         addSpecItemEvent: function () {
             var _this = this;
             _this.$container.on('click', '.btn-addSpecItem', function () {
-                var $this = $(this)
-                    , $iptSpecItem = $this.prev('.ipt-specItem')
-                    , specItemInputValue = $iptSpecItem.val()
-                    , $specItemAddContainer = $this.parent()
-                    , $specGroup = $specItemAddContainer.parent().parent();
+                var $this = $(this),
+                    $iptSpecItem = $this.prev('.ipt-specItem'),
+                    specItemInputValue = $iptSpecItem.val(),
+                    $specItemAddContainer = $this.parent(),
+                    $specGroup = $specItemAddContainer.parent().parent();
                 if (specItemInputValue === '') {
                     layer.msg('规格值不能为空');
                     return false;
@@ -182,10 +183,10 @@
         deleteSpecItemEvent: function () {
             var _this = this;
             _this.$container.on('click', '.spec-item-delete', function () {
-                var $item = $(this).parent()
-                    , $specGroup = $item.parent().parent()
-                    , groupIndex = $specGroup.attr('data-index')
-                    , itemIndex = $item.attr('data-item-index');
+                var $item = $(this).parent(),
+                    $specGroup = $item.parent().parent(),
+                    groupIndex = $specGroup.attr('data-index'),
+                    itemIndex = $item.attr('data-item-index');
                 layer.confirm('确定要删除该规则吗？确认后不可恢复请谨慎操作', function (layerIndex) {
                     // 删除指定规则组
                     data.spec_attr[groupIndex].spec_items.splice(itemIndex, 1);
@@ -205,9 +206,9 @@
             $specBatch.on('click', '.btn-specBatchBtn', function () {
                 var formData = {};
                 $specBatch.find('input').each(function () {
-                    var $this = $(this)
-                        , formType = $this.data('type')
-                        , value = $this.val();
+                    var $this = $(this),
+                        formType = $this.data('type'),
+                        value = $this.val();
                     if (typeof formType !== 'undefined' && formType !== '' && value !== '') {
                         formData[formType] = value;
                     }
@@ -236,8 +237,8 @@
          * 渲染表格html
          */
         renderTabelHtml: function () {
-            var $specTabel = this.$container.find('.spec-sku-tabel')
-                , $goodsSku = $specTabel.parent();
+            var $specTabel = this.$container.find('.spec-sku-tabel'),
+                $goodsSku = $specTabel.parent();
             // 商品规格为空：隐藏sku容器
             if (data.spec_attr.length === 0) {
                 $specTabel.empty();
@@ -264,13 +265,15 @@
             // 遍历tr 行
             var spec_list = [];
             for (i = 0; i < totalRow; i++) {
-                var rowData = [], rowCount = 1, specSkuIdAttr = [];
+                var rowData = [],
+                    rowCount = 1,
+                    specSkuIdAttr = [];
                 // 遍历td 列
                 for (var j = 0; j < data.spec_attr.length; j++) {
                     var skuValues = data.spec_attr[j].spec_items;
                     rowCount *= skuValues.length;
-                    var anInterBankNum = (totalRow / rowCount)
-                        , point = ((i / anInterBankNum) % skuValues.length);
+                    var anInterBankNum = (totalRow / rowCount),
+                        point = ((i / anInterBankNum) % skuValues.length);
                     if (0 === (i % anInterBankNum)) {
                         rowData.push({
                             rowspan: anInterBankNum,
@@ -304,10 +307,11 @@
         updateSpecInputEvent: function () {
             var _this = this;
             _this.$container.find('.spec-sku-tabel').on('propertychange change', 'input', function () {
-                var $this = $(this)
-                    , dataType = $this.attr('name')
-                    , specIndex = $this.parent().parent().data('index');
+                var $this = $(this),
+                    dataType = $this.attr('name'),
+                    specIndex = $this.parent().parent().data('index');
                 data.spec_list[specIndex].form[dataType] = $this.val();
+                console.log([dataType, $this.val()]);
             });
         },
 
@@ -331,4 +335,3 @@
     window.GoodsSpec = GoodsSpec;
 
 })();
-

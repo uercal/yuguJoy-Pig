@@ -3,6 +3,7 @@
 namespace app\common\model;
 
 use think\Request;
+use function Qiniu\json_decode;
 
 /**
  * 商品模型
@@ -129,7 +130,18 @@ class Goods extends BaseModel
                 'form' => [
                     'goods_price' => $item['goods_price'],
                     'secure_price' => $item['secure_price'],
-                    'stock_num' => $item['stock_num'],
+                    'rent_mode' => $item['rent_mode'] ? json_decode($item['rent_mode'], true) : [
+                        'day' => ['price' => 10],
+                        'month' => [
+                            'ot' => 10,
+                            'tf' => 10,
+                            's' => 10
+                        ],
+                        'year' => [
+                            'o' => 10,
+                            't' => 20
+                        ]
+                    ]
                 ],
             ];
         }
@@ -177,7 +189,7 @@ class Goods extends BaseModel
             "$minPriceSql AS goods_min_price",
             "$maxPriceSql AS goods_max_price"
         ])->with(['category', 'image.file', 'spec', 'service.service'])
-            ->where('is_delete', '=', 0)            
+            ->where('is_delete', '=', 0)
             ->where($filter)
             ->order($sort)
             ->paginate(15, false, [

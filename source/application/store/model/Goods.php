@@ -85,7 +85,7 @@ class Goods extends GoodsModel
      * @return bool
      */
     public function edit($data)
-    {
+    {                   
         if (!isset($data['images']) || empty($data['images'])) {
             $this->error = '请上传商品图片';
             return false;

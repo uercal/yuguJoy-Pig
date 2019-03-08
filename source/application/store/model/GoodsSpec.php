@@ -22,6 +22,7 @@ class GoodsSpec extends GoodsSpecModel
     {
         $data = [];
         foreach ($spec_list as $item) {
+            $item['form']['rent_mode'] = json_encode($item['form']['rent_mode']);
             $data[] = array_merge($item['form'], [
                 'spec_sku_id' => $item['spec_sku_id'],
                 'goods_id' => $goods_id,
@@ -63,8 +64,7 @@ class GoodsSpec extends GoodsSpecModel
     public function removeAll($goods_id)
     {
         $model = new GoodsSpecRel;
-        $model->where('goods_id','=', $goods_id)->delete();
-        return $this->where('goods_id','=', $goods_id)->delete();
+        $model->where('goods_id', '=', $goods_id)->delete();
+        return $this->where('goods_id', '=', $goods_id)->delete();
     }
-
 }

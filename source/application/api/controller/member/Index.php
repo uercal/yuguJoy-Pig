@@ -25,6 +25,7 @@ class Index extends Controller
     {
         // 当前员工信息
         $memberInfo = $this->getMember();
+
         // 权限接口json 12
         $role = $memberInfo['role'];
         $menu = [];
@@ -34,9 +35,9 @@ class Index extends Controller
             $menu[$header] = $role;
         }         
         // unset($menu['order']);
-        //订单    
+        //订单            
         $orderMember = new OrderMember;
-        $orderAfter = $orderMember->getOrderAfter($memberInfo['id']);
+        $orderAfter = $orderMember->getOrderAfter($memberInfo['id']);          
         // 通知
         $noticeLog = new Noticelog;
         $noticeCount = $noticeLog->getUnReadCount($memberInfo['id']);

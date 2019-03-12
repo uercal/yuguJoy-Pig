@@ -14,6 +14,7 @@ use app\api\model\OrderMember;
 use app\api\model\Member;
 use app\api\model\Recharge;
 use app\common\exception\BaseException;
+use app\common\model\RentMode;
 
 /**
  * 订单模型
@@ -68,7 +69,8 @@ class Order extends OrderModel
         // 商品总价
         $goods['total_num'] = $goods_num;
         // 商品租赁信息
-        $rent_info = Db::name('rent_mode')->where('id', $rent_id)->find();
+        $rent_model = new Rentmode;
+        $rent_info = $rent_model->getInfo($rent_id, $goods_spec_id);
         $goods['rent_date'] = $rent_date;
         $goods['rent_num'] = $rent_num;
         $goods['rent_info'] = $rent_info;
@@ -684,15 +686,17 @@ class Order extends OrderModel
         //deduct
         $deductModel = new Deduct;
         $deductLogModel = new DeductLog;
+        $rentModel = new RentMode;
         $deduct = [];
         $deduct_log = [];
         $order_goods = $order['goods'];
         foreach ($order_goods as $key => $value) {
             $_deduct = [];
-            $_init_rent = $this->initRentEnd($value['rent_mode'], $value['rent_num'], $value['rent_date']);
+            $rent_mode = $rentModel->getInfo($value['rent_id'], $value['goods_spec_id']);
+            $_init_rent = $this->initRentEnd($rent_mode, $value['rent_num'], $value['rent_date']);
             $_deduct['order_id'] = $order['order_id'];
             $_deduct['order_goods_id'] = $value['order_goods_id'];
-            $_deduct['rent_mode_id'] = $value['rent_mode']['id'];
+            $_deduct['rent_mode_id'] = $value['rent_id'];
             $_deduct['rent_start'] = $value['rent_date'];
             $_deduct['rent_end'] = $_init_rent['end'];
             $_deduct['deduct_price'] = $_init_rent['price'];

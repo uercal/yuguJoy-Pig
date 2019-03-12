@@ -24,11 +24,11 @@ class OrderAfter extends OrderAfterModel
      * 发起售后
      */
     public function addAfter($after)
-    {                
+    {
         // 售后单号
         $after_no = date('Ymd') . substr(implode(null, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
         $after['after_no'] = $after_no;
-        
+
         // 开启事务
         Db::startTrans();
         try {
@@ -50,7 +50,7 @@ class OrderAfter extends OrderAfterModel
         unset($after['member_token']);
         unset($after['wxapp_id']);
 
-        
+
         // order_member        
         $member_ids = $this->where('id', $after['after_id'])->value('member_ids');
         $member_ids = explode(',', $member_ids);
@@ -76,7 +76,7 @@ class OrderAfter extends OrderAfterModel
         $equip = [];
         $equip_using_log = [];
         $equip_check_log = [];
-        
+
         // 当场修复完毕
         if ($after['checked_equip_ids'] != '') {
             $checked_equip_ids = explode(',', $after['checked_equip_ids']);
@@ -106,7 +106,7 @@ class OrderAfter extends OrderAfterModel
                 $equip_check_log[] = $_check_log;
             }
         }
-        
+
         // 旧
         if ($after['exchange_equip_ids'] != '') {
             $exchange_equip_ids = explode(',', $after['exchange_equip_ids']);
@@ -117,7 +117,7 @@ class OrderAfter extends OrderAfterModel
                 $_using_log['equip_id'] = $value;
                 $_using_log['member_id'] = $after['member_id'];
                 $_using_log['equip_status'] = 40;
-                $equip_using_log[] = $_using_log;                
+                $equip_using_log[] = $_using_log;
 
                 // equip  解除订单
                 $_equip = [];
@@ -139,7 +139,7 @@ class OrderAfter extends OrderAfterModel
                 $_using_log['equip_id'] = $value;
                 $_using_log['member_id'] = $after['member_id'];
                 $_using_log['equip_status'] = 30;
-                $equip_using_log[] = $_using_log;                
+                $equip_using_log[] = $_using_log;
 
                 // equip  绑定订单
                 $_equip = [];
@@ -172,7 +172,7 @@ class OrderAfter extends OrderAfterModel
                 $equip[] = $_equip;
             }
         }
-        
+
 
         //DO
         Db::startTrans();
@@ -191,8 +191,8 @@ class OrderAfter extends OrderAfterModel
                     $after['status'] = 40;
                 }
             }
-            $this->where('id', $id)->update($after);             
-            
+            $this->where('id', $id)->update($after);
+
             // 设备
             $equipModel = new Equip;
             $equipUsingModel = new EquipUsingLog;
@@ -220,20 +220,19 @@ class OrderAfter extends OrderAfterModel
             $this->error = $e->getMessage();
             return false;
         }
-
     }
 
 
     public function doneReback($after)
     {
         unset($after['member_token']);
-        unset($after['wxapp_id']);        
+        unset($after['wxapp_id']);
 
         // order_member        
         $member_ids = $this->where('id', $after['after_id'])->value('member_ids');
         $member_ids = explode(',', $member_ids);
         $order_member = [];
-                
+
         // 返修结算
         $after['pay_status'] = 20;
         foreach ($member_ids as $key => $value) {
@@ -243,7 +242,7 @@ class OrderAfter extends OrderAfterModel
             $_order_member['status'] = 20;
             $order_member[] = $_order_member;
         }
-               
+
         //DO
         Db::startTrans();
         try {
@@ -259,8 +258,8 @@ class OrderAfter extends OrderAfterModel
                 $after['pay_time'] = time();
                 $after['status'] = 40;
             }
-            $this->where('id', $id)->update($after);             
-                        
+            $this->where('id', $id)->update($after);
+
             // 员工
             $orderMemberModel = new OrderMember;
             if (!empty($order_member)) {
@@ -300,12 +299,12 @@ class OrderAfter extends OrderAfterModel
             $_order_member['status'] = 10;
             $order_member[] = $_order_member;
         }
-        
+
         // 开启事务
         Db::startTrans();
         try {
             // halt($after);
-            $this->allowField(true)->save($after, ['after_id' => $after['after_id']]);            
+            $this->allowField(true)->save($after, ['after_id' => $after['after_id']]);
             // 
             $this->order_log()->saveAll($order_member);
             Db::commit();
@@ -362,10 +361,11 @@ class OrderAfter extends OrderAfterModel
 
     public function getSendList($page)
     {
-        return $list = $this->with(['order' => ['address']])->where([
+        $list = $this->with(['order' => ['address']])->where([
             'pay_status' => 10,
             'status' => 10
-        ])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);;
+        ])->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
+        return $list;
     }
 
 
@@ -388,7 +388,7 @@ class OrderAfter extends OrderAfterModel
             // payLog
             $payLog = new PayLog;
             $payLog->save([
-                'pay_type' => 20,//售后
+                'pay_type' => 20, //售后
                 'after_id' => $after_id,
                 'pay_price' => $pay_price,
                 'user_id' => $user_id

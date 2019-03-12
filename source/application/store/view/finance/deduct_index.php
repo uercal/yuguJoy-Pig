@@ -52,7 +52,7 @@
                                 <th style="width:10%;">订单商品</th>
                                 <th>租赁开始</th> 
                                 <th>租赁结束</th>
-                                <th>租金金额</th>
+                                <th>租金单价金额</th>
                                 <th>扣款时间</th>
                                 <th>当前状态</th>                                                                                                                   
                             </tr>

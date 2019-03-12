@@ -53,7 +53,7 @@ class OrderAfter extends BaseModel
     }
 
     public function getMembersAttr($value, $data)
-    {
+    {                
         return Member::with(['roleNameAttr'])->whereIn('id', $data['member_ids'])->select()->toArray();
     }
 

@@ -103,7 +103,7 @@ class OrderMember extends OrderMemberModel
             case 'after':
                 $data = $this->with(['after' => ['order' => ['address', 'equip' => ['goods', 'specValue']]]])->where('id', $id)->find();
                 $equip = $data['after']['order']['equip'];
-                break;           
+                break;
         }
 
         $equip = $equip->toArray();
@@ -134,7 +134,7 @@ class OrderMember extends OrderMemberModel
      * 员工端 申请完成派送底单
      */
     public function sendDone($input, $member_id)
-    {   
+    {
         // 数据组装
         $wxapp_id = $input['wxapp_id'];
         $order_id = $input['order_id'];
@@ -163,24 +163,24 @@ class OrderMember extends OrderMemberModel
                 $param = [];
                 $param['order_id'] = $order_id;
                 $param['equip_id'] = $value['equip_id'];
-                $param['member_id'] = $member_id;//员工操作
+                $param['member_id'] = $member_id; //员工操作
                 $param['equip_status'] = 30;
                 $param['wxapp_id'] = $wxapp_id;
                 $_data[] = $param;
             }
 
             $log = new EquipUsingLog;
-            $log->saveAll($_data);      
+            $log->saveAll($_data);
 
             // 获取配送/维修员工
-            $member_ids = $this->where('order_id', $order_id)->column('member_id');                                
+            $member_ids = $this->where('order_id', $order_id)->column('member_id');
             // 新增配送员工记录
             $_member = [];
             foreach ($member_ids as $key => $value) {
                 $param = [];
                 $param['member_id'] = $value;
                 $param['order_id'] = $order_id;
-                $param['status'] = 20;//已完成
+                $param['status'] = 20; //已完成
                 $_member[] = $param;
             }
             $this->saveAll($_member);
@@ -202,26 +202,5 @@ class OrderMember extends OrderMemberModel
             $this->error = $e->getMessage();
             return false;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

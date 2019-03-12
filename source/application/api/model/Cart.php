@@ -200,10 +200,11 @@ class Cart
             $goods['goods_price'] = $goods_sku['goods_price'];
 
             // 商品租赁信息
-            $rent_info = Db::name('rent_mode')->where('id', $cart['rent_id'])->find();
+            $rent_model = new Rentmode;
+            $rent_info = $rent_model->getInfo($cart['rent_id'], $cart['goods_spec_id']);
             $goods['rent_date'] = $cart['rent_date'];
             $goods['rent_num'] = $cart['rent_num'];
-            $goods['rent_info'] = $rent_info;
+            $goods['rent_info'] = $rent_info;                       
 
             if ($rent_info['is_static'] == 0) {
                 $goods['rent_total_price'] = bcmul($rent_info['price'], $cart['rent_num'], 2);

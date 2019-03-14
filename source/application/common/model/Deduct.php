@@ -113,7 +113,7 @@ class Deduct extends BaseModel
                 // paylog 交易记录 租金扣款 （元）
                 $_paylog = [];
                 $_paylog['order_goods_id'] = $value['order_goods_id'];
-                $_paylog['pay_price'] = $deduct_price / 100;
+                $_paylog['pay_price'] = $deduct_price;
                 $_paylog['pay_type'] = 30;
                 $_paylog['user_id'] = $value['user_id'];
                 $pay_log[] = $_paylog;

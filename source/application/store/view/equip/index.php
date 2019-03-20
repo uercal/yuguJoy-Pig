@@ -5,8 +5,8 @@
                 <div class="widget-head am-cf">
                     <div class="widget-title am-cf">设备列表</div>
                 </div>
-                <div class="widget-body am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                <div class="widget-body am-fr" style="display: flex;align-items: start;justify-content: space-between;flex-direction: row;flex-wrap: wrap;">
+                    <div class="am-u-sm-12 am-u-md-3 am-u-lg-3">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
@@ -20,7 +20,7 @@
                     </div>
                     <!-- 搜索栏 -->
                     <form method="GET" action="" id="form">
-                        <div class="am-form-group" style="position:absolute;right:20px;">
+                        <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs" style="display:flex;">
                                     <a class="am-btn am-btn-default am-radius"
@@ -69,6 +69,8 @@
                             </div>                            
                         </div>
                     </form>
+                </div>
+                <div class="widget-body am-fr">
                     <div class="am-scrollable-horizontal am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-table-striped
                          tpl-table-black am-text-nowrap">

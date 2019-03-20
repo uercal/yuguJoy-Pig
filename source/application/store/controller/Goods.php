@@ -85,15 +85,15 @@ class Goods extends Controller
                 in_array($data['service_id'], $choose_services) ? $data['selected'] = true : $data['selected'] = false;
                 return $data;
             }, $service);
-            
+            // halt($model['spec_rel']);
             // 多规格信息
             $specData = 'null';
             if ($model['spec_type'] === 20)
-                $specData = json_encode($model->getManySpecData($model['spec_rel'], $model['spec']));                
+                $specData = json_encode($model->getManySpecData($model['spec_rel'], $model['spec']));                               
             return $this->fetch('edit', compact('model', 'catgory', 'specData', 'service'));
         }
         // 更新记录        
-        if ($model->edit($this->postData('goods'))) {
+        if ($model->edit($this->postData('goods'))) {            
             return $this->renderSuccess('更新成功', url('goods/index'));
         }
         $error = $model->getError() ? : '更新失败';

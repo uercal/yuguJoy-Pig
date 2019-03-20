@@ -30,8 +30,8 @@
         <th>{{ $value.group_name }}</th>
         {{ /each }}
         <th>押金</th>
-        <th>保修金</th>    
-        <th>租赁价格</th>    
+        <th>意外保</th>    
+        <th colspan="4">租赁价格</th>    
         <!-- <th>库存</th>         -->
     </tr>
     {{ each spec_list item }}
@@ -41,39 +41,55 @@
             {{ td.spec_value }}
         </td>
         {{ /each }}        
-        <td>
+        <td class="td-spec-value am-text-middle">
             <input type="number" name="goods_price" min="0.1" value="{{ item.form.goods_price }}" class="am-field-valid ipt-w80"
                    required>
         </td>
-        <td>
+        <td class="td-spec-value am-text-middle">
             <input type="number" name="secure_price" min="0.1" value="{{ item.form.secure_price }}" class="am-field-valid ipt-w80"
                    required>
-        </td>        
-        <td>
+        </td>                
+        <td class="td-spec-value am-text-middle">                 
             <label for="">日租</label>
-            <input type="number" name="rent_mode][day][price]" min="0.1" value="{{ item.form.rent_mode.day.price }}" class="am-field-valid ipt-w80"
-                   required>
-            <label for="">1~2月</label>
-            <input type="number" name="rent_mode][month][ot]" min="0.1" value="{{ item.form.rent_mode.month.ot }}" class="am-field-valid ipt-w80"
-                   required>                   
-            <label for="">3~5月</label>
-            <input type="number" name="rent_mode][month][tf]" min="0.1" value="{{ item.form.rent_mode.month.tf }}" class="am-field-valid ipt-w80"
-                   required>
+            <input type="number" name="rent_mode][day][price]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.day.price:null }}" class="am-field-valid ipt-w80"
+                required>                                
+        </td>
+        <td class="td-spec-value am-text-middle">     
+            <div>
+                <label for="">1~2月</label>
+                <input type="number" name="rent_mode][month][ot]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.month.ot:null }}" class="am-field-valid ipt-w80"
+                    required>                                   
+            </div>                                            
+            <div>
+                <label for="">3~5月</label>
+                <input type="number" name="rent_mode][month][tf]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.month.tf:null }}" class="am-field-valid ipt-w80"
+                    required>                                    
+            </div>
+        </td>
+        <td class="td-spec-value am-text-middle">                 
             <label for="">6月+</label>
-            <input type="number" name="rent_mode][month][s]" min="0.1" value="{{ item.form.rent_mode.month.s }}" class="am-field-valid ipt-w80"
-                   required>                   
-            <label for="">1年</label>
-            <input type="number" name="rent_mode][year][o]" min="0.1" value="{{ item.form.rent_mode.year.o }}" class="am-field-valid ipt-w80"
-                   required>
-            <label for="">2年</label>
-            <input type="number" name="rent_mode][year][t]" min="0.1" value="{{ item.form.rent_mode.year.t }}" class="am-field-valid ipt-w80"
-                   required>
-        </td>        
-        <!-- <td>
-            <input type="number" name="stock_num" min="0.1" value="{{ item.form.stock_num }}" class="am-field-valid ipt-w80"
-                   required>
-        </td>        -->
+            <input type="number" name="rent_mode][month][s]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.month.s:null }}" class="am-field-valid ipt-w80"
+                required>                                              
+        </td>
+        <td class="td-spec-value am-text-middle">   
+            <div>
+                <label for="">1年</label>
+                <input type="number" name="rent_mode][year][o]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.year.o:null }}" class="am-field-valid ipt-w80"
+                    required>    
+            </div>                                               
+            <div>
+                <label for="">2年</label>
+                <input type="number" name="rent_mode][year][t]" min="0" value="{{ item.form.rent_mode?item.form.rent_mode.year.t:null }}" class="am-field-valid ipt-w80"
+                    required>        
+            </div>
+        </td>
+
+        <!--  -->             
     </tr>
     {{ /each }}
     </tbody>
-</script> 
+</script>
+<style>
+
+
+</style> 

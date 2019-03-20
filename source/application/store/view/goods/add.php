@@ -189,6 +189,16 @@
                                 </div>
                             </div>
                             <div class="am-form-group">
+                                <label class="am-u-sm-3 am-u-lg-2 am-form-label">增值服务</label>
+                                <div class="am-u-sm-9 am-u-end">
+                                    <?php foreach ($service as $item) : ?>
+                                    <label class="am-checkbox">
+                                        <input type="checkbox" name="goods[service][]" value="<?= $item['service_id'] ?>" data-am-ucheck><?= $item['service_name'] ?>
+                                    </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
                                 <label class="am-u-sm-3 am-u-lg-2 am-form-label">初始销量</label>
                                 <div class="am-u-sm-9 am-u-end">
                                     <input type="number" class="tpl-form-input" name="goods[sales_initial]" value="0">
@@ -268,7 +278,7 @@
          */
         $('#my-form').superForm({
             // form data
-            buildData: function() {                
+            buildData: function() {
                 return {
                     goods: {
                         spec_many: specMany.getData()

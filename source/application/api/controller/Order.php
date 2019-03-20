@@ -90,7 +90,7 @@ class Order extends Controller
         if (input('choose_key_list')) {
             $choose_key_list = input('choose_key_list');
             $choose_key_list = explode('#', $choose_key_list);
-            $order = $model->getCartByKey($this->user, $choose_key_list);
+            $order = $model->getCartByKey($this->user, $choose_key_list);            
         } else {
             $order = $model->getCart($this->user);
         }

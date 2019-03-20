@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use app\common\model\RentMode;
 use think\Db;
 
 
@@ -55,6 +56,14 @@ class OrderGoods extends BaseModel
         return $this->hasOne('RentMode', 'id', 'rent_id');
     }
 
+
+    public function getRentListInfoAttr($value, $data)
+    {
+        $mode = new RentMode;
+        return $mode->getList($data['goods_spec_id']);
+    }
+
+
     /**
      * 
      */
@@ -81,5 +90,4 @@ class OrderGoods extends BaseModel
     {
         return $this->belongsTo('GoodsSpec', 'spec_sku_id', 'spec_sku_id');
     }
-
 }

@@ -118,11 +118,10 @@ class Goods extends BaseModel
                 'spec_value' => $item['spec_value'],
                 'spec_value_id' => $item['spec_value_id'],
             ];
-        }
-
+        }        
         // spec_list
         $specListData = [];
-        foreach ($skuData->toArray() as $item) {
+        foreach ($skuData->toArray() as $item) {                 
             $specListData[] = [
                 'goods_spec_id' => $item['goods_spec_id'],
                 'spec_sku_id' => $item['spec_sku_id'],
@@ -140,11 +139,11 @@ class Goods extends BaseModel
                         'year' => [
                             'o' => 10,
                             't' => 20
-                        ]
+                        ]                        
                     ]
                 ],
             ];
-        }
+        }             
         return ['spec_attr' => array_values($specAttrData), 'spec_list' => $specListData];
     }
 

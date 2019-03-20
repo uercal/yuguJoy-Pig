@@ -89,7 +89,11 @@ class Order extends OrderModel
                 } else {
                     // 
                     if ($rent_num >= $value['min'] && $rent_num <= $value['max']) {
-                        $goods['rent_total_price'] = bcmul($value['price'], $rent_num, 2);
+                        if ($rent_num >= 3) {
+                            $goods['rent_total_price'] = bcmul($value['price'], 3, 2);
+                        } else {
+                            $goods['rent_total_price'] = bcmul($value['price'], $rent_num, 2);
+                        }
                         $goods['rent_price'] = $value['price'];
                         break;
                     }
@@ -195,7 +199,7 @@ class Order extends OrderModel
         foreach ($order['goods_list'] as $goods) {
             /* @var Goods $goods */
             // 取消购物车 单一物品购买
-            $goods_sku = $goods['spec'][0];
+            $goods_sku = $goods['goods_sku'];
             // 
             $goodsList[] = [
                 'user_id' => $user_id,

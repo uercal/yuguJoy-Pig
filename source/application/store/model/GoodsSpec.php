@@ -21,7 +21,7 @@ class GoodsSpec extends GoodsSpecModel
     public function addSkuList($goods_id, $spec_list)
     {
         $data = [];
-        foreach ($spec_list as $item) {
+        foreach ($spec_list as $item) {                    
             $item['form']['rent_mode'] = json_encode($item['form']['rent_mode']);
             $data[] = array_merge($item['form'], [
                 'spec_sku_id' => $item['spec_sku_id'],

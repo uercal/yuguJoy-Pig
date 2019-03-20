@@ -225,17 +225,16 @@ class Order extends Controller
             $error = $model->getError() ?: '更新失败';
             return $this->renderError($error);
         }
-        $detail = OrderModel::detail($order_id);
+        $detail = OrderModel::detail($order_id);         
         // 租赁模式 list
-        $rent_model = new RentModeModel;
-        $rent_list = $rent_model->getList();
+                
         // 订单配送人员列表
         $member_ids = OrderMember::where('order_id', $detail['order_id'])->column('member_id');
         $member = new MemberModel;
         $member_list = $member->getList(['id' => ['in', array_unique($member_ids)]]);
 
         // 
-        return $this->fetch('edit', compact('detail', 'rent_list', 'member_list'));
+        return $this->fetch('edit', compact('detail', 'member_list'));
     }
 
 

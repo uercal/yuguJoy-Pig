@@ -90,10 +90,16 @@ class RentMode extends BaseModel
         foreach ($list as $key => $value) {
             $list[$key]['map'] = json_decode($value['map'], true);
             if ($value['is_static'] == 0) {
-                // 不随动
+                // 不随动                
                 $list[$key]['price_type_text'] = '日';
                 $list[$key]['show_price'] = '￥' . $value['price'];
                 $list[$key]['content'] = "￥" . $value['price'] . "/日," . $value['content'];
+                $list[$key]['rent_limit'] = 1;
+                $list[$key]['rent_num'] = 1;
+                if ($value['price'] == 0) {
+                    unset($list[$key]);
+                    continue;
+                }
             } else {
                 // 随动
                 $list[$key]['price_type_text'] = '月';
@@ -104,21 +110,36 @@ class RentMode extends BaseModel
                 sort($price);
 
                 if ($value['time_type'] == 20 && count($price) == 1) {
+                    if ($price[0] == '￥0') {
+                        unset($list[$key]);
+                        continue;
+                    }
                     $list[$key]['content'] = '6个月以上：' . $price[0] . '/月.' . $value['content'];
+                    $list[$key]['rent_limit'] = 6;
+                    $list[$key]['rent_num'] = 6;
                 }
                 if ($value['time_type'] == 20 && count($price) == 2) {
+                    if (($price[0] == '￥0' || $price[1] == '￥0')) {
+                        unset($list[$key]);
+                        continue;
+                    }
                     $list[$key]['content'] = '1个月至2个月：' . $price[0] . '/月，3个月至5个月：' . $price[1] . '/月.' . $value['content'];
+                    $list[$key]['rent_limit'] = 5;
+                    $list[$key]['rent_num'] = 1;
                 }
                 if ($value['time_type'] == 30) {
+                    if (($price[0] == '￥0' || $price[1] == '￥0')) {
+                        unset($list[$key]);
+                        continue;
+                    }
                     $list[$key]['content'] = '1年（' . $price[0] . '/月）,2年（' . $price[1] . '/月）.' . $value['content'];
+                    $list[$key]['rent_limit'] = 24;
+                    $list[$key]['rent_num'] = 12;
                 }
-
-
-
                 $list[$key]['show_price'] = implode('~', $price);
             }
         }
-
+        $list = array_values($list->toArray());
         return $list;
     }
 

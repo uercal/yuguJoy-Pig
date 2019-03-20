@@ -1,5 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
+ // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
@@ -137,7 +137,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         if ($this->disuse) {
             // 废弃字段
-            foreach ((array) $this->disuse as $key) {
+            foreach ((array)$this->disuse as $key) {
                 if (array_key_exists($key, $this->data)) {
                     unset($this->data[$key]);
                 }
@@ -276,7 +276,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         // 全局作用域
         if ($useBaseQuery && method_exists($this, 'base')) {
-            call_user_func_array([$this, 'base'], [ & $query]);
+            call_user_func_array([$this, 'base'], [&$query]);
         }
 
         // 返回当前模型的数据库查询对象
@@ -303,8 +303,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
      * @return void
      */
     protected static function init()
-    {
-    }
+    { }
 
     /**
      * 设置父关联对象
@@ -485,11 +484,12 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
                     $value = time();
                     break;
             }
-        } elseif (is_string($this->autoWriteTimestamp) && in_array(strtolower($this->autoWriteTimestamp), [
-            'datetime',
-            'date',
-            'timestamp',
-        ])
+        } elseif (
+            is_string($this->autoWriteTimestamp) && in_array(strtolower($this->autoWriteTimestamp), [
+                'datetime',
+                'date',
+                'timestamp',
+            ])
         ) {
             $value = $this->formatDateTime(time(), $this->dateFormat);
         } else {
@@ -536,17 +536,17 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         }
         switch ($type) {
             case 'integer':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
             case 'float':
                 if (empty($param)) {
-                    $value = (float) $value;
+                    $value = (float)$value;
                 } else {
-                    $value = (float) number_format($value, $param, '.', '');
+                    $value = (float)number_format($value, $param, '.', '');
                 }
                 break;
             case 'boolean':
-                $value = (bool) $value;
+                $value = (bool)$value;
                 break;
             case 'timestamp':
                 if (!is_numeric($value)) {
@@ -564,15 +564,14 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
                 }
                 break;
             case 'array':
-                $value = (array) $value;
+                $value = (array)$value;
             case 'json':
-                $option = !empty($param) ? (int) $param : JSON_UNESCAPED_UNICODE;
+                $option = !empty($param) ? (int)$param : JSON_UNESCAPED_UNICODE;
                 $value  = json_encode($value, $option);
                 break;
             case 'serialize':
                 $value = serialize($value);
                 break;
-
         }
         return $value;
     }
@@ -602,11 +601,12 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             // 类型转换
             $value = $this->readTransform($value, $this->type[$name]);
         } elseif (in_array($name, [$this->createTime, $this->updateTime])) {
-            if (is_string($this->autoWriteTimestamp) && in_array(strtolower($this->autoWriteTimestamp), [
-                'datetime',
-                'date',
-                'timestamp',
-            ])
+            if (
+                is_string($this->autoWriteTimestamp) && in_array(strtolower($this->autoWriteTimestamp), [
+                    'datetime',
+                    'date',
+                    'timestamp',
+                ])
             ) {
                 $value = $this->formatDateTime(strtotime($value), $this->dateFormat);
             } else {
@@ -669,17 +669,17 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         }
         switch ($type) {
             case 'integer':
-                $value = (int) $value;
+                $value = (int)$value;
                 break;
             case 'float':
                 if (empty($param)) {
-                    $value = (float) $value;
+                    $value = (float)$value;
                 } else {
-                    $value = (float) number_format($value, $param, '.', '');
+                    $value = (float)number_format($value, $param, '.', '');
                 }
                 break;
             case 'boolean':
-                $value = (bool) $value;
+                $value = (bool)$value;
                 break;
             case 'timestamp':
                 if (!is_null($value)) {
@@ -1113,7 +1113,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
             $array = [];
 
-            foreach ((array) $pk as $key) {
+            foreach ((array)$pk as $key) {
                 if (isset($data[$key])) {
                     $array[$key] = $data[$key];
                     unset($data[$key]);
@@ -1141,7 +1141,6 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
             // 更新回调
             $this->trigger('after_update', $this);
-
         } else {
             // 自动写入
             $this->autoCompleteData($this->insert);
@@ -1170,7 +1169,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
             // 获取自动增长主键
             if ($result && $insertId = $this->getQuery()->getLastInsID($sequence)) {
-                foreach ((array) $pk as $key) {
+                foreach ((array)$pk as $key) {
                     if (!isset($this->data[$key]) || '' == $this->data[$key]) {
                         $this->data[$key] = $insertId;
                     }
@@ -1212,7 +1211,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             }
         } elseif (!empty($this->except)) {
             $fields      = $this->getQuery()->getTableInfo('', 'fields');
-            $field       = array_diff($fields, (array) $this->except);
+            $field       = array_diff($fields, (array)$this->except);
             $this->field = $field;
         } else {
             $field = [];
@@ -1220,7 +1219,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
 
         if ($this->disuse) {
             // 废弃字段
-            $field = array_diff($field, (array) $this->disuse);
+            $field = array_diff($field, (array)$this->disuse);
         }
         return $field;
     }
@@ -1623,7 +1622,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         if (isset(self::$event[$this->class][$event])) {
             foreach (self::$event[$this->class][$event] as $callback) {
                 if (is_callable($callback)) {
-                    $result = call_user_func_array($callback, [ & $params]);
+                    $result = call_user_func_array($callback, [&$params]);
                     if (false === $result) {
                         return false;
                     }
@@ -1725,7 +1724,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             $result = $result->where($data);
             $data   = null;
         } elseif ($data instanceof \Closure) {
-            call_user_func_array($data, [ & $result]);
+            call_user_func_array($data, [&$result]);
             $data = null;
         } elseif ($data instanceof Query) {
             $result = $data->with($with)->cache($cache);
@@ -1750,7 +1749,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             $query->where($data);
             $data = null;
         } elseif ($data instanceof \Closure) {
-            call_user_func_array($data, [ & $query]);
+            call_user_func_array($data, [&$query]);
             $data = null;
         }
         $resultSet = $query->select($data);
@@ -2232,7 +2231,6 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         } catch (InvalidArgumentException $e) {
             return false;
         }
-
     }
 
     /**
@@ -2330,5 +2328,4 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     {
         self::event('after_delete', $callback, $override);
     }
-
 }

@@ -421,7 +421,7 @@ class Order extends OrderModel
             $value['order_goods_id'] = $key;
             $value['rent_date'] = strtotime($value['rent_date']);
             // 
-            $rent_info = $this->getRentPriceArr($value['rent_id'], $value['rent_num']);
+            $rent_info = $this->getRentPriceArr($value['rent_id'], $value['rent_num'], $value['order_goods_id']);
             $value['rent_price'] = $rent_info['rent_price'];
             $value['rent_total_price'] = $rent_info['rent_total_price'];
             // 
@@ -509,10 +509,13 @@ class Order extends OrderModel
         return $model->saveAll($order_goods);
     }
 
-    public function getRentPriceArr($rent_id, $rent_num)
+    public function getRentPriceArr($rent_id, $rent_num, $order_goods_id)
     {
-        $rent_info = RentMode::get($rent_id);
-        if ($rent_info['is_static'] == 0) return ['rent_price' => 18.00, 'rent_total_price' => bcmul(18, $rent_num, 2)];
+        $mode = new RentMode;
+        $goods_spec_id = OrderGoods::get($order_goods_id)['goods_spec_id'];
+        $rent_info = $mode->getInfo($rent_id, $goods_spec_id);
+        // halt($rent_info->toArray());
+        if ($rent_info['is_static'] == 0) return ['rent_price' => $rent_info['price'], 'rent_total_price' => bcmul($rent_info['price'], $rent_num, 2)];
         // 
         $map = json_decode($rent_info['map'], true);
         foreach ($map as $key => $value) {

@@ -194,7 +194,7 @@ input::-webkit-inner-spin-button{
                                     <td style="width:10%;">
                                         <select class="rent-mode-select" order-goods-id="<?= $goods['order_goods_id'] ?>"
                                         data-am-selected="{btnWidth: '60%', btnSize: 'xs'}" name="goods[<?= $goods['order_goods_id'] ?>][rent_id]">
-                                            <?php foreach ($rent_list as $rent) : ?>
+                                            <?php foreach ($goods['rent_list_info'] as $rent) : ?>
                                             <option value="<?= $rent['id'] ?>" <?= $rent['id'] == $goods['rent_mode']['id'] ? 'selected' : '' ?>
                                             data-content="<?= $rent['content'] ?>" class="rent_content" data-rent-unit="<?= $rent['rent_show_unit'] ?>">
                                                 <?= $rent['name'] ?>

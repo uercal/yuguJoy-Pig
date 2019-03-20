@@ -16,7 +16,7 @@
         // 配置信息
         setting = $.extend(true, {}, setting, options);
         // 已存在的规格数据
-        typeof baseData !== 'undefined' && baseData !== null && (data = baseData);        
+        typeof baseData !== 'undefined' && baseData !== null && (data = baseData);
         // 初始化
         this.initialize();
     }
@@ -212,7 +212,7 @@
                     if (typeof formType !== 'undefined' && formType !== '' && value !== '') {
                         formData[formType] = value;
                     }
-                });
+                });                
                 if (!$.isEmptyObject(formData)) {
                     data.spec_list.forEach(function (item, index) {
                         data.spec_list[index].form = $.extend({}, data.spec_list[index].form, formData);
@@ -228,6 +228,7 @@
          */
         renderHtml: function () {
             // 渲染商品规格元素
+            console.log(data);
             this.$specAttr.html(template('tpl_spec_attr', data));
             // 渲染商品规格table
             this.renderTabelHtml();
@@ -309,9 +310,9 @@
             _this.$container.find('.spec-sku-tabel').on('propertychange change', 'input', function () {
                 var $this = $(this),
                     dataType = $this.attr('name'),
-                    specIndex = $this.parent().parent().data('index');
+                    specIndex = $this.parents('tr').data('index');
+                console.log([dataType, $this.val(), specIndex]);
                 data.spec_list[specIndex].form[dataType] = $this.val();
-                console.log([dataType, $this.val()]);
             });
         },
 

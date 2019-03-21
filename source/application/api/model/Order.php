@@ -374,7 +374,7 @@ class Order extends OrderModel
         Db::startTrans();
         try {
             // 保存订单信息
-            $this->save($_state);
+            $this->allowField(true)->save($_state);
             // 设备状态
             Equip::where('order_id', $this['order_id'])->update([
                 'status' => 30,

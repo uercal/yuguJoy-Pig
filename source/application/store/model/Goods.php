@@ -39,6 +39,7 @@ class Goods extends GoodsModel
             Db::commit();
             return true;
         } catch (\Exception $e) {
+            $this->error = $e;
             Db::rollback();
         }
         return false;

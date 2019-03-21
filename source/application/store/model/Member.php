@@ -95,9 +95,9 @@ class Member extends MemberModel
         // 开启事务处理
         Db::startTrans();
         try {
-            // 删除当前商品
+            // 
             $status = $this->status;
-            if ($status == 10) {
+            if ($status != 40) {
                 $this->status = 40;
             }
             if ($status == 40) {

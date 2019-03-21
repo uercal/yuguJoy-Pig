@@ -38,8 +38,8 @@ class Goods extends GoodsModel
             $this->addGoodsImages($data['images']);
             Db::commit();
             return true;
-        } catch (\Exception $e) {
-            $this->error = $e;
+        } catch (\Exception $e) {   
+            $this->error = $e->getMessage();         
             Db::rollback();
         }
         return false;

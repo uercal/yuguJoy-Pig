@@ -473,7 +473,7 @@ class Order extends OrderModel
             'user_id' => $user_id,
             'order_status' => ['<>', 20]
         ], [
-            // 'goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode','deduct'],
+            'goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode'],
             'deduct' => ['order_goods' => ['image', 'spec', 'specValueName', 'goods', 'rentMode']],
             'address'
         ])) {

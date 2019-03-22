@@ -672,66 +672,72 @@ class Order extends OrderModel
 
 
         Db::startTrans();
-        // account_money
-        $account = new AccountMoney;
-        $account->where('user_id', $user_id)->setDec('account_money', $dec_account_money);
-        $account->where('user_id', $user_id)->setInc('freezing_account', $inc_freezing_account);
-        $account->where('user_id', $user_id)->setInc('freezing_quota', $inc_freezing_quota);
+        try {
+            //code...
 
-        //payLog
-        $payLog = new PayLog;
-        $payLog->save([
-            'pay_type' => 10, //订单
-            'order_id' => $order['order_id'],
-            'pay_price' => bcadd($rent_price, $bonus_money, 2),
-            'user_id' => $user_id
-        ]);
+            // account_money
+            $account = new AccountMoney;
+            $account->where('user_id', $user_id)->setDec('account_money', $dec_account_money);
+            $account->where('user_id', $user_id)->setInc('freezing_account', $inc_freezing_account);
+            $account->where('user_id', $user_id)->setInc('freezing_quota', $inc_freezing_quota);
 
-        //deduct
-        $deductModel = new Deduct;
-        $deductLogModel = new DeductLog;
-        $rentModel = new RentMode;
-        $deduct = [];
-        $deduct_log = [];
-        $order_goods = $order['goods'];
-        foreach ($order_goods as $key => $value) {
-            $_deduct = [];
-            $rent_mode = $rentModel->getInfo($value['rent_id'], $value['goods_spec_id']);
-            $_init_rent = $this->initRentEnd($rent_mode, $value['rent_num'], $value['rent_date']);
-            $_deduct['order_id'] = $order['order_id'];
-            $_deduct['order_goods_id'] = $value['order_goods_id'];
-            $_deduct['rent_mode_id'] = $value['rent_id'];
-            $_deduct['rent_start'] = $value['rent_date'];
-            $_deduct['rent_end'] = $_init_rent['end'];
-            $_deduct['deduct_price'] = $_init_rent['price'];
-            $_deduct['status'] = $_init_rent['end'] == $_init_rent['deduct'] ? 20 : 10;
-            $_deduct['deduct_time'] = $_init_rent['deduct'];
-            $_deduct['user_id'] = $user_id;
-            $deduct[] = $_deduct;
-            $_deduct_log = [];
-            $_deduct_log['order_goods_id'] = $value['order_goods_id'];
-            $_deduct_log['start_time'] = $value['rent_date'];
-            $_deduct_log['end_time'] = $_init_rent['deduct'];
-            $deduct_log[] = $_deduct_log;
+            //payLog
+            $payLog = new PayLog;
+            $payLog->save([
+                'pay_type' => 10, //订单
+                'order_id' => $order['order_id'],
+                'pay_price' => bcadd($rent_price, $bonus_money, 2),
+                'user_id' => $user_id
+            ]);
+            
+            //deduct
+            $deductModel = new Deduct;
+            $deductLogModel = new DeductLog;
+            $rentModel = new RentMode;
+            $deduct = [];
+            $deduct_log = [];
+            $order_goods = $order['goods'];            
+            foreach ($order_goods as $key => $value) {
+                $_deduct = [];
+                $rent_mode = $rentModel->getInfo($value['rent_id'], $value['goods_spec_id']);                           
+                $_init_rent = $this->initRentEnd($rent_mode, $value['rent_num'], $value['rent_date']);         
+                $_deduct['order_id'] = $order['order_id'];
+                $_deduct['order_goods_id'] = $value['order_goods_id'];
+                $_deduct['rent_mode_id'] = $value['rent_id'];
+                $_deduct['rent_start'] = $value['rent_date'];
+                $_deduct['rent_end'] = $_init_rent['end'];
+                $_deduct['deduct_price'] = $_init_rent['price'];
+                $_deduct['status'] = $_init_rent['end'] == $_init_rent['deduct'] ? 20 : 10;
+                $_deduct['deduct_time'] = $_init_rent['deduct'];
+                $_deduct['user_id'] = $user_id;
+                $deduct[] = $_deduct;
+                $_deduct_log = [];
+                $_deduct_log['order_goods_id'] = $value['order_goods_id'];
+                $_deduct_log['start_time'] = $value['rent_date'];
+                $_deduct_log['end_time'] = $_init_rent['deduct'];
+                $deduct_log[] = $_deduct_log;
+            }
+            
+            $deductModel->saveAll($deduct);
+            $deductLogModel->saveAll($deduct_log);
+
+            // 更新订单状态
+            $this->save([
+                'pay_status' => 20,
+                'pay_time' => time(),
+                'transaction_id' => '余额付款',
+                'freezing_account' => $inc_freezing_account,
+                'freezing_quota' => $inc_freezing_quota
+            ], [
+                'order_id' => $order['order_id']
+            ]);
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            Db::rollback();
+            $this->error = $e->getMessage();
+            return false;
         }
-
-        $deductModel->saveAll($deduct);
-        $deductLogModel->saveAll($deduct_log);
-
-
-
-        // 更新订单状态
-        $this->save([
-            'pay_status' => 20,
-            'pay_time' => time(),
-            'transaction_id' => '余额付款',
-            'freezing_account' => $inc_freezing_account,
-            'freezing_quota' => $inc_freezing_quota
-        ], [
-            'order_id' => $order['order_id']
-        ]);
-        Db::commit();
-        return true;
     }
 
 

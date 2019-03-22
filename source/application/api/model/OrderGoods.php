@@ -21,8 +21,9 @@ class OrderGoods extends OrderGoodsModel
         'create_time',
     ];
 
+    protected $append = ['rent_dately'];
 
-    public function getRentDateAttr($value, $data)
+    public function getRentDatelyAttr($value, $data)
     {
         return date('Y-m-d', $data['rent_date']);
     }

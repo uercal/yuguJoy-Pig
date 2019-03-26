@@ -349,7 +349,8 @@
                         </table>        
                         <?php endif; ?>
 
-
+                        
+                        <br>
                         <div class="widget-head am-cf">
                             <div class="widget-title am-fl">售后处理说明</div>
                         </div>                     

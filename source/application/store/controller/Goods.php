@@ -40,7 +40,7 @@ class Goods extends Controller
             $service = GoodsServiceModel::getAll();
             return $this->fetch('add', compact('catgory', 'service'));
         }
-        $model = new GoodsModel;
+        $model = new GoodsModel;        
         if ($model->add($this->postData('goods'))) {
             return $this->renderSuccess('添加成功', url('goods/index'));
         }

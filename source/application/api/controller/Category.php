@@ -36,7 +36,18 @@ class Category extends Controller
             });
             $choose_list = array_values($choose_list)[0];
         } else {
-            $choose_list = $list[0];
+            $child = [];
+            foreach ($list as $key => $value) {
+                $child = array_merge($child,$value['child']);                
+            }
+            $_list = [
+                'category_id' => 0,
+                'name' => '全部',
+                'parent_id' => 0,
+                'sort' => 100,
+                'child' => $child
+            ];
+            $choose_list = $_list;
         }
         return $this->renderSuccess(compact('list', 'choose_list'));
     }

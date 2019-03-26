@@ -19,6 +19,7 @@ class Goods extends GoodsModel
      */
     public function add(array $data)
     {
+        // halt($data['spec_many']['spec_list']);
         if (!isset($data['images']) || empty($data['images'])) {
             $this->error = '请上传商品图片';
             return false;

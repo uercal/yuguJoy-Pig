@@ -58,7 +58,7 @@
         <?php $menus = $menus ?: []; ?>
         <?php $group = $group ?: 0; ?>
         <!-- 一级菜单 -->
-        <ul class="sidebar-nav">
+        <ul class="sidebar-nav" style="overflow-y: auto;">
             <li class="sidebar-nav-heading"><?= $setting['store']['values']['name'] ?></li>
             <?php foreach ($menus as $key => $item): ?>
                 <li class="sidebar-nav-link">

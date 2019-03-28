@@ -26,6 +26,25 @@ class Goods extends GoodsModel
         }
         $data['content'] = isset($data['content']) ? $data['content'] : '';
         $data['wxapp_id'] = $data['spec']['wxapp_id'] = self::$wxapp_id;
+
+
+        // 检查租赁金额是否全部为0
+        $spec_list = $data['spec_many']['spec_list'];
+        $zero = 0;
+        foreach ($spec_list as $key => $value) {
+            $rent_mode = $value['form']['rent_mode'];
+            if ($this->isZeroMode($rent_mode)) {
+                $zero = 1;
+                break;
+            }
+        }
+
+        if ($zero == 1) {
+            $this->error = '租赁模式金额不能全为0';
+            return false;
+        }
+
+
         // 开启事务
         Db::startTrans();
         try {
@@ -39,8 +58,8 @@ class Goods extends GoodsModel
             $this->addGoodsImages($data['images']);
             Db::commit();
             return true;
-        } catch (\Exception $e) {   
-            $this->error = $e->getMessage();         
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
             Db::rollback();
         }
         return false;
@@ -138,9 +157,10 @@ class Goods extends GoodsModel
     public function isZeroMode($rent_mode)
     {
         $day = $rent_mode['day']['price'] == 0;
-        $month = $rent_mode['month']['ot'] == 0 || $rent_mode['month']['tf'] == 0 || $rent_mode['month']['s'] == 0;
+        $month = $rent_mode['month']['ot'] == 0 || $rent_mode['month']['tf'] == 0;
+        $_month = $rent_mode['month']['s'] == 0;
         $year = $rent_mode['year']['o'] == 0 || $rent_mode['year']['t'] == 0;
-        if ($day && $month && $year) {
+        if ($day && $month && $year && $_month) {
             return true;
         } else {
             return false;

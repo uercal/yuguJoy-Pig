@@ -51,15 +51,15 @@ class Cart
             $goodsList[$goods['goods_id']] = $goods;
         }
         // 购物车商品列表
-        $cartList = [];
+        $cartList = [];        
         foreach ($this->cart as $key => $cart) {
             //             
             /* @var Goods $goods */
             $goods = $goodsList[$cart['goods_id']];
-            $goods['key'] = $key;
+            $goods['key'] = $key;            
             // 规格信息
-            $goods['goods_spec_id'] = $cart['goods_spec_id'];
-            $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']];
+            $goods['goods_spec_id'] = $cart['goods_spec_id'];            
+            $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']];                        
             // 多规格文字内容
             $goods_sku['goods_attr'] = '';
             if ($goods['spec_type'] === 20) {
@@ -69,7 +69,7 @@ class Cart
                     $goods_sku['goods_attr'] .= $spec_rel[$specValueId]['spec']['spec_name'] . ':'
                         . $spec_rel[$specValueId]['spec_value'] . '; ';
                 }
-            }
+            }            
             $goods['goods_sku'] = $goods_sku;
             // 商品单价
             $goods['goods_price'] = $goods_sku['goods_price'];

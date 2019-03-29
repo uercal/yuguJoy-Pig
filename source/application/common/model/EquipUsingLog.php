@@ -48,7 +48,7 @@ class EquipUsingLog extends BaseModel
         $map = $request->request();
         $_map = [];
         if (!empty($map['equip_id'])) $_map['equip_id'] = ['=', $map['equip_id']];
-
+        if (!empty($map['equip_status'])) $_map['equip_status'] = ['=', $map['equip_status']];
         if (!empty($map['startDate']) && !empty($map['endDate'])) $_map['Using_time'] = ['between', [strtotime($map['startDate']), strtotime($map['endDate'])]];
 
         $data = $this->with(['order', 'member'])

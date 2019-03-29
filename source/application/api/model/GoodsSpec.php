@@ -4,6 +4,8 @@ namespace app\api\model;
 
 use app\common\model\GoodsSpec as GoodsSpecModel;
 
+use app\common\model\RentMode;
+
 /**
  * 商品规格模型
  * Class GoodsSpec
@@ -21,4 +23,17 @@ class GoodsSpec extends GoodsSpecModel
         'update_time'
     ];
 
+    protected $append = ['default_rent'];
+
+
+
+    public function getDefaultRentAttr($value, $data)
+    {
+        $model = new RentMode;
+        $list = $model->getList($data['goods_spec_id']);
+        $res = array_values(array_filter($list, function ($e) {
+            return $e['is_default']  == 1;
+        }));
+        return $res;
+    }
 }

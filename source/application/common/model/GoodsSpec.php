@@ -11,4 +11,5 @@ class GoodsSpec extends BaseModel
 {
     protected $name = 'goods_spec';
 
+    
 }

@@ -118,11 +118,7 @@ class Equip extends EquipModel
     {
         // 开启事务处理
         Db::startTrans();
-        try {
-            // 删除设备sku
-            (new GoodsSpec)->removeAll($this['goods_id']);
-            // 删除设备图片
-            $this->image()->delete();
+        try {           
             // 删除当前设备
             $this->delete();
             // 事务提交

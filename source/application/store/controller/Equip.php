@@ -65,7 +65,7 @@ class Equip extends Controller
      */
     public function delete($equip_id)
     {
-        $model = GoodsModel::get($equip_id);
+        $model = EquipModel::get($equip_id);
         if (!$model->remove()) {
             return $this->renderError('删除失败');
         }

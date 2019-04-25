@@ -84,7 +84,7 @@ class Equip extends BaseModel
 
     public static function detail($equip_id)
     {
-        return self::with(['goodsGetName', 'specValue', 'goods' => ['service' => ['service']], 'order'])->where('equip_id', $equip_id)->find()->append(['services'])->toArray();
+        return self::with(['goodsGetName', 'specValue', 'goods' => ['service' => ['service']], 'order'])->where('equip_id', $equip_id)->find()->append(['services']);
     }
 
 

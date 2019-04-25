@@ -104,7 +104,7 @@ class Goods extends BaseModel
     public function getManySpecData($spec_rel, $skuData)
     {
         // spec_attr
-        $specAttrData = [];
+        $specAttrData = [];        
         foreach ($spec_rel->toArray() as $item) {
             if (!isset($specAttrData[$item['spec_id']])) {
                 $specAttrData[$item['spec_id']] = [

@@ -49,7 +49,7 @@ class Equip extends Controller
             if ($model->add($this->postData('equip'))) {
                 return $this->renderSuccess('添加成功', url('equip/index'));
             }
-            $error = $model->getError() ? : '添加失败';
+            $error = $model->getError() ?: '添加失败';
             return $this->renderError($error);
         } else {
             $error = 'SN码已存在';
@@ -83,17 +83,17 @@ class Equip extends Controller
         // 设备详情
         $model = EquipModel::detail($equip_id);
         if (!$this->request->isAjax()) {
-            // 产品
+            // 产品            
             $spec_list = $this->getSku($model['goods_id']);
             $goods = GoodsModel::getChooseList();
             return $this->fetch('edit', compact('model', 'goods', 'spec_list'));
         }
         // 更新记录
-        if ($this->checkSN($this->postData('equip')['sn_code'])) {
+        if ($this->checkSN($this->postData('equip')['sn_code'], $equip_id)) {
             if ($model->edit($this->postData('equip'))) {
                 return $this->renderSuccess('更新成功', url('equip/index'));
             }
-            $error = $model->getError() ? : '更新失败';
+            $error = $model->getError() ?: '更新失败';
             return $this->renderError($error);
         } else {
             $error = 'SN码已存在';
@@ -102,10 +102,14 @@ class Equip extends Controller
     }
 
 
-    public function checkSN($code)
+    public function checkSN($code, $equip_id = null)
     {
         $obj = EquipModel::where(['sn_code' => $code])->find();
-        return $obj === null;
+        if ($obj) {
+            return $equip_id ? $obj['equip_id'] == $equip_id : false;
+        } else {
+            return true;
+        }
     }
 
     public function getSku($goods_id)
@@ -235,7 +239,6 @@ class Equip extends Controller
         $map = $res['map'];
         $list = $res['data'];
         return $this->fetch('using_index', compact('map', 'list'));
-
     }
 
 
@@ -248,5 +251,4 @@ class Equip extends Controller
         $data = $res['data'];
         return $this->fetch('using_detail', compact('map', 'data'));
     }
-
 }

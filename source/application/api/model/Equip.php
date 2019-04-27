@@ -29,7 +29,6 @@ class Equip extends EquipModel
                 $_data[$value['spec_value_id']] = [];
             }
             $_data[$value['spec_value_id']][] = $value;
-
         }
         return $_data;
     }
@@ -38,7 +37,7 @@ class Equip extends EquipModel
     public function getFilterList($filter, $page)
     {
         if (empty($filter)) {
-            return $this->with(['goodsGetName', 'specValue'])->order('create_time', 'desc')->paginate(12, false, ['page' => $page, 'list_rows' => 12]);
+            return $this->with(['goodsGetName', 'specValue'])->order('create_time', 'desc')->paginate(20, false, ['page' => $page, 'list_rows' => 20]);
         } else {
 
             $map = [];
@@ -51,9 +50,8 @@ class Equip extends EquipModel
                     $query->name('goods')->where('category_id', $filter['cate_id'])->field('goods_id');
                 })->where($map)->order('create_time', 'desc')->paginate(12, false, ['page' => $page, 'list_rows' => 12]);
             } else {
-                return $this->with(['goodsGetName', 'specValue'])->where($map)->order('create_time', 'desc')->paginate(12, false, ['page' => $page, 'list_rows' => 12]);
+                return $this->with(['goodsGetName', 'specValue'])->where($map)->order('create_time', 'desc')->paginate(20, false, ['page' => $page, 'list_rows' => 20]);
             }
-
         }
     }
 
@@ -74,11 +72,11 @@ class Equip extends EquipModel
             $_usingLog['equip_id'] = $this->equip_id;
             $_usingLog['member_id'] = $member_id;
             $_usingLog['equip_status'] = $status == 10 ? 50 : 10;
-            $_usingLog['wxapp_id'] = 10001;                       
+            $_usingLog['wxapp_id'] = 10001;
             // 开启事务
             Db::startTrans();
             try {
-                $this->save(['status' => $status == 10 ? 50 : 10]);                
+                $this->save(['status' => $status == 10 ? 50 : 10]);
                 // 设备使用记录                                
                 $this->equipUsingLog()->save($_usingLog);
                 Db::commit();
@@ -126,7 +124,7 @@ class Equip extends EquipModel
         $_check_log['check_time'] = time();
         $_check_log['check_status'] = 10;
 
-         // 开启事务
+        // 开启事务
         Db::startTrans();
         try {
             // 在库 维修
@@ -136,7 +134,7 @@ class Equip extends EquipModel
                 $_usingLog['equip_id'] = $this->equip_id;
                 $_usingLog['member_id'] = $member_id;
                 $_usingLog['equip_status'] = $status == 10 ? 50 : 10;
-                $_usingLog['wxapp_id'] = 10001;                
+                $_usingLog['wxapp_id'] = 10001;
                 // 设备使用记录                                
                 $this->equipUsingLog()->save($_usingLog);
                 // 维修记录  只开始
@@ -152,8 +150,6 @@ class Equip extends EquipModel
                 Db::commit();
                 return true;
             }
-
-
         } catch (\Exception $e) {
             Db::rollback();
             $this->error = $e->getMessage();
@@ -192,7 +188,7 @@ class Equip extends EquipModel
             // 开启事务
             Db::startTrans();
             try {
-                $this->save(['status' => $result == 0 ? ($order_id ? 30 : 10) : 50]);                
+                $this->save(['status' => $result == 0 ? ($order_id ? 30 : 10) : 50]);
                 // 设备使用记录                                
                 $this->equipUsingLog()->save($_usingLog);
                 // 设备维修记录
@@ -206,7 +202,5 @@ class Equip extends EquipModel
             }
         }
         return false;
-
-
     }
 }

@@ -27,7 +27,7 @@
                                 <th>产品图片</th>
                                 <th>产品名称</th>
                                 <th>产品分类</th>
-                                <th>实际销量</th>
+                                <!-- <th>实际销量</th> -->
                                 <th>产品排序</th>
                                 <th>产品状态</th>
                                 <th>添加时间</th>
@@ -49,7 +49,7 @@
                                         <p class="item-title"><?= $item['goods_name'] ?></p>
                                     </td>
                                     <td class="am-text-middle"><?= $item['category']['name'] ?></td>
-                                    <td class="am-text-middle"><?= $item['sales_actual'] ?></td>
+                                    <!-- <td class="am-text-middle"><?= $item['sales_actual'] ?></td> -->
                                     <td class="am-text-middle"><?= $item['goods_sort'] ?></td>
                                     <td class="am-text-middle">
                                             <span class="<?= $item['goods_status']['value'] === 10 ? 'x-color-green'

@@ -432,7 +432,7 @@ Vue.http.get('<?= url("order/addAjax") ?>').then(function(res){
                 }
 
                 // 
-                if(!(/^1[34578]\d{9}$/.test(address.phone))){ 
+                if(!(/^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/.test(address.phone))){ 
                     layer.msg('输入手机号码有误,请重新输入') 
                     return [false,'']; 
                 }
@@ -500,8 +500,8 @@ Vue.http.get('<?= url("order/addAjax") ?>').then(function(res){
                 })
             }
         },
-        mounted:function(){
-                           
+        mounted:function(){            
+
         },
         updated: function () {
             // 

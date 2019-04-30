@@ -179,7 +179,7 @@
                                     <td>￥<?= $goods['rent_total_price'] ?></td>
                                     <td>￥<?= $goods['goods_price'] ?></td>
                                     <td>×<?= $goods['total_num'] ?></td>
-                                    <td>￥<?= $goods['total_price'] ?></td>
+                                    <td>￥<?= $goods['all_total_price'] ?></td>
                                 </tr>
                                 
                             <?php endforeach; ?>

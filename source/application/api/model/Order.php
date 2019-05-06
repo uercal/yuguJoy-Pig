@@ -101,7 +101,7 @@ class Order extends OrderModel
             }
         }
 
-
+        //         
         // 保险金额与否
         $goods['secure'] = $secure;
         $goods['secure_price'] = $secure == 0 ? 0 : $goods_sku['secure_price'];
@@ -483,10 +483,10 @@ class Order extends OrderModel
         $rent_all_price = 0;
         $goods_all_price = 0;
         foreach ($order['goods'] as $key => $value) {
-            $rent_all_price += $value['rent_total_price'];
-            $goods_all_price += $value['goods_price'];
-            $goods_all_price += $value['secure_price'];
-            $goods_all_price += $value['service_price'];
+            $rent_all_price += bcmul($value['rent_total_price'], $value['total_num'], 2);
+            $goods_all_price += bcmul($value['goods_price'], $value['total_num'], 2);
+            $goods_all_price += bcmul($value['secure_price'], $value['total_num'], 2);
+            $goods_all_price += bcmul($value['service_price'], $value['total_num'], 2);
         }
 
         // 
@@ -689,24 +689,25 @@ class Order extends OrderModel
                 'pay_price' => bcadd($rent_price, $bonus_money, 2),
                 'user_id' => $user_id
             ]);
-            
+
             //deduct
             $deductModel = new Deduct;
             $deductLogModel = new DeductLog;
             $rentModel = new RentMode;
             $deduct = [];
             $deduct_log = [];
-            $order_goods = $order['goods'];            
+            $order_goods = $order['goods'];
             foreach ($order_goods as $key => $value) {
                 $_deduct = [];
-                $rent_mode = $rentModel->getInfo($value['rent_id'], $value['goods_spec_id']);                           
-                $_init_rent = $this->initRentEnd($rent_mode, $value['rent_num'], $value['rent_date']);         
+                $rent_mode = $rentModel->getInfo($value['rent_id'], $value['goods_spec_id']);
+                $_init_rent = $this->initRentEnd($rent_mode, $value['rent_num'], $value['rent_date']);
                 $_deduct['order_id'] = $order['order_id'];
                 $_deduct['order_goods_id'] = $value['order_goods_id'];
                 $_deduct['rent_mode_id'] = $value['rent_id'];
                 $_deduct['rent_start'] = $value['rent_date'];
                 $_deduct['rent_end'] = $_init_rent['end'];
-                $_deduct['deduct_price'] = $_init_rent['price'];
+                // 租金*数量
+                $_deduct['deduct_price'] = bcmul($_init_rent['price'], $value['total_num'], 2);
                 $_deduct['status'] = $_init_rent['end'] == $_init_rent['deduct'] ? 20 : 10;
                 $_deduct['deduct_time'] = $_init_rent['deduct'];
                 $_deduct['user_id'] = $user_id;
@@ -717,7 +718,7 @@ class Order extends OrderModel
                 $_deduct_log['end_time'] = $_init_rent['deduct'];
                 $deduct_log[] = $_deduct_log;
             }
-            
+
             $deductModel->saveAll($deduct);
             $deductLogModel->saveAll($deduct_log);
 

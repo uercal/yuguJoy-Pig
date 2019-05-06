@@ -43,6 +43,7 @@ class Order extends Controller
         // 商品结算信息
         $model = new OrderModel;
         $order = $model->getBuyNow($this->user, $goods_id, $goods_num, $goods_sku_id, $rent_id, $rent_num, $rent_date, $secure, $service_ids);
+        // halt($order);
         if (!$this->request->isPost()) {
             return $this->renderSuccess($order);
         }

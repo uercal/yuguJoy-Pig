@@ -255,7 +255,7 @@ input::-webkit-inner-spin-button{
                                             <input type="text" name="goods[<?= $goods['order_goods_id'] ?>][total_num]" class="am-form-field rent-num-input" onchange="if(value.length>3)value=value.slice(0,3)" style="text-align:center;" value="<?= $goods['total_num'] ?>">                                              
                                         </div>                                                                                                                                                
                                     </td>
-                                    <td>￥<?= $goods['total_price'] ?></td>
+                                    <td>￥<?= $goods['all_total_price'] ?></td>
                                     
                                 </tr>
                             <?php endforeach; ?>

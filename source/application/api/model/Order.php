@@ -182,8 +182,14 @@ class Order extends OrderModel
      * @throws \Exception
      */
     public function add($user_id, $order)
-    {
-        if($order['order_total_price']==0||$order['order_pay_price']==0){            
+    {        
+        if($order['order_total_price']==0||$order['order_pay_price']==0){   
+            $log = [
+                'post'=>input(),
+                'order'=>$order
+            ];
+            $log = json_encode($log);
+            Db::name('error_log')->insert(['log'=>$log]);
             return false;
         }
 

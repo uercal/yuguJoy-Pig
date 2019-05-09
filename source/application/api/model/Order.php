@@ -183,6 +183,10 @@ class Order extends OrderModel
      */
     public function add($user_id, $order)
     {
+        if($order['order_total_price']==0||$order['order_pay_price']==0){            
+            return false;
+        }
+
         Db::startTrans();
         // 记录订单信息
         $this->save([
@@ -654,7 +658,7 @@ class Order extends OrderModel
     public function doPay($order, $payInfo, $user_id)
     {
         if ($payInfo['canPay'] == 0) return false;
-
+        if ($payInfo['real_money'] == 0) return false;
         // 押金 扣额度  2000
         $goods_price = $payInfo['goods_price'];
         // 租金  第一期 直接扣余额  600

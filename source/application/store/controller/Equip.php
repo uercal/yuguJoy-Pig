@@ -150,9 +150,18 @@ class Equip extends Controller
         $qrCode = new qrCode($string);
         // 
         $qrCode->setSize(300);
-        header('Content-Type: ' . $qrCode->getContentType());
-        echo $qrCode->writeString();
-        exit;
+        $name = $equip_id . '.png';
+        $path = WEB_PATH . 'uploads/qrcode/' . $name;
+        $qrCode->writeFile($path);
+        ob_clean();
+        //                 
+        $file = fopen($path, "r");
+        header("Content-Type: image/png");
+        header("Accept-Ranges: bytes");
+        header("Accept-Length: " . filesize($path));
+        header("Content-Disposition: attachment; filename=$name");
+        echo fread($file, filesize($path));
+        fclose($file);
     }
 
 

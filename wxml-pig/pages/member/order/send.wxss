@@ -214,14 +214,14 @@
 }
 
 .add-left-title {
-    width: 20%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 .add-left-value {
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-direction: column;
 }
@@ -256,6 +256,10 @@
     margin-right: 8rpx;
 }
 
+.service-item>text{
+    white-space: nowrap;
+}
+
 .service-item-active {
     background-color: #ffa400;
     height: 30rpx;
@@ -264,9 +268,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8rpx;
+    margin-right: 8rpx;    
 }
 
-.service-item-active text {
+.service-item-active>text {
     color: #fff;
+    white-space: nowrap;
 }

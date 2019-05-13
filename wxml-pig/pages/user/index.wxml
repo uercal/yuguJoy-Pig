@@ -83,10 +83,10 @@
 
 
     <view class="m-top20 plr">
-        <navigator url="../user/info" wx:if="{{infoStatus.code==0}}">
-            <view class="user-order-title dis-flex b-f m-top20">
+        <navigator class="phone" url="../user/info" wx:if="{{infoStatus.code==0}}">
+            <view class="user-order-title dis-flex b-f">
                 <view class="flex-box">
-                    <image src='/images/icon_no deposit.png'></image>
+                    <image src='/images/icon_no_deposit.png'></image>
                     <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">
@@ -96,10 +96,10 @@
                 </view>
             </view>
         </navigator>
-        <button class="phone" bindtap='checkStatus' data-status="{{infoStatus.status}}" wx:else>
-            <view class="user-order-title dis-flex b-f m-top20">
+        <navigator class="phone" bindtap='checkStatus' data-status="{{infoStatus.status}}" wx:else>
+            <view class="user-order-title dis-flex b-f">
                 <view class="flex-box">
-                    <image src='/images/icon_no deposit.png'></image>
+                    <image src='/images/icon_no_deposit.png'></image>
                     <text class="user-orderName h4">申请免押金</text>
                 </view>
                 <view class="flex-box">
@@ -108,7 +108,7 @@
                     </view>
                 </view>
             </view>
-        </button>
+        </navigator>
 
         <navigator url="../pay/log">
             <view class="user-order-title dis-flex b-f">

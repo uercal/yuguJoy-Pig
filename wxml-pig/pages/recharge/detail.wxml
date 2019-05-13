@@ -124,10 +124,10 @@
                 <text class="flex-five col-7">商品金额:</text>
                 <text class="flex-five col-m t-r">￥{{order.total_price}}</text>
             </view>
-            <view class="dis-flex flow-all-list-cont">
+            <!-- <view class="dis-flex flow-all-list-cont">
                 <text class="flex-five col-7">配送费用:</text>
                 <text class="flex-five col-m t-r">+￥{{order.express_price}}</text>
-            </view>
+            </view> -->
             <view class="dis-flex flow-all-list-cont">
                 <text class="flex-five col-7">应付金额:</text>
                 <text class="flex-five col-m t-r">￥{{order.pay_price}}</text>

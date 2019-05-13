@@ -18,10 +18,10 @@
             <image src='/images/member/team.png'></image>
             <text>成员状态</text>
         </navigator>
-        <navigator class='work-nav'>
+        <!-- <navigator class='work-nav'>
             <image src='/images/member/help.png'></image>
             <text>帮助中心</text>
-        </navigator>
+        </navigator> -->
         <navigator class='work-nav' url='/pages/member/statics/index'>
             <image src='/images/member/date.png'></image>
             <text>数据统计</text>

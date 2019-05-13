@@ -18,7 +18,7 @@
         <view class="cont-box b-f dis-flex" style="flex-direction:column;">
             <view class='goods_attr'>
                 <view style='display:flex;align-items: center;'>
-                    <text class='goods_rent_price'>￥{{goods_price}}</text>
+                    <text class='goods_rent_price'>￥{{rentPrice}}</text>
                     <text class="goods_price">设备押金：{{goods_price}}</text>
                 </view>
                 <text class='goods_count'>租赁次数：{{detail.goods_sales}}</text>
@@ -100,8 +100,8 @@
                     <view style="width:70%;margin-left:30rpx;">
                         <text class="showDetail" wx:if="{{secure_status==0&&(choose_service.length==0||!choose_service)}}">本商品支持保障，维护等服务，点击可选服务</text>
                         <text class="showDetail" style="display:flex;flex-direction:column;" wx:else>
-                                                        <text>{{secure_status==0?'标准保（免费）':'意外保'}}/</text>
-                        <text wx:for="{{service}}" wx:if="{{item.checked}}">{{item.service_name}} /</text>
+                                                        <text>{{secure_status==0?'标准保(免费)':'意外保'}}</text>
+                        <text wx:for="{{service}}" wx:if="{{item.checked}}"> , {{item.service_name}}</text>
                         </text>
                     </view>
                 </view>
@@ -181,11 +181,11 @@
                     <text>{{cart_total_num}}</text>
                 </view>
             </view>
-            <block wx:if="{{stock_num > 0}}">
+            <block>
                 <view bindtap="submit" class="order-number" data-type="addCart">加入购物车</view>
                 <view bindtap="submit" class="order-bt" data-type="buyNow"> 立即购买</view>
             </block>
-            <view class="default-btn" style="wdata-typeth:100%" wx:else>暂无现货</view>
+            <!-- <view class="default-btn" style="wdata-typeth:100%" wx:else>暂无现货</view> -->
         </view>
     </view>
 </scroll-view>

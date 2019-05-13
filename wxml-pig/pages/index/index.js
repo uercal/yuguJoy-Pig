@@ -39,8 +39,9 @@ Page({
 
     cateAll: function(e) {
         let category_id = e.currentTarget.dataset.categoryId;
+        App.globalData.category_id = category_id;
         wx.switchTab({
-            url: '/pages/category/index'
+            url: '/pages/category/index'            
         })
     },
 
@@ -80,15 +81,15 @@ Page({
         });
     },
 
-    bindChange: function(e) {
-        let itemKey = e.target.dataset.itemKey,
-            imgCurrent = this.data.imgCurrent;
-        // imgCurrent[itemKey] = e.detail.current;
-        imgCurrent[itemKey] = e.detail.currentItemId;
-        this.setData({
-            imgCurrent
-        });
-    },
+    // bindChange: function(e) {
+    //     let itemKey = e.target.dataset.itemKey,
+    //         imgCurrent = this.data.imgCurrent;
+    //     // imgCurrent[itemKey] = e.detail.current;
+    //     imgCurrent[itemKey] = e.detail.currentItemId;
+    //     this.setData({
+    //         imgCurrent
+    //     });
+    // },
 
     goTop: function(t) {
         this.setData({

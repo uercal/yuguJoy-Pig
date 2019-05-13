@@ -1,7 +1,7 @@
-@import "/font/font.wxss";
+@import "/utils/font/font.wxss";
 
 text {
-    font-family: 'DIN' !important;
+    /* font-family: 'DIN' !important; */
 }
 
 .user-header .user-bg-box {

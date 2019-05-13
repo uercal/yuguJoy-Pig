@@ -24,12 +24,12 @@ Page({
     onShow: function() {
         // 获取当前用户信息
         this.getUserDetail();
-    
+
     },
     checkStatus: function(e) {
         wx.navigateTo({
             url: '/pages/user/apply'
-        })        
+        })
     },
     /**
      * 获取当前用户信息
@@ -62,9 +62,8 @@ Page({
             success: function(res) {
                 // 发送用户信息
                 App._post_form('user/phone', {
-                    encrypted_data: encodeURIComponent(e.detail.encryptedData),
-                    code: res.code,
                     encrypted_data: e.detail.encryptedData,
+                    code: res.code,
                     iv: e.detail.iv,
                     token: wx.getStorageSync('token')
                 }, function(result) {

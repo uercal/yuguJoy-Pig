@@ -26,13 +26,23 @@ Page({
         App._get('user.order/detail', {
             order_id
         }, function(result) {
-            let goods_list = result.data.order.deduct;
-            let _goods_list = [];
-            for (var value of goods_list) {
-                value.detailed = false;
-                _goods_list.push(value);
+            if (result.data.order.pay_status.value === 10) {
+                let goods_list = result.data.order.goods;
+                let _goods_list = [];
+                for (var value of goods_list) {
+                    value.detailed = false;
+                    _goods_list.push(value);
+                }
+                result.data.order.goods = _goods_list;
+            } else {
+                let goods_list = result.data.order.deduct;
+                let _goods_list = [];
+                for (var value of goods_list) {
+                    value.detailed = false;
+                    _goods_list.push(value);
+                }
+                result.data.order.deduct = _goods_list;
             }
-            result.data.order.deduct = _goods_list;
             _this.setData(result.data);
         });
     },
@@ -40,7 +50,11 @@ Page({
 
     chgDetail: function(e) {
         let index = e.currentTarget.dataset.index;
-        this.data.order.deduct[index].detailed = !this.data.order.deduct[index].detailed;
+        if (this.data.order.pay_status.value === 10) {
+            this.data.order.goods[index].detailed = !this.data.order.goods[index].detailed;
+        } else {
+            this.data.order.deduct[index].detailed = !this.data.order.deduct[index].detailed;
+        }
         this.setData({
             order: this.data.order
         });

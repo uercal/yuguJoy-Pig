@@ -41,9 +41,10 @@
                 <text>{{item.username?item.username:item.nickName}}</text>
             </view>
             <view class='info-item'>
-                <image src='/images/member/position.png'></image>
-                <text>{{item.address_default.region.province+item.address_default.region.city+item.address_default.region.region
+                <image src='/images/member/position.png'></image>                
+                <text wx:if="{{item.address_default}}">{{item.address_default.region.province+item.address_default.region.city+item.address_default.region.region
                 +item.address_default.detail}}</text>
+                <text wx:else>未填写</text>
             </view>
             <view class='info-item'>
                 <image src='/images/member/iphone.png'></image>

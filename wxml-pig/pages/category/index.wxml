@@ -34,7 +34,8 @@
         <view class='goods-attr'>
             <!-- <image></image> -->
             <view class='goods-attr-up'>
-                <text class='goods-price'>￥{{item.spec[0].goods_price}}</text>
+                <!-- <text class='goods-price'>￥{{item.spec[0].goods_price}}</text> -->
+                <text class='goods-price'>{{item.spec[0].default_rent[0].show_price}}</text>
                 <text class='goods-name'>{{item.goods_name}}</text>
             </view>
             <view class='goods-attr-bottom'>

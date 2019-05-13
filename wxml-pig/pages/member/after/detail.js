@@ -99,6 +99,10 @@ Page({
     },
 
     subSend: function() {
+        if(this.data.addMemberIds.length==0){
+            App.showError('请添加配送人员');
+            return false;
+        }
         let _this = this;
         App.member_post('member.Order/sendAfter', {
             after_id: _this.data.id,            

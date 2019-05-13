@@ -46,7 +46,8 @@
                         <image src='/images/hot-angel.png' class='goods-img-bonus' mode="aspectFit"></image>
                     </image>
                     <view class='goods-txt'>
-                        <text class='goods-price'>￥{{goods.spec[0].goods_price}}</text>
+                        <!-- <text class='goods-price'>￥{{goods.spec[0].goods_price}}</text> -->
+                        <text class='goods-price'>{{goods.spec[0].default_rent[0].show_price}}</text>
                         <text class='goods-name'>{{goods.goods_name}}</text>
                     </view>
                 </navigator>

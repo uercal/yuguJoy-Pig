@@ -180,29 +180,7 @@ Page({
             wx.redirectTo({
                 url: '/pages/pay/index?from=order&id=' + result.data.order_id
             });
-
-            // 发起微信支付
-            // wx.requestPayment({
-            //     timeStamp: result.data.payment.timeStamp,
-            //     nonceStr: result.data.payment.nonceStr,
-            //     package: 'prepay_id=' + result.data.payment.prepay_id,
-            //     signType: 'MD5',
-            //     paySign: result.data.payment.paySign,
-            //     success: function(res) {
-            //         // 跳转到订单详情
-            //         wx.redirectTo({
-            //             url: '../order/detail?order_id=' + result.data.order_id,
-            //         });
-            //     },
-            //     fail: function() {
-            //         App.showError('订单未支付', function() {
-            //             // 跳转到未付款订单
-            //             wx.redirectTo({
-            //                 url: '../order/index?type=payment',
-            //             });
-            //         });
-            //     },
-            // });
+            
         };
 
         // 按钮禁用, 防止二次提交

@@ -129,7 +129,7 @@
 
 
 <!-- 添加设备 -->
-<view class="card">
+<view class="card" wx:if="{{isSend}}">
     <view class='card-head'>
         <text style="font-weight:bold;">添加配送设备(勾选保修/服务)</text>
     </view>
@@ -148,7 +148,7 @@
                     <text>{{item.goods_name}}</text>
                     <text>{{item.equip_id}}</text>
                     <text>{{item.sn_code}}</text>
-                    <view style="display:flex;align-items:center;margin:10rpx;">
+                    <view style="display:flex;align-items:center;margin:10rpx 10rpx 0 10rpx;">
                         <view class='{{(!item.secure||item.secure==0)?"service-item-active":"service-item"}}' bindtap='secure' data-index="{{index}}" data-value="0">
                             <text>免费保</text>
                         </view>
@@ -156,12 +156,21 @@
                             <text>意外保</text>
                         </view>
                     </view>
-                    <view style="display:flex;align-items:center;margin:10rpx;">
+                    <view style="display:flex;align-items:center;margin:10rpx 10rpx 0 10rpx;" wx:if="{{item.goods.service.length!=0}}">
                         <view class='{{child.checked?"service-item-active":"service-item"}}' wx:for="{{item.goods.service}}" wx:for-item="child" wx:for-index="cIndex" bindtap="service" data-p-index="{{index}}" data-index="{{cIndex}}">
                             <text>{{child.service_name}}</text>
                         </view>
                     </view>
-                    <text>{{item.spec_value.spec_value}}</text>
+                    <view wx:else style="display:flex;align-items:center;margin:10rpx 10rpx 0 10rpx;">
+                        <view class="service-item">
+                            <text>无</text>
+                        </view>
+                    </view>
+                    <view style="display:flex;align-items:center;margin:10rpx 10rpx 0 10rpx;">
+                        <view class="service-item-active">
+                            <text>{{item.spec_value.spec_value}}</text>
+                        </view>
+                    </view>
                 </view>
             </view>
             <view class='add-right' bindtap='delEquip' data-id="{{item.equip_id}}">
@@ -177,7 +186,7 @@
 </view>
 
 <!-- 添加配送人员 -->
-<view class="card">
+<view class="card" wx:if="{{isSend}}">
     <view class='card-head'>
         <text style="font-weight:bold;">添加配送人员</text>
     </view>

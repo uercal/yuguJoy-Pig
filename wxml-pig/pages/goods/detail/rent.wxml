@@ -33,20 +33,20 @@
 
         <view class="cf tmall-types" style='margin-top:20rpx;margin-bottom:50px;'>
             <view class="tipstxt">租赁时间</view>
-            <view class='rent-mode-number' wx:if="{{rent_index!=3}}">
+            <view class='rent-mode-number' wx:if="{{rent_limit!=24}}">
                 <view class="selectNumber">
-                    <button bindtap="downRent" wx:if="{{rent_index!=2}}" class="default  {{rent_num>1?'':' default-active'}}" type="default">-</button>
+                    <button bindtap="downRent" wx:if="{{rent_limit!=6}}" class="default  {{rent_num>1?'':' default-active'}}" type="default">-</button>
                     <button bindtap="downRent" wx:else class="default  {{rent_num>6?'':' default-active'}}" type="default">-</button>
 
                     <input bindinput="import" type="number" value="{{rent_num}}" disabled></input>
 
-                    <button bindtap="upRent" wx:if="{{rent_index==1}}" class="default {{rent_num<5?'':' default-active'}}" type="default">+</button>
+                    <button bindtap="upRent" wx:if="{{rent_limit==5}}" class="default {{rent_num<5?'':' default-active'}}" type="default">+</button>
                     <button bindtap="upRent" wx:else class="default" type="default">+</button>
                 </view>
                 <text style='padding-left:10rpx;'>{{rentInfo.price_type_text}}</text>
             </view>
 
-            <view class="cf cartypelist" wx:if="{{rent_index==3}}">
+            <view class="cf cartypelist" wx:if="{{rent_limit==24}}">
                 <view bindtap="chooseRentNum" class="cartypeitem {{rent_num==item?'cur':''}}" wx:for="{{[12,24]}}" data-num="{{item}}">
                     {{item}}月({{item/12}}年)
                 </view>

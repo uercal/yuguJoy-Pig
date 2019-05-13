@@ -65,9 +65,9 @@ Page({
     go2order: function(e) {
         console.log(e);
         let order_id = e.currentTarget.dataset.orderId;
-        wx.navigateTo({
-            url: '/pages/member/order/detail?order_id=' + order_id
-        });
+        // wx.navigateTo({
+        //     url: '/pages/member/order/detail?order_id=' + order_id
+        // });
     },
 
 

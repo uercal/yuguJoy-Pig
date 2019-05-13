@@ -5,7 +5,7 @@ App({
      */
     globalData: {
         user_id: null,
-
+        category_id: null
     },
 
     api_root: '', // api地址

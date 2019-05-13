@@ -14,14 +14,15 @@
         </view>
         <view class='info-item'>
             <image src='/images/member/customer.png'></image>
-            <text>{{detail.user_name}}</text>
+            <text wx:if="{{detail.user_name}}">{{detail.user_name}}</text>
+            <text wx:else>未填写</text>
         </view>
     </view>
 </view>
 
 
 <!-- 基础信息 -->
-<view class='user'>
+<view class='user' wx:if="{{detail.address_default}}">
     <view class='user-type'>默认地址信息</view>
     <view class='user-info'>
         <view class='info-item'>

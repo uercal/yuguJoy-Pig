@@ -12,8 +12,8 @@
 		"nodeModules": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
-	"appid": "wxb9de7de8697ceb37",
+	"libVersion": "2.6.1",
+	"appid": "wx936b68cf0752e8e1",
 	"projectname": "demo",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 27,
+			"current": 29,
 			"list": [
 				{
 					"id": -1,
@@ -49,7 +49,8 @@
 					"id": 1,
 					"name": "goods",
 					"pathName": "pages/goods/index",
-					"query": "goods_id=3"
+					"query": "goods_id=15",
+					"scene": null
 				},
 				{
 					"id": -1,
@@ -206,6 +207,20 @@
 					"name": "pay",
 					"pathName": "pages/pay/log",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "goods",
+					"pathName": "pages/member/order/send",
+					"query": "id=26&from=send",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "order_id=40",
+					"pathName": "pages/order/detail",
+					"query": "order_id=40",
+					"scene": null
 				}
 			]
 		}

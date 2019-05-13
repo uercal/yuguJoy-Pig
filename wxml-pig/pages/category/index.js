@@ -17,36 +17,49 @@ Page({
     },
 
     onLoad: function(options) {
-        let _this = this;
-        if (options.from == 'index') {
-            this.setData({
-                from_index: true
-            })
-        } else {
-            // 获取分类列表
-            this.getCategoryList();
-        }
 
     },
+
+    onShow: function() {
+        let _this = this;
+        if (App.globalData.category_id) {
+            let category_id = App.globalData.category_id;
+            this.setData({
+                from_index: true,
+                category_id: category_id
+            })
+            this.getCategoryList(category_id);
+        } else {
+            // 获取分类列表
+            this.getCategoryList(0);
+        }
+    },
+
+
+
 
     /**
      * 获取分类列表
      */
-    getCategoryList: function() {
+    getCategoryList: function(category_id) {
         let _this = this;
-        App._get('category/lists', {}, function(result) {
+        App._get('category/lists', {
+            category_id: category_id
+        }, function(result) {
             console.log(result);
             let pick_arr = [];
             result.data.list.map(function(e) {
                 pick_arr.push(e.name);
             });
-            console.log(pick_arr);
+
             _this.setData({
                 pick_arr: pick_arr,
                 list: result.data.list,
-                choose_list: result.data.list[0],
+                choose_list: result.data.choose_list,
                 curNav: result.data.list[0].category_id
             });
+            // 
+            App.globalData.category_id = null;
         });
     },
 

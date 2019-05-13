@@ -46,7 +46,7 @@
                                 <view class="flow-list-right rent-info">
                                         <navigator url="../goods/index?goods_id={{item.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
                                                 <text class="f-30 col-3 twolist-hidden">{{item.goods_name}}</text>
-                                                <text class="flow-cont">￥{{item.total_price}}</text>
+                                                <!-- <text class="flow-cont">￥{{item.total_price}}</text> -->
                                         </navigator>
 
                                         <view style="display:flex;align-items:center;justify-content:space-between;">
@@ -67,24 +67,24 @@
                                 <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
                                         <view class='attr-line'>
                                                 <text class='attr-font pad-l'>应付租金</text>
-                                                <text class='attr-font'>￥{{item.rent_total_price}}</text>
+                                                <text class='attr-font'>￥{{item.rent_total_price*item.total_num}}</text>
                                         </view>
                                         <view class='attr-line'>
                                                 <text class='attr-font pad-l'>应付押金</text>
-                                                <text class='attr-font'>￥{{item.goods_price}}</text>
+                                                <text class='attr-font'>￥{{item.goods_price*item.total_num}}</text>
                                         </view>
                                         <view class='attr-line'>
                                                 <text class='attr-font pad-l'>保修金额</text>
-                                                <text class='attr-font'>￥{{item.secure==0?'0':item.secure_price}}</text>
+                                                <text class='attr-font'>￥{{item.secure==0?'0':item.secure_price*item.total_num}}</text>
                                         </view>
                                         <view class='attr-line'>
                                                 <text class='attr-font pad-l'>增值金额</text>
-                                                <text class='attr-font'>￥{{item.service_price}}</text>
+                                                <text class='attr-font'>￥{{item.service_price*item.total_num}}</text>
                                         </view>
-                                        <view class='attr-line'>
+                                        <!-- <view class='attr-line'>
                                                 <text class='attr-font pad-l'>应付金额</text>
                                                 <text class='attr-font'>￥{{item.all_total_price}}</text>
-                                        </view>
+                                        </view> -->
 
                                 </view>
                         </view>
@@ -96,33 +96,21 @@
         </view>
 
         <!-- 商品金额 -->
-        <view class="flow-all-money b-f padding-box m-top20">
+        <!-- <view class="flow-all-money b-f padding-box m-top20">
                 <view class="dis-flex flow-all-list">
                         <text class="flex-five">总金额:</text>
                         <view class="flex-five t-r">
                                 <text class="col-m">￥{{order_total_price}}</text>
                         </view>
-                </view>
-                <!-- <view class="dis-flex flow-all-list">
-                        <text class="flex-five">配送费用:</text>
-                        <view class="flex-five t-r">
-                                <view wx:if="{{address.address_id}}">
-                                        <text class="col-m" wx:if="{{intra_region}}">+￥{{express_price}}</text>
-                                        <text wx:else>不在配送范围</text>
-                                </view>
-                                <view wx:else>
-                                        <text class="col-7">请先选择配送地址</text>
-                                </view>
-                        </view>
-                </view> -->
-        </view>
+                </view>                
+        </view> -->
 
         <!-- 提交订单 -->
         <view class="flow-fixed-footer b-f m-top10">
                 <view class="dis-flex chackout-box">
-                        <view class=" chackout-left pl-12 ">实付款：
+                        <!-- <view class=" chackout-left pl-12 ">实付款：
                                 <text class="col-m">￥{{order_total_price}}</text>
-                        </view>
+                        </view> -->
                         <view bindtap="submitOrder" class="chackout-right">
                                 <text class="flow-btn">确定提交</text>
                         </view>

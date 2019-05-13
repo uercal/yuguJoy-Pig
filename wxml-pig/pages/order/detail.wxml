@@ -36,7 +36,8 @@
                         <text class="col-m" wx:if="{{order.pay_status.value===10}}">{{order.pay_status.text}}</text>
                         <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===10}}">{{order.delivery_status.text}}</text>
                         <text class="col-m" wx:if="{{order.pay_status.value===20 && order.delivery_status.value===20 && order.receipt_status.value===10}}">{{order.receipt_status.text}}</text>
-                        <text class="col-m" wx:if="{{order.order_status.value===30}}">{{order.order_status.text}}</text>
+                        <text class="col-m" wx:if="{{order.order_status.value===30 && order.done_status.value===10}}">{{order.order_status.text}}</text>
+                        <text class="col-m" wx:if="{{order.order_status.value===30 && order.done_status.value===20}}">{{order.done_status.text}}</text>
                     </view>
                 </view>
             </view>
@@ -63,13 +64,13 @@
                     <view class="flow-list-right rent-info">
                         <navigator url="../goods/index?goods_id={{item.order_goods.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
                             <text class="f-30 col-3 twolist-hidden">{{item.order_goods.goods_name}}</text>
-                            <text class="flow-cont">￥{{item.order_goods.total_price}}</text>
+                            <text class="flow-cont">￥{{item.order_goods.all_total_price}}</text>
                         </navigator>
 
                         <view style="display:flex;align-items:center;justify-content:space-between;">
                             <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.order_goods.spec_value}}/{{item.order_goods.rent_mode.name}}/保修:{{item.order_goods.secure==0?'标准保(免费)':'意外保(￥'+item.order_goods.secure_price}}</text>
                             <view style="display:flex;flex-direction:column;align-items:flex-end;">
-                                <text class="right-attr-text">{{item.order_goods.rent_num}}{{item.order_goods.rent_info.is_static==1?"月":"日" }}</text>
+                                <text class="right-attr-text">{{item.order_goods.rent_num}}{{item.order_goods.rent_mode.is_static==1?"月":"日" }}</text>
                                 <text class="small1">×{{item.order_goods.total_num}}</text>
                             </view>
                         </view>
@@ -92,19 +93,19 @@
                         </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>应付租金</text>
-                            <text class='attr-font'>￥{{item.order_goods.rent_total_price}}</text>
+                            <text class='attr-font'>￥{{item.order_goods.rent_total_price*item.order_goods.total_num}}</text>
                         </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>应付押金</text>
-                            <text class='attr-font'>￥{{item.order_goods.goods_price}}</text>
+                            <text class='attr-font'>￥{{item.order_goods.goods_price*item.order_goods.total_num}}</text>
                         </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>保修金额</text>
-                            <text class='attr-font'>￥{{item.order_goods.secure==0?'0':item.order_goods.secure_price}}</text>
+                            <text class='attr-font'>￥{{item.order_goods.secure==0?'0':item.order_goods.secure_price*item.order_goods.total_num}}</text>
                         </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>增值金额</text>
-                            <text class='attr-font'>￥{{item.order_goods.service_price}}</text>
+                            <text class='attr-font'>￥{{item.order_goods.service_price*item.order_goods.total_num}}</text>
                         </view>
                         <view class='attr-line'>
                             <text class='attr-font pad-l'>应付金额</text>
@@ -115,10 +116,71 @@
                 </view>
             </view>
 
+            <view class="checkout_list " wx:if="{{order.pay_status.value===10}}" wx:for="{{order.goods}}" wx:key="this">
+
+                <view class="dis-flex flow-shopList" data-index="{{index}}">
+                    <view class="flow-list-left">
+                        <image mode="scaleToFill" src="{{item.image.file_path}}"></image>
+                    </view>
+                    <view class="flow-list-right rent-info">
+                        <navigator url="../goods/index?goods_id={{item.goods_id}}" style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-30 col-3 twolist-hidden">{{item.goods_name}}</text>
+                            <text class="flow-cont">￥{{item.all_total_price}}</text>
+                        </navigator>
+
+                        <view style="display:flex;align-items:center;justify-content:space-between;">
+                            <text class="f-26 col-7" style="padding:10rpx 0;width:70%;">{{item.spec_value}}/{{item.rent_mode.name}}/保修:{{item.secure==0?'标准保(免费)':'意外保(￥'+item.secure_price}}</text>
+                            <view style="display:flex;flex-direction:column;align-items:flex-end;">
+                                <text class="right-attr-text">{{item.rent_num}}{{item.rent_mode.is_static==1?"月":"日" }}</text>
+                                <text class="small1">×{{item.total_num}}</text>
+                            </view>
+                        </view>
+
+                        <view class="flow-list-cont" style="height:60rpx;">
+                            <view class='down-p {{item.detailed?"active":""}}' bindtap='chgDetail' data-index="{{index}}" style="height:100%;padding-right:10rpx;">
+                                <text style="margin-right:10rpx;">详情</text>
+                            </view>
+                        </view>
+                    </view>
+                    <!-- 详情 -->
+                    <view style="display:flex;flex-direction:column;width:100%;" wx:if="{{item.detailed}}">
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>租期起始</text>
+                            <text class='attr-font'>{{item.rent_dately}}</text>
+                        </view>
+                        <view class='attr-line' wx:if="{{item.status==10}}">
+                            <text class='attr-font pad-l'>扣款时间</text>
+                            <text class='attr-font'>{{item.deduct_time}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付租金</text>
+                            <text class='attr-font'>￥{{item.rent_total_price*item.total_num}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付押金</text>
+                            <text class='attr-font'>￥{{item.goods_price*item.total_num}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>保修金额</text>
+                            <text class='attr-font'>￥{{item.secure==0?'0':item.secure_price*item.total_num}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>增值金额</text>
+                            <text class='attr-font'>￥{{item.service_price*item.total_num}}</text>
+                        </view>
+                        <view class='attr-line'>
+                            <text class='attr-font pad-l'>应付金额</text>
+                            <text class='attr-font'>￥{{item.all_total_price}}</text>
+                        </view>
+
+                    </view>
+                </view>
+            </view>
+
         </view>
 
         <view class="select b-f">
-            <view class="flow-num-box b-f">共{{order.deduct.length}}件商品，合计：
+            <view class="flow-num-box b-f">共{{order.pay_status.value==10?order.goods.length:order.deduct.length}}件商品，合计：
                 <text class="flow-money">{{order.total_price}}</text>
             </view>
         </view>
@@ -132,10 +194,10 @@
                 <text class="flex-five col-7">商品金额:</text>
                 <text class="flex-five col-m t-r">￥{{order.total_price}}</text>
             </view>
-            <view class="dis-flex flow-all-list-cont">
+            <!-- <view class="dis-flex flow-all-list-cont">
                 <text class="flex-five col-7">配送费用:</text>
                 <text class="flex-five col-m t-r">+￥{{order.express_price}}</text>
-            </view>
+            </view> -->
             <view class="dis-flex flow-all-list-cont">
                 <text class="flex-five col-7">应付金额:</text>
                 <text class="flex-five col-m t-r">￥{{order.pay_price}}</text>
@@ -157,8 +219,11 @@
             <view bindtap="receipt">确认收货</view>
         </view>
 
-        <view class="flow-btn h3" style="background-color:#00B26A;" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===20 && order.order_status.value===30}}">
+        <view class="flow-btn h3" style="background-color:#00B26A;" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===20 && order.order_status.value===30 && order.done_status.value===10}}">
             <view>租赁中</view>
+        </view>
+        <view class="flow-btn h3" style="background-color:#FA8426;" wx:if="{{order.delivery_status.value===20 && order.receipt_status.value===20 && order.order_status.value===30 && order.done_status.value===20}}">
+            <view>已完成</view>
         </view>
     </view>
 

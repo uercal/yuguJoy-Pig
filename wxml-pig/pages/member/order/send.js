@@ -87,6 +87,10 @@ Page({
     },
 
     subSend: function() {
+        if (this.data.addMemberIds.length == 0) {
+            App.showError('请添加配送人员');
+            return false;
+        }
         let _this = this;
         App.member_post('member.Order/delivery', {
             order_id: _this.data.id,
@@ -177,8 +181,8 @@ Page({
         let addEquip = this.data.addEquip;
 
         // 
-        addEquip.splice(this.data.addEquip.findIndex(item => item === equip_id), 1);
-        addEquipIds.splice(addEquipIds.findIndex(item => item.equip_id === equip_id), 1);
+        addEquip.splice(this.data.addEquip.findIndex(item => item.equip_id === equip_id), 1);
+        addEquipIds.splice(addEquipIds.findIndex(item => item === equip_id), 1);
         this.setData({
             addEquipIds: this.data.addEquipIds,
             addEquip: this.data.addEquip

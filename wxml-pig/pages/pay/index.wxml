@@ -16,7 +16,7 @@
 
 
     <view class='pay-item'>
-        <text class='pay-title'>押金(包含服务费用)</text>
+        <text class='pay-title'>押金</text>
         <text class='pay-value'>{{order.pay.goods_all_price}}元</text>
     </view>
 

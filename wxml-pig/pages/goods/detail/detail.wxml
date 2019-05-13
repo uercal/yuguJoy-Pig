@@ -26,5 +26,5 @@
 </view>
 
 <view class="footer-fixed f-30">
-         <view class="default-btn" style="width:100%;background-color: #ff495e;" bindtap='hideModal'>确定</view>
+         <view class="default-btn" style="width:100%;background-color: #f35437;" bindtap='hideModal'>确定</view>
 </view>

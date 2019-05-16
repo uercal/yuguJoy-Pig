@@ -21,7 +21,7 @@ use think\Db;
 class User extends UserModel
 {
     private $token;
-
+    protected $error;
     /**
      * 隐藏字段
      * @var array
@@ -52,7 +52,7 @@ class User extends UserModel
      * @throws \think\exception\DbException
      */
     public function login($post)
-    {        
+    {
         // 微信登录 获取session_key
         $session = $this->wxlogin($post['code']);
         // 自动注册用户
@@ -82,9 +82,9 @@ class User extends UserModel
      * @throws \think\exception\DbException
      */
     private function wxlogin($code)
-    {        
+    {
         // 获取当前小程序信息
-        $wxapp = Wxapp::detail();          
+        $wxapp = Wxapp::detail();
         // 微信登录 (获取session_key)
         $WxUser = new WxUser($wxapp['app_id'], $wxapp['app_secret']);
         if (!$session = $WxUser->sessionKey($code))
@@ -140,14 +140,20 @@ class User extends UserModel
      */
     public function updatePhoneNumber($open_id, $phoneNumber)
     {
-        return $this->where('open_id', '=', $open_id)->update([
-            'phone' => $phoneNumber
-        ]);
+        Db::startTrans();
+        try {
+            $this->save(['phone' => $phoneNumber], ['open_id' => $open_id]);
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
     }
 
 
 
-    
+
     // 添加收藏
     public function doFavorite($input)
     {
@@ -184,13 +190,13 @@ class User extends UserModel
     public function getTypeList($type, $page)
     {
         switch ($type) {
-            // 认证用户
+                // 认证用户
             case 1:
                 return $this->with(['address', 'addressDefault'])->where('user_id', 'IN', function ($query) {
                     $query->name('exam')->where(['status' => 20, 'type' => 10])->field('user_id');
                 })->order('create_time', 'desc')->paginate(5, false, ['page' => $page, 'list_rows' => 5]);
                 break;
-            // 非认证用户
+                // 非认证用户
             case 2:
                 return $this->with(['address', 'addressDefault'])->where('user_id', 'NOT IN', function ($query) {
                     $query->name('exam')->where(['status' => 20, 'type' => 10])->field('user_id');
@@ -204,6 +210,4 @@ class User extends UserModel
     {
         return $this->with(['address', 'addressDefault'])->where('user_id', $user_id)->find()->append(['license', 'idcard', 'other']);
     }
-
-
 }

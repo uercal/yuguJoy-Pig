@@ -340,7 +340,7 @@ class Order extends OrderModel
         foreach ($order['goods_list'] as $goods) {
             /* @var Goods $goods */
             // 取消购物车 单一物品购买
-            $goods_sku = $goods['spec'][0];
+            $goods_sku = $goods['goods_sku'];
             // 
             $goodsList[] = [
                 'user_id' => $user_id,

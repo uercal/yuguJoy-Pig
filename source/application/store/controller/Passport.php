@@ -20,7 +20,7 @@ class Passport extends Controller
      * @throws \think\exception\DbException
      */
     public function login()
-    {
+    {        
         if ($this->request->isAjax()) {
             $model = new StoreUser;
             if ($model->login($this->postData('User'))) {
@@ -40,5 +40,4 @@ class Passport extends Controller
         Session::clear('yoshop_store');
         $this->redirect('passport/login');
     }
-
 }

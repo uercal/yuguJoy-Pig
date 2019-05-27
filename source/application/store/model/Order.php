@@ -550,7 +550,7 @@ class Order extends OrderModel
             $_state['pay_time'] = time();
             $_state['transaction_id'] = '变更状态支付';
         }
-
+        // halt([$state, $_state]);
         // 
         switch ($state['chg_data']) {
             case 'pay':
@@ -590,21 +590,35 @@ class Order extends OrderModel
         try {
             // 保存订单信息
             $this->update($_state);
-            // log
 
+            // deduct  TODO
+
+
+
+
+
+
+
+
+
+
+
+            // log            
             $data = Equip::where('order_id', $state['order_id'])->select()->toArray();
-            $_data = [];
-            foreach ($data as $key => $value) {
-                $param = [];
-                $param['order_id'] = ($type == 1 || $type == 2) ? null : $state['order_id'];
-                $param['equip_id'] = $value['equip_id'];
-                $param['member_id'] = $member_id;
-                $param['equip_status'] = ($type == 1 || $type == 2) ? 10 : 30;
-                $param['wxapp_id'] = $wxapp_id;
-                $_data[] = $param;
+            if (!empty($data)) {
+                $_data = [];
+                foreach ($data as $key => $value) {
+                    $param = [];
+                    $param['order_id'] = ($type == 1 || $type == 2) ? null : $state['order_id'];
+                    $param['equip_id'] = $value['equip_id'];
+                    $param['member_id'] = $member_id;
+                    $param['equip_status'] = ($type == 1 || $type == 2) ? 10 : 30;
+                    $param['wxapp_id'] = $wxapp_id;
+                    $_data[] = $param;
+                }
+                $log = new EquipUsingLog;
+                $log->saveAll($_data);
             }
-            $log = new EquipUsingLog;
-            $log->saveAll($_data);
 
             // 获取配送/维修员工
             $member_ids = OrderMember::where('order_id', $state['order_id'])->column('member_id');
@@ -660,6 +674,8 @@ class Order extends OrderModel
             //     'status' => 10
             // ]);
 
+
+
             Db::commit();
             return true;
         } catch (\Exception $e) {
@@ -689,7 +705,7 @@ class Order extends OrderModel
             $order->address()->delete();
             $order->goods()->delete();
             // 删除员工配送相关记录
-            OrderMember::where(['order_id'=>$order_id])->delete();
+            OrderMember::where(['order_id' => $order_id])->delete();
             // 
             Db::commit();
             return true;
@@ -712,8 +728,26 @@ class Order extends OrderModel
         $deduct_list = $deductModel->where('order_id', $order_id)->select()->toArray();
         $is_done = true;
         if (empty($deduct_list)) {
-            $this->error = '该订单没有扣款信息';
-            return false;
+
+            // $this->error = '该订单没有扣款信息';
+            // return false;
+            $rentModel = new RentMode;
+            $orderGoodsModel = new OrderGoods;
+            $order_goods_data = $orderGoodsModel->where(['order_id' => $order_id])->select()->toArray();
+            $_rent_date = 0;
+            foreach ($order_goods_data as $key => $value) {
+                $rent = $rentModel->where('id', $value['rent_id'])->find();
+                if ($rent['rent_show_unit'] == '日') {
+                    $rent_date = strtotime("+" . $value['rent_num'] . " days", $value['rent_date']);
+                } else {
+                    $rent_date = strtotime("+" . $value['rent_num'] . " months", $value['rent_date']);
+                }
+                $_rent_date = $_rent_date < $rent_date ? $rent_date : $_rent_date;
+            }
+            if (time() < $_rent_date) {
+                $this->error = '订单租期未满';
+                $is_done = false;
+            }
         } else {
             foreach ($deduct_list as $key => $value) {
                 if ($value['rent_end'] > time()) {

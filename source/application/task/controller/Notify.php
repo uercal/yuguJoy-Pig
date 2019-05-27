@@ -31,4 +31,8 @@ class Notify
         $WxPayCharge->notify(new RechargeModel);
     }
 
+    public function test(){
+        
+    }
+
 }

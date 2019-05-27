@@ -64,7 +64,7 @@ function write_log($values, $dir)
     $content = '[' . date('Y-m-d H:i:s') . ']' . PHP_EOL . $values . PHP_EOL . PHP_EOL;
     try {
         // 文件路径
-        $filePath = $dir . '/logs/';
+        $filePath = $dir . '/logs/';        
         // 路径不存在则创建
         !is_dir($filePath) && mkdir($filePath, 0755, true);
         // 写入文件

@@ -36,7 +36,7 @@ class Recharge extends RechargeModel
     public function updatePayStatus($transaction_id)
     {
         Db::startTrans();
-        self::get(['pay_status' => 10]);
+        // self::get(['pay_status' => 10]);
         try {
            // 更新订单状态
             $this->save([

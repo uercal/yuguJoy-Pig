@@ -688,6 +688,9 @@ class Order extends OrderModel
             // 删除订单地址 和 商品
             $order->address()->delete();
             $order->goods()->delete();
+            // 删除员工配送相关记录
+            OrderMember::where(['order_id'=>$order_id])->delete();
+            // 
             Db::commit();
             return true;
         } catch (\Exception $e) {

@@ -50,7 +50,7 @@ class Order extends Controller
         if ($model->hasError()) {
             return $this->renderError($model->getError());
         }
-        if (!$order['address']) {
+        if (empty($order['address'])) {
             $error = '请选择配送地址';
             return $this->renderError($error);
         }
@@ -91,7 +91,7 @@ class Order extends Controller
         if (input('choose_key_list')) {
             $choose_key_list = input('choose_key_list');
             $choose_key_list = explode('#', $choose_key_list);
-            $order = $model->getCartByKey($this->user, $choose_key_list);            
+            $order = $model->getCartByKey($this->user, $choose_key_list);
         } else {
             $order = $model->getCart($this->user);
         }

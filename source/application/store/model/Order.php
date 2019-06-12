@@ -759,12 +759,25 @@ class Order extends OrderModel
         }
 
 
-        if (!$is_done) return false;
+        if (!$is_done) {
+            // return false;
+        }
         // 开启事务
         Db::startTrans();
         try {
             //完结订单  
 
+            if (!$is_done) {
+                // return false;
+                $deduct_data = [];
+                foreach ($deduct_list as $key => $value) {
+                    $_deduct_data = [];
+                    $_deduct_data['id'] = $value['id'];
+                    $_deduct_data['status'] = 20;
+                    $deduct_data[] = $_deduct_data;
+                }
+                $deductModel->saveAll($deduct_data);
+            }
 
             //更新订单状态
             $this->save([

@@ -51,15 +51,20 @@ class Cart
             $goodsList[$goods['goods_id']] = $goods;
         }
         // 购物车商品列表
-        $cartList = [];        
+        $cartList = [];
         foreach ($this->cart as $key => $cart) {
             //             
             /* @var Goods $goods */
             $goods = $goodsList[$cart['goods_id']];
-            $goods['key'] = $key;            
+            $goods['key'] = $key;
             // 规格信息
-            $goods['goods_spec_id'] = $cart['goods_spec_id'];            
-            $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']];                        
+            $goods['goods_spec_id'] = $cart['goods_spec_id'];
+            // 避免更新规格goods_spec_id更新查找不到
+            if (!isset(array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']])) {
+                unset($this->cart[$key]);
+                continue;
+            }
+            $goods_sku = array_column($goods['spec']->toArray(), null, 'goods_spec_id')[$cart['goods_spec_id']];
             // 多规格文字内容
             $goods_sku['goods_attr'] = '';
             if ($goods['spec_type'] === 20) {
@@ -69,7 +74,7 @@ class Cart
                     $goods_sku['goods_attr'] .= $spec_rel[$specValueId]['spec']['spec_name'] . ':'
                         . $spec_rel[$specValueId]['spec_value'] . '; ';
                 }
-            }            
+            }
             $goods['goods_sku'] = $goods_sku;
             // 商品单价
             $goods['goods_price'] = $goods_sku['goods_price'];
@@ -204,7 +209,7 @@ class Cart
             $rent_info = $rent_model->getInfo($cart['rent_id'], $cart['goods_spec_id']);
             $goods['rent_date'] = $cart['rent_date'];
             $goods['rent_num'] = $cart['rent_num'];
-            $goods['rent_info'] = $rent_info;                       
+            $goods['rent_info'] = $rent_info;
 
             if ($rent_info['is_static'] == 0) {
                 $goods['rent_total_price'] = bcmul($rent_info['price'], $cart['rent_num'], 2);

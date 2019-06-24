@@ -106,9 +106,7 @@ class RentMode extends BaseModel
                 $price = [];
                 foreach ($list[$key]['map'] as $k => $v) {
                     $price[] = '￥' . $v['price'];
-                }
-                sort($price);
-
+                }                
                 if ($value['time_type'] == 20 && count($price) == 1) {
                     if ($price[0] == '￥0') {
                         unset($list[$key]);
@@ -135,7 +133,11 @@ class RentMode extends BaseModel
                     $list[$key]['content'] = '1年（' . $price[0] . '/月）,2年（' . $price[1] . '/月）.' . $value['content'];
                     $list[$key]['rent_limit'] = 24;
                     $list[$key]['rent_num'] = 12;
-                }
+                }                
+
+                // 
+                sort($price);
+
                 $list[$key]['show_price'] = implode('~', $price);
             }
         }

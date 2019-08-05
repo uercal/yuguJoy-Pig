@@ -17,7 +17,7 @@ class UploadFile extends BaseModel
     protected $name = 'upload_file';
     protected $updateTime = false;
     protected $deleteTime = false;
-    protected $append = ['file_path'];
+    protected $append = ['file_path','api_path'];
 
     /**
      * 获取图片完整路径
@@ -31,6 +31,11 @@ class UploadFile extends BaseModel
             return self::$base_url . 'uploads/' . $data['file_name'];
         }
         return $data['file_url'] . '/' . $data['file_name'];
+    }
+
+
+    public function getApiPathAttr($value,$data){
+        return '/api/image/render&path=uploads/'.$data['file_name'];
     }
 
     /**

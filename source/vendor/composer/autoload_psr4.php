@@ -16,6 +16,7 @@ return array(
     'Symfony\\Component\\Inflector\\' => array($vendorDir . '/symfony/inflector'),
     'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
     'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
+    'Imagine\\' => array($vendorDir . '/imagine/imagine/src'),
     'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src', $vendorDir . '/endroid/qrcode/src'),
     'Endroid\\Installer\\' => array($vendorDir . '/endroid/installer/src'),
 );

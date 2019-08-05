@@ -4,3 +4,5 @@ composer.lock
 
 *.css.map
 .sass-cache
+
+wxml-pig_output

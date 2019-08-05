@@ -41,6 +41,10 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         array (
             'MyCLabs\\Enum\\' => 13,
         ),
+        'I' => 
+        array (
+            'Imagine\\' => 8,
+        ),
         'E' => 
         array (
             'Endroid\\QrCode\\' => 15,
@@ -88,6 +92,10 @@ class ComposerStaticInit34a41e2841af1a67f3ddef099fc7b348
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'Imagine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/imagine/imagine/src',
         ),
         'Endroid\\QrCode\\' => 
         array (

@@ -20,7 +20,8 @@
         "topthink/framework": "5.0.*",
         "qiniu/php-sdk": "^7.2",
         "endroid/qrcode": "^3.4",
-        "endroid/qr-code": "^3.4"
+        "endroid/qr-code": "^3.4",
+        "imagine/imagine": "^1.2"
     },
     "autoload": {
         "psr-4": {

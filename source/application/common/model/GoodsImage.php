@@ -19,7 +19,7 @@ class GoodsImage extends BaseModel
     public function file()
     {
         return $this->belongsTo('UploadFile', 'image_id', 'file_id')
-            ->bind(['file_path', 'file_name', 'file_url']);
+            ->bind(['file_path', 'file_name', 'file_url','api_path']);
     }
 
 }

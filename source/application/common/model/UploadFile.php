@@ -17,7 +17,7 @@ class UploadFile extends BaseModel
     protected $name = 'upload_file';
     protected $updateTime = false;
     protected $deleteTime = false;
-    protected $append = ['file_path','api_path'];
+    protected $append = ['file_path', 'api_path'];
 
     /**
      * 获取图片完整路径
@@ -33,10 +33,9 @@ class UploadFile extends BaseModel
         return $data['file_url'] . '/' . $data['file_name'];
     }
 
-
-    public function getApiPathAttr($value,$data)
+    public function getApiPathAttr($value, $data)
     {
-        return self::$base_url.'index.php?s='.'/api/image/render&path=uploads/'.$data['file_name'];
+        return self::$base_url . 'index.php?s=' . '/api/image/render&path=uploads/' . $data['file_name'] . '&wxapp_id=' . self::$wxapp_id;
     }
 
     /**
@@ -46,7 +45,7 @@ class UploadFile extends BaseModel
      */
     public static function getFildIdByName($fileName)
     {
-        return (new static)->where(['file_name' => $fileName])->value('file_id');
+        return (new static )->where(['file_name' => $fileName])->value('file_id');
     }
 
     /**
@@ -56,7 +55,7 @@ class UploadFile extends BaseModel
      */
     public static function getFileName($fileId)
     {
-        return (new static)->where(['file_id' => $fileId])->value('file_name');
+        return (new static )->where(['file_id' => $fileId])->value('file_name');
     }
 
     /**
@@ -74,8 +73,8 @@ class UploadFile extends BaseModel
         }
         return $model->order(['file_id' => 'desc'])
             ->paginate(32, false, [
-            'query' => Request::instance()->request()
-        ]);
+                'query' => Request::instance()->request(),
+            ]);
     }
 
 }

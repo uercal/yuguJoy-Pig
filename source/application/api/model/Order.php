@@ -49,7 +49,10 @@ class Order extends OrderModel
         // 商品信息
         /* @var Goods $goods */
         $goods = Goods::detail($goods_id);
-        $goods_spec_id = Db::name('goods_spec')->where('spec_sku_id', $goods_sku_id)->value('goods_spec_id');
+        $goods_spec_id = Db::name('goods_spec')->where([
+            'spec_sku_id'=>$goods_sku_id,
+            'goods_id'=>$goods_id            
+            ])->value('goods_spec_id');
         // 规格信息
         $goods['goods_spec_id'] = $goods_spec_id;
         $goods_sku = array_column($goods['spec']->toArray(), null, 'spec_sku_id')[$goods_sku_id];
